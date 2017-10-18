@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
     name: { type: DataTypes.STRING(100), allowNull: true, comment: '图片名称' },
     url: { type: DataTypes.STRING(100), allowNull: true, comment: '跳转链接' },
     priority: { type: DataTypes.BIGINT(11), allowNull: true, comment: '排序' },
-    imgurl: { type: DataTypes.STRING(100), allowNull: true, comment: '图片路劲' }
+    imgurl: { type: DataTypes.STRING(100), allowNull: true, comment: '图片路劲  ' }
   },
     {
       timestamps: true,
