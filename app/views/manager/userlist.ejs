@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="uft-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>用户信息</title>
+    <script src="lib/vue/vue.js"></script>
+	<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen">
+</head>
+<body>
+
+<script type="text/javascript">
+
+//删除用户函数
+function deleteUser(userid){
+  var r=confirm("确认删除此用户");
+  if (r==true){
+     window.location.href="admin/delete?userid="+userid;
+  }
+}
+
+
+//编辑用户的函数
+function editUser(userid){
+   var ids = new Array(0,1);
+   var value = new Array("销售","用户"); 
+   var obj = event.srcElement ? event.srcElement : event.target;
+   if(obj.innerText=="编辑"){
+      var ele=document.getElementById("roleinput"+userid);
+      var select = document.createElement("select"); 
+	  for(var x = 0;x<ids.length;x++){ 
+	      var option = document.createElement("option"); 
+		  option.setAttribute("value",ids[x]);//设置option属性值 
+		  option.appendChild(document.createTextNode(value[x])); 
+		  select.appendChild(option);//向select增加option 
+		 } 
+	  select.options[0].selected = true;//设置默认选中第一个 
+	  ele.innerHTML="";
+	  ele.appendChild(select);
+	  obj.innerText="保存";
+	  }else{
+        window.location.href="admin/update?userid="+userid+"&&roleid="+userid;
+		var ele=document.getElementById("roleinput"+userid);
+		ele.innerText=roleid;
+		obj.innerText="编辑";
+		}
+}
+
+function saveUser(){
+
+    
+}
+</script>
+<table border="1">
+<tr>
+  <td>用户名</td>  <td>手机</td> <td>角色</td><td>编辑</td> <td>删除</td> 
+</tr>
+<% for(var i=0; i<users.length; ++i) { %>  
+     <tr>
+      <td><%=users[i].openid %></td>
+      <td><%=users[i].mobile %> </td>
+      <td id="roleinput<%=users[i].userid%>"><%=users[i].roleid %> </td>
+      <td ><a href='#' onclick='editUser("<%=users[i].userid%>")'>编辑</a></td>
+	  <td><a href='#' onclick='deleteUser(<%=users[i].userid%>)'>删除</a></td> 
+     </tr>
+<% } %>  
+</table>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿{
+     "button":[
+        {	
+          "type":"view",
+          "name":"产品浏览",
+          "url":"http://www.faruxue1688.com/product/index"
+        },
+        {	
+          "type":"view",
+          "name":"关于我们",
+          "url":"http://www.faruxue1688.com/aboutus.html"
+        },
+        {	
+          "type":"view",
+          "name":"我的",
+           "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx459b286ba935a855&redirect_uri=http://www.faruxue1688.com/wx/userinfo&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect"
+        }
+     ]
+}

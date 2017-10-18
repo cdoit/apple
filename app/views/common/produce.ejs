@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>产品选择</title>
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="../css/jquery.typeahead.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/produce.css" />
+    <style type="text/css">
+	        body {
+    		width: 100%;
+			height: 100%;
+            background-image: url(../assets/bg.jpg) ;
+            background-attachment: fixed;
+			background-size: 100% 100%;
+        }
+	body:before {
+	content:'';
+	position:fixed;
+	z-index:-1;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: url(../assets/bg.jpg) center 0 no-repeat;
+	background-size: cover;
+	}
+
+		.navbar{
+		       background-image: url(../assets/bg.jpg);
+               background-attachment: fixed;
+		}
+
+    </style>
+    </head>
+
+<body>
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid" style="height:100%">
+            <div class="citySelect">
+                <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">武汉<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">武汉</a></li>
+                </ul>
+            </div>
+            <div class="vsearch-box">
+			   <form action='/search' method='get'>
+                <input type="search"  name='buildname' onmousedown="showSearch()" class="vsearch-text" placeholder="请输入查询楼盘" autocomplete="off" />
+                <button type="submit" class="vsearch-button btn"></button>
+				</form>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="slogan">
+            <img src="/data/adviertisement/ad.gif" class="img-responsive img-thumbnail" style="width:100%;height:100%"/></img>
+        </div>
+	<% 
+	if (ad.products.length) { 
+       
+	   for(var i=0,j=0;i<ad.products.length;i++){
+
+	      if(j===0){%>
+		  <div class="row">
+		  <%}%>  
+            <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+                <div class="thumbnail" id='<%=ad.products[i].productId%>'>
+                    <div class="header">
+                        <span class="title"><%=ad.products[i].title%></span>
+						<span class="infomation">
+                            <strong><%=ad.products[i].original_size%></strong>
+                            <small>平方</small>
+                            <strong class="bian">变</strong>
+                            <strong><%=ad.products[i].target_size%></strong>
+                            <small>平方</small>
+                        </span>
+                    </div>
+                    <div class="thumbnail_body">
+                        <img class="img-responsive" src="<%=ad.products[i].img%>/png.png" alt="装修图片">
+                        <!--<span class="infomation">
+                            <small>房屋面积增至</small>
+                            <strong><%=ad.products[i].target_size%></strong>
+                            <small>平方</small>
+							-->
+                        </span>
+                    </div>
+                    <div class="foot">
+                        <div class="foot-start">
+                            <div class="timer">
+                                <div class="timer-title">施工周期</div>
+                                <div class="timer-value"><%=ad.products[i].constructtime%></div>
+                            </div>
+                            <div class="pay">
+                                <div class="pay-title">预计费用</div>
+                                <div class="pay-value"><%=ad.products[i].price%></div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- <div class="foot-end">客厅 <%=ad.products[i].hallcount%> 卧室 <%=ad.products[i].roomcount%> 厨房 <%=ad.products[i].kitchencount%>  卫生间 <%=ad.products[i].wccount%></div> -->
+                        <div class="foot-end"><%=ad.products[i].category%></div>
+                    </div>
+                </div>
+            </div> 
+	<%
+	  j++;
+	if(j===4||i===(ad.products.length-1)){%>
+
+		  </div>
+		<% j=0;}
+	}
+
+	}%>
+        <div class="row footerbottom">
+            <footer>悉道智造</footer>
+            <footer>2017年~2018年</footer>
+        </div>
+        </div>
+    <div id="searhPanel" >
+        <div class="closediv">
+            <a href="#" class="btn close" aria-label="Close">
+                <span aria-hidden="true" style="font-size:30px" onclick="hideSearch()">×</span>
+            </a>
+        </div>
+        <div class="container-fluid search-hot">
+            <div>热搜</div>
+            <ul >
+                <li><a href="/search?buildname=天祥">天祥</a></li>
+            </ul>
+            <!-- <div>历史搜索</div>
+            <hr />
+            <ul>
+                <li><a href="listview.html">万科未来城</a></li>
+                <li><a href="listview.html">保利心语</a></li>
+                <li><a href="listview.html">当代安普顿小镇</a></li>
+            </ul> -->
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.typeahead.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".thumbnail").click(function () {
+                window.location.href = "./product?productId="+$(this).attr("id");
+            });
+            $(".js-typeahead-country_v1").typeahead({
+ 
+                source: [
+                       "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+                        "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh"
+                ]
+            });
+
+		
+        });
+
+        function showSearch() {
+            $("#searhPanel").show();
+            $("#searhPanel").animate({ left: '0px', opacity: '1' }, "fast", function () {
+                $("body").css("overflow", "hidden");
+			    $("body").on("touchmove",function(event){event.preventDefault;}, false);
+            });
+		
+           
+        }
+        function hideSearch() {
+            $("#searhPanel").animate({ right: '10000px', opacity: '1' }, "fast", function () {
+                $("body").css("overflow", "auto");
+                $("#searhPanel").hide();
+				$("body").off("touchmove");
+            });
+        }
+    </script>
+</body>
+</html>

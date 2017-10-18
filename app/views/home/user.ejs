@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="uft-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>用户信息</title>
+	<link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen">
+</head>
+<body>
+<a href="#" class="list-group-item active">
+   个人用户：<%=user.username%> 手机：<%=user.mobile%>
+</a>
+ <%for(var i=0;i<sponsors.length;i++){%>
+   <a href="#" class="list-group-item">  
+     <h6 class="list-group-item-heading">
+     客户：<%=sponsors[i].username%>
+    </h6>
+    <h6 class="list-group-item-text">
+     手机：<%=sponsors[i].mobile%>
+   </h6>
+       <h6 class="list-group-item-text">
+      已经注册，等待量房
+   </h6>
+	</a>
+<%}%>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+    "token":"cdo",
+    "appID":"wx459b286ba935a855",
+    "appScrect":"fb7d8ae1284afd3eb1473e8e9b57404d",
+    "encodingAESKey":"bpihl3Lb9wUNR8cDWLI4JONVK1q2v6ynfM5KmR6Jf54",
+    "apiDomain":"https://api.weixin.qq.com/",
+    "apiURL":{
+        "accessTokenApi":"%scgi-bin/token?grant_type=client_credential&appid=%s&secret=%s",
+        "createMenu":"%scgi-bin/menu/create?access_token=%s"
+    }
+}

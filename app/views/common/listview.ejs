@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>产品列表</title>
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="../css/jquery.typeahead.min.css" />
+    <link type="text/css" rel="stylesheet" href="../css/listview.css" />
+		    <style type="text/css">
+        body{
+		    background-image: url(../assets/bg.jpg);
+            background-attachment: fixed;
+			-webkit-text-size-adjust: 100% !important;
+		}
+			body:before {
+	content:'';
+	position:fixed;
+	z-index:-1;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: url(../assets/bg.jpg) center 0 no-repeat;
+	background-size: cover;
+	}
+		.navbar {
+			background-image: url(../assets/bg.jpg);
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid"> 
+        <div class="citySelect"> 
+        <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 武汉<span class="caret"> </span> </a>
+        <ul class="dropdown-menu"> 
+            <li> <a href="#"> 北京</a> </li> 
+            <li> <a href="#"> 上海</a> </li> 
+            <li> <a href="#"> 武汉</a> </li> 
+        </ul>
+        </div> 
+        <div class="vsearch-box"> 
+		 <form action='/search' method='get'>
+        <input type="search" name="buildname" value="<%=buildname%>" class="vsearch-text" placeholder="请输入查询楼盘" autocomplete="off" /> 
+        <button type="submit" class="vsearch-button btn"> </button> 
+		</form>
+            </div> 
+        </div>
+    </nav>
+    <div class="container-fluid" style="margin-top:70px;">
+	   <%if(build!=null&&build.length>0){
+	     for(var i=0,j=0;i<build.length;i++){
+		 %>
+		  <%if(j==0){%>
+		  <div class="row">
+		  <%}%>
+	             <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+                <div class="thumbnail" id='<%=build[i].id%>' name='<%=build[i].name%>' style="background-color:#cac5c5;color:#fff;font-family:'微软雅黑';cursor:pointer">
+                    <table style="width:100%">
+                        <tr>
+                            <td rowspan="2" width="80" height="80" style="overflow:hidden"><img class="img-responsive" src="../assets/search.png" height="100" /></td>
+                            <td style="font-size:20px;font-weight:800;">
+                                <span  style="margin-left:10px"><%=build[i].name%></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td ><p style="margin-left:10px;font-size:12px">地址：<%=build[i].address%></p></td>
+                        </tr>
+                    </table>
+                </div>
+             </div>
+
+
+	   	  <%
+		     j++;
+		    if(j==4||i==build.length-1){
+			j=0;
+		  %>
+		      </div>
+	   <%}
+	   }
+	   }else{
+	   %>
+          <div style="text-align:center;margin-top:50px;color:#ffffff;font-family:'微软雅黑'">
+             <h3>万分抱歉</h3>
+             <h6 style="margin-top:50px;" >未能搜索到任何结果(营销)</h6>
+             <div style="margin-top:30px;">
+                   <h6>电话我，定制您的房屋</h6>
+                   <a href="#" class="btn btn-primary" style="width:80px;" onclick="callphone()">打电话</a>
+             </div>
+         </div>
+      <%}%>
+
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"> </script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"> </script>
+    <script type="text/javascript" src="../js/jquery.typeahead.min.js"> </script>
+	<script type="text/javascript">
+	 $(document).ready(function () {
+            $(".thumbnail").click(function () {
+                window.location.href = "product/queryBybuildingId?buildingId="+$(this).attr("id")+"&name="+$(this).attr("name");
+            });
+			});
+        function callphone() {
+            window.location.href = "tel:10086";
+        }
+
+	</script>
+</body>
+</html>

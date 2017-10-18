@@ -1,0 +1,227 @@
+﻿body {
+    -webkit-text-size-adjust: 100% !important;
+}
+
+@media screen and (min-width: 768px) {
+    .img-thumbnail {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+.offset-to-top {
+    margin-top: 20px;
+}
+
+.barfix {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
+}
+
+#navbar {
+    background-color: #93a5bb;
+}
+
+.mnav {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+    .mnav li {
+        float: left;
+        display: inline-block;
+        border: 0px;
+        border-radius: 0px;
+    }
+
+        .mnav li a {
+            font-family: "微软雅黑";
+            display: block;
+            margin: 0px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 0px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+            .mnav li a:hover {
+                color: #171717;
+            }
+
+.active {
+    background-color: #cdd1ca;
+}
+
+.slogan {
+    color: #d39947;
+    font-size: 14px;
+}
+
+    .slogan span {
+        border: 1px solid #ff6a00;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+.infotitle {
+    margin-top: 15px;
+    color: #ffffff;
+    font-size: 18px
+}
+
+.infolist {
+    font-size: 16px;
+    font-family: '微软雅黑';
+    color: #ffffff;
+}
+
+.info hr {
+    margin-top: 1px;
+}
+
+.panel-min {
+    margin-top: 10px;
+}
+
+    .panel-min ul {
+        list-style: none;
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .panel-min li {
+        display: inline-block;
+        font-weight: 800;
+        border-radius: 10px;
+        font-family: '微软雅黑';
+        background-color: #bebbbb;
+    }
+
+    .panel-min .btn {
+        font-size: 18px;
+        color: #ffffff;
+        padding: 3px;
+        width: 80px;
+    }
+
+.floorselect {
+    background-color: #4a90e2;
+}
+
+.sum_img {
+    margin-top: 10px;
+}
+
+.panel-select {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center
+}
+
+    .panel-select a {
+        padding: 15px;
+        border-radius: 10px;
+        background-color: #4a90e2;
+        font-family: '微软雅黑';
+        font-size: 20px;
+        font-weight: 800;
+        color: #FFFFFF;
+        text-decoration: none;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+        .panel-select a:hover {
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+.panel-custom {
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+    .panel-custom ul {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+        margin-bottom: 20px
+    }
+
+    .panel-custom li {
+        display: inline-block;
+    }
+
+        .panel-custom li div {
+            margin-top: 5px;
+            text-align: center;
+        }
+
+    .panel-custom a {
+        border-radius: 10px;
+        font-weight: 800;
+        color: #000000
+    }
+
+.panel-commit .swift {
+    border: 1px solid #cdd1ca;
+    background-color: #999999;
+    padding: 10px
+}
+
+.panel-commit .say {
+    margin-left: 5px;
+    font-size: 16px;
+    color: #fff
+}
+
+.rating-container .rating-stars {
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap
+}
+
+.rating-container .rating-input {
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    font-size: 1px;
+    border: none;
+    background: 0 0;
+    padding: 0;
+    margin: 0
+}
+
+.rating-disabled .rating-input, .rating-disabled .rating-stars {
+    cursor: not-allowed
+}
+#v4 {
+    height:600px;
+}
+.rating-container .star {
+    display: inline-block;
+    margin: 0 3px;
+    text-align: center
+}
+.footerbottom footer {
+    text-align: center;
+    color: #ffffff
+}

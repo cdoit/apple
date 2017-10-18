@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>张先生家的施工过程</title>
+    <meta name="viewport" content="target-densitydpi=device-dp, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/process.css"/>
+</head>
+<body>
+    <nav class="nav-top">
+        <ul class="nav-ul">
+            <li class="nav-li <%if(process.tyle=='record'){%> active <%}%>"><a href="record?projectId=<%=process.projectId%>">现场照片</a></li>
+            <li class="nav-li <%if(process.tyle=='result'){%> active <%}%>"><a href="result?projectId=<%=process.projectId%>">效果照片</a></li>
+            <li class="nav-li"><a href="comment?projectId=<%=process.projectId%>">评价</a></li>
+        </ul>
+    </nav>
+    <!-- 这里是  原始状态图     也是初始显示图 -->
+    <div class="main">
+        <div id="carousel-generic" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+                <%if(process.original!=null&&process.original.length>0){%>
+                    <% for(var i=0;i<process.original.length;i++){ %>
+                        <%if(i==0){%>
+                            <div class="item active">
+                                <img class="center-block img-responsive"   src="<%=process.original[i].imgurl%>" alt="...">
+                            </div>
+                        <%}%>
+                        <%if(i>0){%>
+                            <div class="item">
+                                <img class=" center-block  img-responsive "  src="<%=process.original[i].imgurl%>" alt="...">
+                            </div>
+                        <%}%>
+                    <%}%>
+                <%}%>
+                
+                <!-- <div class="item">
+                    <img class="center-block  img-responsive "  src="../assets/c.jpg" alt="...">
+                </div>
+                <div class="item">
+                    <img class="center-block   img-responsive "  src="../assets/d.jpg" alt="...">
+                </div> -->
+            </div>
+            <a class="left carousel-control" href="#carousel-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">前一张</span>
+            </a>
+            <a class="right carousel-control" href="#carousel-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">下一张</span>
+            </a>
+        </div>
+
+</div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/toucher.js"></script>
+    <script>
+        $(function(){
+            var myTouch = util.toucher(document.getElementById('carousel-generic'));
+            myTouch.on('swipeLeft', function (e) {
+                $('.right').click();
+            }).on('swipeRight', function (e) {
+                $('.left').click();
+            });
+        })
+        10 </script>
+</body>
+</html>

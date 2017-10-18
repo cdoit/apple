@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>叮当快建</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link href="css/swiper.min.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery.min.js" language="javascript" type="text/javascript"></script>
+    <script src="js/swiper.3.1.2.min.js" language="javascript" type="text/javascript"></script>
+    <script src="js/public.js" language="javascript" type="text/javascript"></script>
+</head>
+<body>
+    <div id="loading-frame">
+        <div class="frame-content">
+            <div class="image-div">
+                <img src="img/loading.gif" />
+            </div>
+            <div id="loading-num">0%</div>
+        </div>
+    </div>
+    <div id="main-frame" class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide page1 noSwiping">
+                <div class="slide-content">
+                    <div class="image-div1 animationFun">
+
+                    </div>
+                    <div class="words-div1 animationFun">
+
+                    </div>
+                    <div class="image-div2 animationFun">
+
+                    </div>
+                    <div class="words-div2 animationFun">
+
+                    </div>
+                    <div class="words-div3 animationFun">
+
+                    </div>
+                    <div class="arrow-div">
+                        <img src="img/arrow-down.png" />
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide page2 noSwiping">
+                <div class="slide-content">
+                    <div class="image-div1 animationFun">
+
+                    </div>
+                    <div class="image-div2 animationFun">
+
+                    </div>
+                    <div class="image-div3 animationFun">
+
+                    </div>
+                    <div class="words-div1 animationFun">
+
+                    </div>
+                    <div class="words-div2 animationFun">
+
+                    </div>
+                    <div class="words-div3 animationFun">
+
+                    </div>
+                    <div class="arrow-div">
+                        <img src="images/arrow-down.png" />
+                    </div>
+                </div>
+            </div>
+            <div id="ifdiv" class="swiper-slide page3 noSwiping">
+                <iframe id="riframe" src="/user" style="width:100%;height:100%" frameborder="0"  ></iframe>
+            </div>
+   
+        </div>
+        <div class="pagination"></div><!--页面标签符-->
+    </div>
+        <span class="music-ico" id="music-ico"></span>
+        <audio loop="loop" src="images/music.mp3" id="media" autoplay="autoplay" preload="preload" controls="controls"></audio>
+    <script type="text/javascript">
+        var img = $("body").find("img[src]");//图片数组
+        var length = img.length;//图片数量
+        var downImg = 0;//已下载数量
+        var percent = 0;//百分比
+        img.each(function (index) {
+            function imgload() {
+                $(".page1").removeClass('swiper-slide-active');
+                downImg++;
+                percent = parseInt(100 * downImg / length);
+                var str = percent + "%";
+                $("#loading-num").html(str);
+                setTimeout(function () {
+                    $("#loading-frame").hide();
+                    $(".page1").addClass('swiper-slide-active');
+                }, 1000);
+            };
+            if (img.eq(index).get(0).complete) {
+                imgload();
+            } else {
+                $(this).load(function () {
+                    imgload();
+                });
+            };
+        });
+
+    </script>
+</body>
+</html>

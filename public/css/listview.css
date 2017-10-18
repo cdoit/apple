@@ -1,0 +1,69 @@
+﻿html, body  {
+    width: 100%;
+    height: 100%;
+}
+
+.citySelect {
+    width: 60px;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    font-size: 20px;
+    vertical-align: middle;
+    line-height: 50px;
+}
+
+    .citySelect a {
+        color: #ffffff;
+    }
+
+.vsearch-box {
+    width: calc(100% - 60px);
+    float: left;
+    height: 100%;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+input:focus {
+    outline: none;
+    border-color: #cfdc00;
+    box-shadow: 0 0 5px rgba(207, 220, 0, 0.4);
+}
+
+.vsearch-text {
+    width: 100%;
+    height: 40px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    font-size: 12pt;
+    border-left-width: 1px;
+    border-radius: 20px;
+    vertical-align: middle;
+    line-height: 40px;
+    padding-left: 10px;
+}
+
+.vsearch-button {
+    position: absolute;
+    height: 30px;
+    width: 40px;
+    background: #0094ff;
+    border: 0px;
+    border-radius: 20px;
+    right: 20px;
+    top: 10px;
+}
+
+.vsearch-box button:before {
+    content: "\f105";
+    font-family: "FontAwesome";
+    color: #F9F0DA;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 50px;
+    top: -10px;
+    right: 12px;
+    position: absolute;
+}

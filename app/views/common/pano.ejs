@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>室内装修</title>
+	<meta name="viewport" content="target-densitydpi=device-dp, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=edge" />
+	<style>
+		@-ms-viewport { width:device-width; }
+		@media only screen and (min-device-width:800px) { html { overflow:hidden; } }
+		html { height:100%; }
+
+		body { height:100%; overflow:hidden; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; background-color:#000000; 
+		  -webkit-text-size-adjust: 100% !important;
+		}
+        p {
+            margin:0px;
+            padding:0px;
+        }
+        .nav-top {
+            width: 100%;
+            position:fixed;
+            z-index:100;
+        }
+        .nav-ul {
+            margin:0px;
+            padding:0px;
+            list-style:none;
+    background-color:rgba(128, 128, 128,0.5);
+        }
+        .nav-li {
+            display:inline-block;
+        }
+            .nav-li{
+               padding-left:10px;
+               padding-right:10px;
+               padding-top:10px;
+               padding-bottom:10px;
+               font-weight:800;
+            }
+                .nav-li a {
+                    text-decoration: none;
+                    color: #000000;
+                }
+        .active a{
+            color:#ffffff;
+        }
+        #pano {
+            width: 100%;
+          height: 100%;
+        }
+        .nav-bottom {
+            width: 100%;
+			position:fixed;
+            bottom:0px;
+        }
+        .nav-bottom-ul {
+            font-size: 0px;
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            width: 100%;
+        }
+        .nav-bottom-li {
+            float: left;
+            margin: 0px;
+            padding: 0px;
+            font-weight: 800;
+            width: 50%;
+            padding-top:10px;
+            padding-bottom:15px;
+            font-size:16px;
+            text-align:center;
+            cursor:pointer;
+        }
+            .nav-bottom-li a {
+                text-decoration: none;
+                color: #FFFFFF;
+            }
+        .a1 {
+            text-decoration: none;
+
+            background-color: #96a8ee;
+       
+        }
+        .a2{
+            text-decoration: none;
+
+            background-color:#0721ea
+        }
+        .active a {
+            color: #ffffff;
+        }
+	</style>
+</head>
+<body>
+<script src="../panos/index.js"></script>
+<nav class="nav-top">
+     <%if(panos.length>0){
+	      var Mp=null;
+		 var Floor=null;
+		 var Wall=null;
+		 var Over=null;
+		 var normal=null;
+		  for(var i=0;i<panos.length;i++){
+			
+			   if(panos[i].category==0){
+			      Mp=panos[i];
+			   }
+			    if(panos[i].category==1){
+			      Floor=panos[i];
+			   }
+			   if(panos[i].category==2){
+			      Wall=panos[i];
+			   }
+			   if(panos[i].category==3){
+			      Over=panos[i];
+			   }
+			}
+				normal=Over;
+			if(normal==null){
+			normal=panos[0]
+			}
+	 %>
+	    <ul class="nav-ul">
+	     <%if(Mp!=null){%>
+          <li id="v0" class="nav-li" onclick="loadxml('<%=Mp.imgurl%>','<%=Mp.category%>','<%=Mp.productId%>')"><a href="javascript:void(0)">毛坯</a></li>
+		 <%}%>
+		 <%if(Floor!=null){%>
+        <li  id="v1"  class="nav-li"  onclick="loadxml('<%=Floor.imgurl%>','<%=Floor.category%>','<%=Floor.productId%>')"><a href="javascript:void(0)"  >加建楼板</a></li>
+		 <%}%>
+		<%if(Wall!=null){%>
+        <li id="v2"  class="nav-li" onclick="loadxml('<%=Wall.imgurl%>','<%=Wall.category%>','<%=Wall.productId%>')" ><a href="javascript:void(0)"  >加建墙</a></li>
+		 <%}%>
+		 <%if(Over!=null){%>		 
+           <li id="v3" class="nav-li"  onclick="loadxml('<%=Over.imgurl%>','<%=normal.category%>','<%=normal.productId%>')"><a href="javascript:void(0)" >装修后</a></li>
+		 <%}%>
+    </ul>
+	 <%}%>
+</nav>
+<div id="pano" >
+	<noscript><table style="width:100%;height:100%;"><tr style="vertical-align:middle;"><td><div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div></td></tr></table></noscript>
+	<script>
+			//获取浏览器上的参数信息
+		function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return unescape(r[2]);
+        return null;
+		}
+		  
+		    var imgurl=null;
+			var productId=null;
+	       imgurl=GetQueryString("imgurl");
+		  var  category=GetQueryString("category");
+		   productId=GetQueryString("productid");
+		   if(category==null){
+		      category=3;
+		   }
+		 
+		 var  selectli= document.getElementById("v"+category);
+		 selectli.setAttribute("class","nav-li active"); 
+
+		 var xmlurl="";
+
+		 if(imgurl!=null&&imgurl!=""&&category!=null&&category!=""){
+		 xmlurl=imgurl+'/'+category+'/index.xml';
+		 }else{
+		 xmlurl='<%=normal.imgurl%>'+'/<%=normal.category%>'+'/index.xml';
+		 }
+        embedpano({ swf: "../panos/index.swf", xml:xmlurl, target:"pano", html5:"auto", mobilescale:1.0, passQueryParameters:true});
+	</script>
+</div>
+
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function callphone() {
+            window.location.href = "tel:10086";
+        }
+
+		function loadxml(imgurl,category,productId){
+		   window.location.href = "pano?imgurl="+imgurl+"&category="+category+"&productid="+productId;
+		 }
+
+
+    </script>
+</body>
+</html>

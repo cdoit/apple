@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>评价</title>
+    <meta name="viewport" content="target-densitydpi=device-dp, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="../css/star-rating.min.css" />
+    <style type="text/css">
+        html, body, .main {
+            height: 100%;
+            width: 100%;
+			-webkit-text-size-adjust: 100% !important;
+        }
+        body, .navbar {
+            background-image: url(../assets/bg.jpg);
+            background-attachment: fixed;
+            background-repeat: repeat-x;
+        }
+			body:before {
+	content:'';
+	position:fixed;
+	z-index:-1;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: url(../assets/bg.jpg) center 0 no-repeat;
+	background-size: cover;
+	}
+		.main table{
+		  width:100%;
+		  height:100%;
+		  color:#ffffff;
+		}
+		.commitTitle{
+		  width:100px;
+		  height:60px;
+		  font-size:20px;
+		  font-weight:800
+		}
+    </style>
+</head>
+<body>
+    <div class="container-fluid main">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="commitTitle">房主评价</td>
+                </tr>
+                <tr style="vertical-align:top">
+                    <td><%=commit.remark%></td>
+                </tr>
+                <tr style="height:60px;">
+                    <td style="text-align:center">
+                        <input value="<%=commit.rating%>" type="text" class="rating-loading" data-size="xs">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/star-rating.min.js"></script>
+    <script type="text/javascript">
+        $(document).on('ready', function () {
+            $('.rating-loading').rating({ displayOnly: true, step: 0.5 });
+        });
+    </script>
+</body>
+</html>

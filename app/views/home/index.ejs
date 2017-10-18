@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="css/app.css" type="text/css" />
+<script src="lib/vue/vue.js"></script>
+<script src="lib/vue/vue-resource.js"></script>
+<script src="lib/mock/mock.js"></script>
+
+<div id="app" >
+    <p class=".header">{{ message }}</p>
+    <input type="text" v-model="message"/>
+</div>
+
+<input onclick="update()" type="button" value="修改绑定" name="refresh">
+<input onclick="post()" type="button" value="提交服务" name="post">
+<img src="img/test.jpg"></img>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: '我是一个绑定的默认值!'
+  }
+});
+
+function update()
+{
+    app.message="和我绑定的变量被修改了";
+}
+
+function post()
+{
+    // var template={'返回':'这是一个mock数据'};
+    // Mock.mock("http://127.0.0.1:3000/getdata",template);
+    var resource = Vue.resource("http://127.0.0.1:3000/getdata");
+		vm = this;
+	  resource.get()
+		.then((response) => {
+        app.message=response.data;
+		})
+		.catch(function(response) {
+			alert("no");
+		})
+ }
+
+function successCallback()
+{
+
+}
+
+function errorCallback()
+{
+
+}
+</script>  
