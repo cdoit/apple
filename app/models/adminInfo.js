@@ -44,6 +44,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: '最后成功登录IP' 
     },
     roleId: { field: 'role_id', type: DataTypes.BIGINT(11), allowNull: false, comment: '当前用户的角色' },
+    companyId: { field: 'company_id', type: DataTypes.BIGINT(11), allowNull: false, comment: '当前用户所属公司' },
     active: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true, comment: '是否正常状态' }
   },
     {

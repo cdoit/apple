@@ -1,15 +1,35 @@
-﻿//用于建立管理员的表，管理员通过账号和密码登陆
-
+﻿//项目表
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define('Project', {
-        projectid: {
-            type: DataTypes.BIGINT(11),
-            primaryKey: true,
-            unique: true,
-            autoIncrement: true,
+        id: { type: DataTypes.STRING(100), primaryKey: true, unique: true },
+        schemeId: {
+            type: DataTypes.STRING(100),
+            field: 'scheme_id',
             allowNull: false,
-            comment: '管理员的id信息'
-        }
+            comment: '方案Id'
+          },
+          equipmentId: {
+            type: DataTypes.STRING(100),
+            field: 'equipment_id',
+            allowNull: false,
+            comment: '设备Id'
+          },
+          designId: {
+            type: DataTypes.STRING(100),
+            field: 'design_id',
+            allowNull: false,
+            comment: '设计Id'
+          },
+          adminInfoId: {
+            type: DataTypes.STRING(100),
+            field: 'adminInfo_id',
+            allowNull: false,
+            comment: '项目创建人员Id'
+          },
+          name: { type: DataTypes.STRING(100), allowNull: true, comment: '项目名称' },
+          address: { type: DataTypes.STRING(100), allowNull: true, comment: '项目地址' },
+          auditstate: { type: DataTypes.STRING(10), allowNull: true, comment: '审核状态' },
+          progress: { type: DataTypes.STRING(10), allowNull: true, comment: '项目进度' },
     },
         {
             timestamps: true,

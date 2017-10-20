@@ -3,7 +3,6 @@ var login = require('./login');
 var router = express.Router();
 const db = require("../db/");
 var uuid = require('node-uuid');
-const panorama = require("../models/panorama");
 
 router.get('', function (req, res) {
     var productid = req.query.productid;
