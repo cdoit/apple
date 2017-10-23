@@ -3,6 +3,7 @@ var login = require('./login');
 var router = express.Router();
 const db = require("../db/");
 
+
 router.get('/login', function (req, res, next) {
 
     res.render('manager/login.ejs');
@@ -19,7 +20,7 @@ router.post('/login/index', function (req, res, next) {
     }).then(function (result) {
         if (result != null) {
             req.session.admin = result;
-            res.redirect("/manager/order");
+            res.redirect("/manager/test");
         } else {
             res.render('/manager/login');
         }
@@ -29,11 +30,11 @@ router.post('/login/index', function (req, res, next) {
 //访问管理页面
 router.get('/', login.checkin, function (req, res, next) {
 
-    db.User.findAll().then(function (result) {
+    db.AdminInfo.findAll().then(function (result) {
 
         res.render('manager/index.ejs', { users: result});
     });
-})
+});
 
 router.get('/user', login.checkin, function (req, res, next) {
 
@@ -41,7 +42,7 @@ router.get('/user', login.checkin, function (req, res, next) {
 
         res.render('manager/user.ejs', { users: result });
     });
-})
+});
 
 router.get('/role', login.checkin, function (req, res, next) {
 
@@ -49,7 +50,7 @@ router.get('/role', login.checkin, function (req, res, next) {
 
         res.render('manager/role.ejs', { roles: result });
     });
-})
+});
 
 router.get('/project', login.checkin, function (req, res, next) {
 
@@ -57,7 +58,13 @@ router.get('/project', login.checkin, function (req, res, next) {
 
         res.render('manager/project.ejs', { projects: result });
     });
-})
+});
+
+
+router.get('/test', login.checkin, function (req, res, next) {
+    
+    res.render('manager/test.ejs');
+    });
 
 router.get('/order', login.checkin, function (req, res, next) {
     
@@ -68,5 +75,5 @@ router.get('/order', login.checkin, function (req, res, next) {
         db.Sequelize.query("SELECT o.*,p.`name`,a.adminname from `order` as o LEFT JOIN product as p ON o.product_id = p.id LEFT JOIN admininfo as a ON a.id = o.adminInfo_id").then(function (result) {
             res.render('manager/order.ejs', { order: result[0] });
         });
-    })
+    });
 module.exports = router;
