@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>管理员页面</title>
+    <title>设备云监控页面</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen">
     <style type="text/css">
@@ -29,16 +29,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">管理员页面</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">人力</a></li>
-                    <li><a href="#">预算</a></li>
-                    <li><a href="#">采购</a></li>
-                    <li><a href="#">支出</a></li>
-                    <li><a href="#">分包</a></li>
-                </ul>
+                <a class="navbar-brand" href="#">设备</a>
             </div>
         </div>
     </nav>
@@ -46,39 +37,39 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a href="/manager/order">订单管理<span class="sr-only">(current)</span></a></li>
-                    <!-- <li><a href="/manager/role">角色管理</a></li>
-                    <li><a href="/manager/project">账户管理</a></li> -->
+				    <li class="active"><a href="/equipment/list">设备列表<span class="sr-only">(current)</span></a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header">订单列表</h1>
+                <h3 class="page-header">设备列表</h3>
+                <a href="/equipment/add">创建设备</a>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>订单ID</th>
-                                <th>产品名称</th>
-                                <th>分配客服</th>
-                                <th>创建时间</th>
+                                <th>设备名称</th>
+                                <th>设备编号</th>
+                                <th>保修期</th>
+                                <th>购买时间</th>
+                                <th>购买人</th>
+                                <th>状态</th>
+                                <th>运行状态</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
+                        <% for(var i=0; i<equipment.length; ++i) { %>  
                             <tr>
-                            <%if(order!=null&&order.length>0){
-                                for(var i=0,j=0;i<order.length;i++){
-                                %>
-                                <td><%=order[i].id%></td>
-                                <td><%=order[i].name%></td>
-                                <td><%=order[i].adminname%></td>
-                                <td><%=order[i].created_at%></td>
-                                <td>
-                                    <a href="#">分配</a>
-                                </td>
-                                <%}}%>
+                                  <td><%=equipment[i].name %> </td>
+                                  <td><%=equipment[i].code %> </td>
+                                  <td><%=equipment[i].warrantyperiod %> </td>
+                                  <td><%=equipment[i].buytime %> </td>
+                                  <td><%=equipment[i].customer %> </td>
+                                  <td><%=equipment[i].state %> </td>
+                                  <td><%=equipment[i].workstate %> </td>
+                                  <td>    </td>
                             </tr>
-        
+                        <% } %>  
                         </tbody>
                     </table>
                 </div>

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>管理员页面</title>
+    <title>设备云监控页面</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen">
     <style type="text/css">
@@ -29,15 +29,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">管理员页面</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">成员管理</a></li>
-                    <li><a href="#">项目管理</a></li>
-                    <li><a href="#">财务管理</a></li>
-                    <li><a href="#">网站设置</a></li>
-                </ul>
+                <a class="navbar-brand" href="#">设备</a>
             </div>
         </div>
     </nav>
@@ -45,34 +37,26 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                 <li class="active"><a href="/manager/user">用户管理<span class="sr-only">(current)</span></a></li>
-                    <li><a href="/manager/role">角色管理</a></li>
-                    <li><a href="/manager/project">账户管理</a></li>
+				    <li class="active"><a href="/equipment/list">设备列表<span class="sr-only">(current)</span></a></li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h3 class="page-header">角色列表</h3>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>用户ID</th>
-                                <th>用户名</th>
-                                <th>手机号</th>
-                                <th>地址</th>
-                                <th>性别</th>
+                <h3 class="page-header">添加设备</h3>
+                <form role="form" action="/scheme/addScheme" method="post">
+                    <table class="table table-bordered"> 
+                        <tbody> 
+                            <tr> 
+                                <td class="first">方案名称</td>
+                                <td>
+                                <input type="text" class="form-control" id="schemeName" name="schemeName" >
+                                <input type="hidden" name="path" class="path">
+                                <button type="submit" id="goodsFormButton" style="display: none;">确定</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                <% for(var i=0; i<roles.length; ++i) { %>  
-     <tr>
-   
-     </tr>
-<% } %>  
-        
+                            
                         </tbody>
-                    </table>
-                </div>
+                    </table>				
+                </form>
             </div>
         </div>
     </div>
