@@ -79,14 +79,46 @@ module.exports = function (app) {
     });
 
     app.post('/uploadSingle', upload.single('logo'), function(req, res, next){
-        var file = req.file;
+            var file = req.file;
         
-            console.log('文件类型：%s', file.mimetype);
-            console.log('原始文件名：%s', file.originalname);
-            console.log('文件大小：%s', file.size);
-            console.log('文件保存路径：%s', file.path);
-        res.send({ret_code: '0'});
+            // console.log('文件类型：%s', file.mimetype);
+            // console.log('原始文件名：%s', file.originalname);
+            // console.log('文件大小：%s', file.size);
+            // console.log('文件保存路径：%s', file.path);
+
+            //以下代码得到文件后缀
+            var name = file.originalname;
+            var nameArray = name.split('');
+            var nameMime = [];
+            var l = nameArray.pop();
+            nameMime.unshift(l);
+            while (nameArray.length != 0 && l != '.') {
+                l = nameArray.pop();
+                nameMime.unshift(l);
+            }
+            //Mime是文件的后缀
+            var Mime = nameMime.join('');
+            console.log(Mime);
+            fs.renameSync('./upload/'+file.filename,'./upload/'+file.filename+Mime);
+            // res.send('./upload/'+file.filename+Mime);
+            res.json('./upload/'+file.filename+Mime);
     });
+
+    app.get('/download', function (req, res,next) {
+        var q = req.query;
+        // if (q.type == 'jpg') {
+      
+        //   //相对路径
+        //   res.download('public/1.jpg');
+        // }else if (q.type == 'txt') {
+      
+        //   //绝对路径
+        //   res.download(`F:/testredis/public/1.txt`);
+        // }else{
+        //   res.send('错误的请求');
+        // }
+        res.download('upload/logo-1508833808696.png');
+      });
 
     //
     app.get("/admin/show", function (req, res, next) {
@@ -387,6 +419,7 @@ module.exports = function (app) {
     app.use('/pano',require("../app/controllers/pano"));
     app.use('/product',require("../app/controllers/product"));
     app.use('/search',require("../app/controllers/search"));
+    app.use('/scheme',require("../app/controllers/scheme"));
 
     app.use(function (err, req, res, next) {
         if (err.message

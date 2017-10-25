@@ -20,7 +20,7 @@ router.post('/login/index', function (req, res, next) {
     }).then(function (result) {
         if (result != null) {
             req.session.admin = result;
-            res.redirect("/manager/test");
+            res.redirect("/scheme/scheme");
         } else {
             res.render('/manager/login');
         }
@@ -59,6 +59,15 @@ router.get('/project', login.checkin, function (req, res, next) {
         res.render('manager/project.ejs', { projects: result });
     });
 });
+
+//方案列表
+router.get('/scheme', login.checkin, function (req, res, next) {
+    
+        db.Scheme.findAll().then(function (result) {
+    
+            res.render('manager/schemes.ejs', { schemes: result });
+        });
+    });
 
 
 router.get('/test', login.checkin, function (req, res, next) {
