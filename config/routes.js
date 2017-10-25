@@ -64,6 +64,10 @@ module.exports = function (app) {
         res.render('manager/login.ejs');
     });
 
+    app.get('/login', function (req, res) {
+        res.render('manager/login.ejs');
+    });
+
     //
     //登陆
     app.post('/login', function (req, res, next) {
@@ -167,6 +171,7 @@ module.exports = function (app) {
     });
 
     app.use('/scheme',require("../app/controllers/scheme"));
+    app.use('/manager',require("../app/controllers/manager"));
     app.use('/equipment',require("../app/controllers/equipment"));
 
     app.use(function (err, req, res, next) {

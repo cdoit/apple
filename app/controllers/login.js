@@ -3,7 +3,7 @@
 exports.checkin = function (req, res, next) {
     var admin = req.session.admin;
     if (admin == null) {
-        return res.redirect("/manager/login/");
+        return res.render('manager/login.ejs');
     }
     next();
 }
