@@ -81,4 +81,10 @@ router.get('/delete', login.checkin, function (req, res, next) {
 });
 
 
+//地图
+router.get('/map', login.checkin, function (req, res, next) {
+    res.render('equipment/map.ejs');
+});
+
+
 module.exports = router;
