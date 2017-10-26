@@ -20,16 +20,14 @@ router.get('/list', login.checkin, function (req, res, next) {
 
 router.get('/add', login.checkin, function (req, res, next) {
     var equipmentId = req.query.equipmentId;
-    if(equipmentId != undefined || equipmentId != null){
-        var filter = {
-            where: {
-                id:equipmentId
-            }
+    var filter = {
+        where: {
+            id:equipmentId
         }
-        db.Equipment.findOne(filter).then(function (result) {
-            res.render('equipment/add.ejs', { equipment: result });
-        }).catch(next);
     }
+    db.Equipment.findOne(filter).then(function (result) {
+        res.render('equipment/add.ejs', { equipment: result });
+    }).catch(next);
 });
 
 router.post('/addEquipment', login.checkin, function (req, res, next) {

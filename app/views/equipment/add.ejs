@@ -12,36 +12,36 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="<%=equipment.name%>" placeholder="" id="" name="name">
-                <input type="hidden" class="input-text" value="<%=equipment.id%>" name="equipmentId">
+                <input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.name%><%}%>" placeholder="" id="" name="name">
+                <input type="hidden" class="input-text" value="<%if(equipment!=null){%><%=equipment.id%><%}%>" name="equipmentId">
 			</div>
         </div>
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备编号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<%=equipment.code%>" placeholder="" id="" name="code">
+				<input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.code%><%}%>" placeholder="" id="" name="code">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">保修期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<%=equipment.warrantyperiod%>" placeholder="" id="" name="warrantyperiod">
+				<input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.warrantyperiod%><%}%>" placeholder="" id="" name="warrantyperiod">
 			</div>
         </div>
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">购买人：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<%=equipment.customer%>" placeholder="" id="" name="customer">
+				<input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.customer%><%}%>" placeholder="" id="" name="customer">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>状态：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="state" class="select">
-					<option value="0" <%if(equipment.state=='0'){%> selected="selected" <%}%>>已出厂</option>
-					<option value="1" <%if(equipment.state=='1'){%> selected="selected" <%}%>>维修中</option>
-					<option value="11" <%if(equipment.state=='11'){%> selected="selected" <%}%>>正常运行</option>
-					<option value="12" <%if(equipment.state=='12'){%> selected="selected" <%}%>>已报修</option>
+					<option value="0" <%if(equipment!=null&&equipment.state=='0'){%> selected="selected" <%}%>>已出厂</option>
+					<option value="1" <%if(equipment!=null&&equipment.state=='1'){%> selected="selected" <%}%>>维修中</option>
+					<option value="11" <%if(equipment!=null&&equipment.state=='11'){%> selected="selected" <%}%>>正常运行</option>
+					<option value="12" <%if(equipment!=null&&equipment.state=='12'){%> selected="selected" <%}%>>已报修</option>
 				</select>
 				</span> </div>
 		</div>
@@ -49,23 +49,23 @@
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运行状态：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="workstate" class="select">
-					<option value="0" <%if(equipment.workstate=='0'){%> selected="selected" <%}%>>满负荷</option>
-					<option value="1" <%if(equipment.workstate=='1'){%> selected="selected" <%}%>>空闲</option>
-					<option value="2" <%if(equipment.workstate=='2'){%> selected="selected" <%}%>>饱和</option>
+					<option value="0" <%if(equipment!=null&&equipment.workstate=='0'){%> selected="selected" <%}%>>满负荷</option>
+					<option value="1" <%if(equipment!=null&&equipment.workstate=='1'){%> selected="selected" <%}%>>空闲</option>
+					<option value="2" <%if(equipment!=null&&equipment.workstate=='2'){%> selected="selected" <%}%>>饱和</option>
 				</select>
 				</span> </div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">排序值：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<%=equipment.priority%>" placeholder="" id="" name="priority">
+				<input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.priority%><%}%>" onkeyup="value=value.replace(/[^\d]/g,'') " id="" name="priority">
 			</div>
 		</div>
 		
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">购买日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="buytime" value="<%=equipment.buytime%>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="datemin" class="input-text Wdate">
+				<input type="text" name="buytime" value="<%if(equipment!=null){%><%=equipment.buytime%><%}%>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="datemin" class="input-text Wdate">
 			</div>
 		</div>
 		
