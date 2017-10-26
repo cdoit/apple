@@ -4,41 +4,83 @@ var router = express.Router();
 var uuid = require('node-uuid');
 const db = require("../db/");
 
-//方案列表
+//设备列表
 router.get('/list', login.checkin, function (req, res, next) {
-    
-        db.Equipment.findAll().then(function (result) {
-    
+        var countPerPage = 10, currentPage = 1;
+        db.Equipment.findAll(
+            {
+                'limit': countPerPage,                      // 每页多少条
+                'offset': countPerPage * (currentPage - 1)  // 跳过多少条
+            }
+        ).then(function (result) {
             res.render('equipment/list.ejs', { equipment: result });
         });
     });
 
 
 router.get('/add', login.checkin, function (req, res, next) {
-    
-    res.render('equipment/add.ejs');
-    });
+    var equipmentId = req.query.equipmentId;
+    if(equipmentId != undefined || equipmentId != null){
+        var filter = {
+            where: {
+                id:equipmentId
+            }
+        }
+        db.Equipment.findOne(filter).then(function (result) {
+            res.render('equipment/add.ejs', { equipment: result });
+        }).catch(next);
+    }
+});
 
-router.post('/addScheme', login.checkin, function (req, res, next) {
+router.post('/addEquipment', login.checkin, function (req, res, next) {
     var admin = req.session.admin;
-    var name = req.body.schemeName;
-    var path = req.body.path;
+    var equipmentId = req.body.equipmentId;
+    var name = req.body.name;
+    var code = req.body.code;
+    var priority = req.body.priority;
+    var warrantyperiod = req.body.warrantyperiod;
+    var customer = req.body.customer;
+    var state = req.body.state;
+    var workstate = req.body.workstate;
+    var buytime = req.body.buytime;
 
-    var scheme = {
-        id:uuid.v1(),
+    if(equipmentId == undefined || equipmentId == ''){
+        equipmentId = uuid.v1();
+    }
+
+    var equipment = {
+        id:equipmentId,
         name:name,
-        adminInfoId:admin.id,
-        path:path,
-        uploadtime:new Date(),
-        state:0
-    };
+        // adminInfoId:admin.id,
+        code:code,
+        // uploadtime:new Date(),
+        state:state,
+        priority:priority,
+        warrantyperiod:warrantyperiod,
+        customer:customer,
+        workstate:workstate,
+        buytime:buytime
+    }
 
-    db.Scheme.create(scheme).then(function (result) {
-        res.redirect("/scheme/scheme");
+    db.Equipment.insertOrUpdate(equipment).then(function (result) {
+        res.redirect("/equipment/list");
+    }).catch(next);
+        
     });
 
-    // res.render('manager/addScheme.ejs');
-    });
+router.get('/delete', login.checkin, function (req, res, next) {
+    var equipmentId = req.query.equipmentId;
+    if(equipmentId != undefined || equipmentId != null){
+        var filter = {
+            where: {
+                id:equipmentId
+            }
+        }
+        db.Equipment.destroy(filter).then(function (result) {
+            res.json(result);
+        }).catch(next);
+    }
+});
 
 
 module.exports = router;
