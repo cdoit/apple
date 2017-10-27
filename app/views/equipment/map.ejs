@@ -7,8 +7,58 @@
     <!--/meta 作为公共模版分离出去-->
     <title>设备云监控</title>
     <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
-    <script src="http://webapi.amap.com/maps?v=1.4.0&key=29d2dc0f97050a4e13315f2e745ed6ce&plugin=AMap.MarkerClusterer"></script>
-    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.0&key=29d2dc0f97050a4e13315f2e745ed6ce&plugin=AMap.CloudDataSearch"></script>    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <style type="text/css">
+        .info {
+            border: solid 1px silver;
+        }
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+        div.info-top div {
+            display: inline-block;
+            color: #333333;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 31px;
+            padding: 0 10px;
+        }
+        div.info-top img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition-duration: 0.25s;
+        }
+        div.info-top img:hover {
+            box-shadow: 0px 0px 5px #000;
+        }
+        div.info-middle {
+            font-size: 12px;
+            padding: 6px;
+            line-height: 20px;
+        }
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+        div.info-bottom img {
+            position: relative;
+            z-index: 104;
+        }
+        span {
+            margin-left: 5px;
+            font-size: 11px;
+        }
+        .info-middle img {
+            float: left;
+            margin-right: 6px;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,9 +93,7 @@
 
             <div id="container"></div>
             <div class="button-group">
-                <input type="button" class="button" value="默认样式" id="add0" onclick = 'addCluster(0)'/>
-                <input type="button" class="button" value="自定义图标" id="add1" onclick = 'addCluster(1)'/>
-                <input type="button" class="button" value="完全自定义" id="add2" onclick = 'addCluster(2)'/>
+                <input type="button" class="button" value="刷新位置" id="add2" onclick = 'addCluster(2)'/>
             </div>
 
     </section>
@@ -53,82 +101,101 @@
         <% include ../includes/footer.ejs %>
         <script src="http://a.amap.com/jsapi_demos/static/china.js"></script>
         <script>
-            var cluster, markers = [];
+            	//地图初始化时，在地图上添加一个marker标记,鼠标点击marker可弹出自定义的信息窗体
             var map = new AMap.Map("container", {
                 resizeEnable: true,
-                center:[105,34],
-                zoom: 4
-            });
-            for(var i=0;i<points.length;i+=1){
-                markers.push(new AMap.Marker({
-                  position:points[i]['lnglat'],
-                  content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-                    offset: new AMap.Pixel(-15,-15)
-                }))
+                center: [116.48, 39.99],
+                zoom: 16
+            });    
+            addMarker();
+            //添加marker标记
+            function addMarker() {
+                map.clearMap();
+
+                //实例化信息窗体
+                var title = '易方达建筑<span style="font-size:11px;color:#F00;">设备编号:S2017-318</span>',
+                    content = [];
+                content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
+                content.push("电话：010-64733333");
+                content.push("<a href='http://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
+                var infoWindow = new AMap.InfoWindow({
+                    isCustom: true,  //使用自定义窗体
+                    content: createInfoWindow(title, content.join("<br/>")),
+                    offset: new AMap.Pixel(16, -45)
+                });
+
+                var marker = new AMap.Marker({
+                    map: map,
+                    position: [116.48, 39.99]
+                });
+                //鼠标点击marker弹出自定义的信息窗体
+                AMap.event.addListener(marker, 'click', function() {
+                    infoWindow.open(map, marker.getPosition());
+                });
             }
-            var count  = markers.length;
-            var _renderCluserMarker = function (context) {
-                var factor = Math.pow(context.count/count,1/18)
-                var div = document.createElement('div');
-                var Hue = 180 - factor* 180;
-                var bgColor = 'hsla('+Hue+',100%,50%,0.7)';
-                var fontColor = 'hsla('+Hue+',100%,20%,1)';
-                var borderColor = 'hsla('+Hue+',100%,40%,1)';
-                var shadowColor = 'hsla('+Hue+',100%,50%,1)';
-                div.style.backgroundColor = bgColor
-                var size = Math.round(30 + Math.pow(context.count/count,1/5) * 20);
-                div.style.width = div.style.height = size+'px';
-                div.style.border = 'solid 1px '+ borderColor;
-                div.style.borderRadius = size/2 + 'px';
-                div.style.boxShadow = '0 0 1px '+ shadowColor;
-                div.innerHTML = context.count;
-                div.style.lineHeight = size+'px';
-                div.style.color = fontColor;
-                div.style.fontSize = '14px';
-                div.style.textAlign = 'center';
-                context.marker.setOffset(new AMap.Pixel(-size/2,-size/2));
-                context.marker.setContent(div)
-             }
-            addCluster(2);
-        
-            function addCluster(tag) {
-                if (cluster) {
-                    cluster.setMap(null);
-                }
-                if (tag == 2) {//完全自定义
-                    cluster = new AMap.MarkerClusterer(map,markers,{
-                        gridSize:80,
-                        renderCluserMarker:_renderCluserMarker
-                    });
-                } else if (tag == 1) {//自定义图标
-                    var sts = [{
-                        url: "http://a.amap.com/jsapi_demos/static/images/blue.png",
-                        size: new AMap.Size(32, 32),
-                        offset: new AMap.Pixel(-16, -16)
-                    }, {
-                        url: "http://a.amap.com/jsapi_demos/static/images/green.png",
-                        size: new AMap.Size(32, 32),
-                        offset: new AMap.Pixel(-16, -16)
-                    }, {
-                        url: "http://a.amap.com/jsapi_demos/static/images/orange.png",
-                        size: new AMap.Size(36, 36),
-                        offset: new AMap.Pixel(-18, -18)
-                    },{
-                        url: "http://a.amap.com/jsapi_demos/static/images/red.png",
-                        size: new AMap.Size(48, 48),
-                        offset: new AMap.Pixel(-24, -24)
-                    },{
-                        url: "http://a.amap.com/jsapi_demos/static/images/darkRed.png",
-                        size: new AMap.Size(48, 48),
-                        offset: new AMap.Pixel(-24, -24)
-                    }];
-                    cluster = new AMap.MarkerClusterer(map, markers, {
-                        styles: sts,
-                        gridSize:80
-                    });
-                } else {//默认样式
-                    cluster = new AMap.MarkerClusterer(map, markers,{gridSize:80});
-                }
+
+            function getlastdeviceloc()
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/equipment/equipmentData',
+                    dataType: 'json',
+                    success: function(data){
+                        if(data!=null)
+                        {
+
+                        }
+                    },
+                    error:function(data) {
+                        console.log(data.msg);
+                    },
+                });		
+            }
+
+
+            //构建自定义信息窗体
+            function createInfoWindow(title, content) {
+                var info = document.createElement("div");
+                info.className = "info";
+
+                //可以通过下面的方式修改自定义窗体的宽高
+                //info.style.width = "400px";
+                // 定义顶部标题
+                var top = document.createElement("div");
+                var titleD = document.createElement("div");
+                var closeX = document.createElement("img");
+                top.className = "info-top";
+                titleD.innerHTML = title;
+                closeX.src = "http://webapi.amap.com/images/close2.gif";
+                closeX.onclick = closeInfoWindow;
+
+                top.appendChild(titleD);
+                top.appendChild(closeX);
+                info.appendChild(top);
+
+                // 定义中部内容
+                var middle = document.createElement("div");
+                middle.className = "info-middle";
+                middle.style.backgroundColor = 'white';
+                middle.innerHTML = content;
+                info.appendChild(middle);
+
+                // 定义底部内容
+                var bottom = document.createElement("div");
+                bottom.className = "info-bottom";
+                bottom.style.position = 'relative';
+                bottom.style.top = '0px';
+                bottom.style.margin = '0 auto';
+                var sharp = document.createElement("img");
+                sharp.src = "http://webapi.amap.com/images/sharp.png";
+                bottom.appendChild(sharp);
+                info.appendChild(bottom);
+                return info;
+            }
+
+            //关闭信息窗体
+            function closeInfoWindow() {
+                map.clearInfoWindow();
             }
         </script>
    
