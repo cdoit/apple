@@ -96,4 +96,15 @@ router.get('/equipmentData', function (req, res, next) {
     }).catch(next);
 });
 
+
+//设备详情数据接口
+router.get('/equipmentInfo', function (req, res, next) {
+    var equipmentId = req.query.equipmentId;
+    db.Sequelize.query(
+        "SELECT e.id,e.`name`,e.`code`,f.address,f.factoryname,f.phonenumber from equipment AS e left JOIN factoryversion as f on e.id = f.equipment_id where e.id='"+equipmentId+"'"
+    ).then(function (result) {
+        res.json(result[0]);
+    }).catch(next);
+});
+
 module.exports = router;
