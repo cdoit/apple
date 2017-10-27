@@ -5,19 +5,19 @@ module.exports = function (sequelize, DataTypes) {
         schemeId: {
             type: DataTypes.STRING(100),
             field: 'scheme_id',
-            allowNull: false,
+            allowNull: true,
             comment: '方案Id'
           },
           equipmentId: {
             type: DataTypes.STRING(100),
             field: 'equipment_id',
-            allowNull: false,
+            allowNull: true,
             comment: '设备Id'
           },
           designId: {
             type: DataTypes.STRING(100),
             field: 'design_id',
-            allowNull: false,
+            allowNull: true,
             comment: '设计Id'
           },
           adminInfoId: {

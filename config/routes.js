@@ -173,6 +173,7 @@ module.exports = function (app) {
     app.use('/scheme',require("../app/controllers/scheme"));
     app.use('/manager',require("../app/controllers/manager"));
     app.use('/equipment',require("../app/controllers/equipment"));
+    app.use('/project',require("../app/controllers/project"));
 
     app.use(function (err, req, res, next) {
         if (err.message
