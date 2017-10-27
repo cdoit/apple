@@ -9,8 +9,8 @@ router.get('/list', login.checkin, function (req, res, next) {
         var countPerPage = 10, currentPage = 1;
         db.Equipment.findAll(
             {
-                'limit': countPerPage,                      // 每页多少条
-                'offset': countPerPage * (currentPage - 1)  // 跳过多少条
+                'limit': countPerPage,                      //每页多少条
+                'offset': countPerPage * (currentPage - 1)  //跳过多少条
             }
         ).then(function (result) {
             res.render('equipment/list.ejs', { equipment: result });
@@ -96,7 +96,7 @@ router.get('/equipmentData', function (req, res, next) {
     }).catch(next);
 });
 
-
+ 
 //设备详情数据接口
 router.get('/equipmentInfo', function (req, res, next) {
     var equipmentId = req.query.equipmentId;
