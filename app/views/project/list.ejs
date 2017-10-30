@@ -17,10 +17,17 @@
         <div class="menu_dropdown bk_2">
                     <dl id="menu-article">
                         <dt><i class="Hui-iconfont">&#xe616;</i> 设备管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-                        <dd style="display:block">
+                        <dd >
                             <ul>
                                 <li ><a href="/equipment/list" title="设备列表">设备列表</a></li>
                                 <li ><a href="/equipment/map" title="设备监控">设备监控</a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl id="menu-renwu">
+                        <dt><i class="Hui-iconfont">&#xe616;</i> 任务管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                        <dd style="display:block">
+                            <ul>
                                 <li class="current"><a href="/project/list" title="任务列表">任务列表</a></li>
                             </ul>
                         </dd>
@@ -78,8 +85,8 @@
                                             <td><%=project[i].progress %> </td>
                                             <td><%=project[i].progress %> </td>
                                             <td class="f-14 product-brand-manage">
-                                                <a style="text-decoration:none" class="ml-5"  _href="/project/fenfa" onclick="project_fenfa('分发','/project/fenfaMap')" href="javascript:;" title="分发"><i class="Hui-iconfont">&#xe665;</i></a>
-                                                <a style="text-decoration:none" _href="/project/fenfa" onclick="project_fenfa('分发','/project/fenfaMap')" href="javascript:;" title="分发"><i class="Hui-iconfont">&#xe615;</i></a>
+                                                <a style="text-decoration:none" class="ml-5"  _href="/project/fenfaMap" onclick="project_fenfa('分发','/project/fenfaMap')" href="javascript:;" title="地图页面分发"><i class="Hui-iconfont">&#xe665;</i></a>
+                                                <a style="text-decoration:none" _href="/project/fenfaList" onclick="project_fenfaList('分发','/project/fenfaList')" href="javascript:;" title="列表页面分发"><i class="Hui-iconfont">&#xe615;</i></a>
                                             </td>
                                         </tr>
                                         <% } %>  
@@ -119,6 +126,15 @@
         }
 
         function project_fenfa(title,url,w,h){
+            var index = layer.open({
+                type: 2,
+                title: title,
+                content: url
+            });
+            layer.full(index);
+        }
+
+        function project_fenfaList(title,url,w,h){
             var index = layer.open({
                 type: 2,
                 title: title,

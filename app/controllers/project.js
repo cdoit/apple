@@ -22,6 +22,11 @@ router.get('/fenfaMap', login.checkin, function (req, res, next) {
     res.render('project/map.ejs');
 });
 
+//任务分配（列表）
+router.get('/fenfaList', login.checkin, function (req, res, next) {
+    res.render('equipment/list.ejs');
+});
+
 //设备数据接口
 router.get('/equipmentData', function (req, res, next) {
     db.Sequelize.query(
