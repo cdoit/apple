@@ -22,28 +22,56 @@ router.get('/fenfaMap', login.checkin, function (req, res, next) {
     res.render('project/map.ejs');
 });
 
-//任务分配（列表）
+//任务分配（列表）  分配机器
 router.get('/fenfaList', login.checkin, function (req, res, next) {
-    res.render('equipment/list.ejs');
-});
-
-//设备数据接口
-router.get('/equipmentData', function (req, res, next) {
-    db.Sequelize.query(
-        "SELECT ep.*,e.`code`,e.`name`,e.buytime,e.customer from equipmentposition ep JOIN equipment as e on e.id = ep.equipment_id where NOT exists (SELECT 1 FROM equipmentposition where ep.equipment_id = equipment_id and created_at>ep.created_at)"
+    var projectId = req.query.projectId;
+    var countPerPage = 10, currentPage = 1;
+    db.Equipment.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1),  //跳过多少条
+            'where': {
+                workstate: '1'  //空闲
+            }
+        }
     ).then(function (result) {
-        res.json(result[0]);
-    }).catch(next);
+        res.render('project/equipmentList.ejs', { equipment: result,projectId:projectId });
+    });
 });
 
- 
-//设备详情数据接口
-router.get('/equipmentInfo', function (req, res, next) {
+router.get('/fenpei', login.checkin, function (req, res, next) {
     var equipmentId = req.query.equipmentId;
-    db.Sequelize.query(
-        "SELECT e.id,e.`name`,e.`code`,f.address,f.factoryname,f.phonenumber from equipment AS e left JOIN factoryversion as f on e.id = f.equipment_id where e.id='"+equipmentId+"'"
+    var projectId = req.query.projectId;
+    // if(equipmentId != undefined || equipmentId != null){
+    //将设备id与该任务管理，并且改任务状态
+    var filter = {
+        equipmentId:equipmentId,
+        progress:'2'   
+
+    }
+    db.Project.update(
+        filter,
+        {
+            where: {
+                id:projectId
+            }
+        }
     ).then(function (result) {
-        res.json(result[0]);
+        //并且改equipment表的状态
+        var contdition = {
+            workstate:'2'   
+    
+        }
+        db.Equipment.update(
+            contdition,
+            {
+                where: {
+                    id:equipmentId
+                }
+            }
+        ).then(function (result) {
+            res.json(result);
+        }).catch(next);
     }).catch(next);
 });
 

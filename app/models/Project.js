@@ -30,6 +30,7 @@ module.exports = function (sequelize, DataTypes) {
           address: { type: DataTypes.STRING(100), allowNull: true, comment: '项目地址' },
           auditstate: { type: DataTypes.STRING(10), allowNull: true, comment: '审核状态' },
           progress: { type: DataTypes.STRING(10), allowNull: true, comment: '项目进度' },
+          // 1 为开始  2已开始  3生产中  4已完成  5终止
     },
         {
             timestamps: true,

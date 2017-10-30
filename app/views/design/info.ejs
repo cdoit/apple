@@ -1,0 +1,55 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <% include ../includes/meta.ejs %>
+    <!--/meta 作为公共模版分离出去-->
+    <title>悉道设备监控与分发云平台</title>
+</head>
+
+<body>
+        <!-- <div class="cl pd-20" style=" background-color:#5bacb6">
+                <img class="avatar size-XL l" src="static/h-ui/images/user.png">
+                <dl style="margin-left:80px; color:#fff">
+                  <dt><span class="f-18">张三</span> <span class="pl-10 f-12">余额：40</span></dt>
+                  <dd class="pt-10 f-12" style="margin-left:0">这家伙很懒，什么也没有留下</dd>
+                </dl>
+              </div> -->
+              <div class="pd-20">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th class="text-r" width="80">设计名称：</th>
+                      <td><%= design.name %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">设计人员：</th>
+                      <td>**</td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">设计文件路径：</th>
+                      <td><%=design.path %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">上传时间：</th>
+                      <td><%=design.uploadtime %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">定稿时间：</th>
+                      <td><%=design.confirmtime %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">状态：</th>
+                      <td><%=design.state %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+   
+    
+        <% include ../includes/footer.ejs %>
+   
+</body>
+
+</html>

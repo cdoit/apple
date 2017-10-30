@@ -81,37 +81,11 @@ router.get('/delete', login.checkin, function (req, res, next) {
 });
 
 
-//地图
-router.get('/map', login.checkin, function (req, res, next) {
-    res.render('equipment/map.ejs');
-});
-
-
-//设备数据接口
-router.get('/equipmentData', function (req, res, next) {
-    db.Sequelize.query(
-        "SELECT ep.*,e.`code`,e.`name`,e.buytime,e.customer from equipmentposition ep JOIN equipment as e on e.id = ep.equipment_id where NOT exists (SELECT 1 FROM equipmentposition where ep.equipment_id = equipment_id and created_at>ep.created_at)"
-    ).then(function (result) {
-        res.json(result[0]);
-    }).catch(next);
-});
-
- 
-//设备详情数据接口
-router.get('/equipmentInfo', function (req, res, next) {
-    var equipmentId = req.query.equipmentId;
-    db.Sequelize.query(
-        "SELECT e.id,e.`name`,e.`code`,f.address,f.factoryname,f.phonenumber from equipment AS e left JOIN factoryversion as f on e.id = f.equipment_id where e.id='"+equipmentId+"'"
-    ).then(function (result) {
-        res.json(result[0]);
-    }).catch(next);
-});
-
-//获取设备详细信息
+//获取设计详细信息
 router.get('/findById', login.checkin, function (req, res, next) {
-    var equipmentId = req.query.equipmentId;
-    db.Equipment.findById(equipmentId).then(function (result) {
-        res.render('equipment/info.ejs',{ equipment: result });
+    var designId = req.query.designId;
+    db.Design.findById(designId).then(function (result) {
+        res.render('design/info.ejs',{ design: result });
     }).catch(next);
 });
 

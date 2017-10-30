@@ -1,0 +1,53 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <% include ../includes/meta.ejs %>
+    <!--/meta 作为公共模版分离出去-->
+    <title>悉道设备监控与分发云平台</title>
+</head>
+
+<body>
+        
+              <div class="pd-20">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <th class="text-r" width="80">设备名称：</th>
+                      <td><%= equipment.name %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">设备编号：</th>
+                      <td><%= equipment.code %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">保修期：</th>
+                      <td><%=equipment.warrantyperiod %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">购买时间：</th>
+                      <td><%=equipment.buytime %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">购买人：</th>
+                      <td><%=equipment.customer %></td>
+                    </tr>
+                    <tr>
+                      <th class="text-r">状态：</th>
+                      <td><%=equipment.state %></td>
+                    </tr>
+                    <tr>
+                        <th class="text-r">运行状态：</th>
+                        <td><%=equipment.workstate %></td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+   
+    
+        <% include ../includes/footer.ejs %>
+   
+</body>
+
+</html>
