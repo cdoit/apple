@@ -17,76 +17,10 @@ router.get('/list', login.checkin, function (req, res, next) {
         });
 });
 
-
-
-router.get('/add', login.checkin, function (req, res, next) {
-    var equipmentId = req.query.equipmentId;
-    var filter = {
-        where: {
-            id:equipmentId
-        }
-    }
-    db.Equipment.findOne(filter).then(function (result) {
-        res.render('equipment/add.ejs', { equipment: result });
-    }).catch(next);
+//任务分配（地图）
+router.get('/fenfaMap', login.checkin, function (req, res, next) {
+    res.render('project/map.ejs');
 });
-
-router.post('/addEquipment', login.checkin, function (req, res, next) {
-    var admin = req.session.admin;
-    var equipmentId = req.body.equipmentId;
-    var name = req.body.name;
-    var code = req.body.code;
-    var priority = req.body.priority;
-    var warrantyperiod = req.body.warrantyperiod;
-    var customer = req.body.customer;
-    var state = req.body.state;
-    var workstate = req.body.workstate;
-    var buytime = req.body.buytime;
-
-    if(equipmentId == undefined || equipmentId == ''){
-        equipmentId = uuid.v1();
-    }
-
-    var equipment = {
-        id:equipmentId,
-        name:name,
-        // adminInfoId:admin.id,
-        code:code,
-        // uploadtime:new Date(),
-        state:state,
-        priority:priority,
-        warrantyperiod:warrantyperiod,
-        customer:customer,
-        workstate:workstate,
-        buytime:buytime
-    }
-
-    db.Equipment.insertOrUpdate(equipment).then(function (result) {
-        res.redirect("/equipment/list");
-    }).catch(next);
-        
-    });
-
-router.get('/delete', login.checkin, function (req, res, next) {
-    var equipmentId = req.query.equipmentId;
-    if(equipmentId != undefined || equipmentId != null){
-        var filter = {
-            where: {
-                id:equipmentId
-            }
-        }
-        db.Equipment.destroy(filter).then(function (result) {
-            res.json(result);
-        }).catch(next);
-    }
-});
-
-
-//地图
-router.get('/map', login.checkin, function (req, res, next) {
-    res.render('equipment/map.ejs');
-});
-
 
 //设备数据接口
 router.get('/equipmentData', function (req, res, next) {
