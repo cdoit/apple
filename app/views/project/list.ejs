@@ -64,6 +64,7 @@
                                             <th width="120">任务名称</th>
                                             <th width="120">任务地址</th>
                                             <th width="120">任务分配的设计</th>
+                                            <th width="120">任务方案</th>
                                             <th width="120">任务分配的设备</th>
                                             <th width="120">审核状态</th>
                                             <th width="120">任务进度</th>
@@ -85,10 +86,15 @@
                                                 <%}%>
                                             </td>
                                             <td>
-                                                <%if(project[i].designId!=null){%>
+                                                <%if(project[i].schemeId!=null){%>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
+                                                <%}%>
+                                            </td>
+                                            <td>
+                                                <%if(project[i].equipmentId!=null){%>
                                                     <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设备信息','/equipment/findById?equipmentId=<%=project[i].equipmentId%>','10001','360','400')">查看</u>
                                                 <%}%>
-                                                <%if(project[i].designId==null){%>
+                                                <%if(project[i].equipmentId==null){%>
                                                     暂未绑定设备数据
                                                 <%}%>
                                             </td>

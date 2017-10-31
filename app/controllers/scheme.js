@@ -41,4 +41,13 @@ router.post('/addScheme', login.checkin, function (req, res, next) {
     });
 
 
+//获取方案详细信息
+router.get('/findById', login.checkin, function (req, res, next) {
+    var schemeId = req.query.schemeId;
+    db.Scheme.findById(schemeId).then(function (result) {
+        res.render('scheme/info.ejs',{ scheme: result });
+    }).catch(next);
+});
+
+
 module.exports = router;

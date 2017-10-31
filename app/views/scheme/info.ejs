@@ -1,0 +1,44 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <% include ../includes/meta.ejs %>
+    <!--/meta 作为公共模版分离出去-->
+    <title>悉道设备监控与分发云平台</title>
+</head>
+
+<body>
+        <div class="pd-20">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th class="text-r" width="80">方案名称：</th>
+                <td><%= scheme.name %></td>
+              </tr>
+              <tr>
+                <th class="text-r">方案人员：</th>
+                <td>**</td>
+              </tr>
+              <tr>
+                <th class="text-r">方案文件路径：</th>
+                <td><%=scheme.path %></td>
+              </tr>
+              <tr>
+                <th class="text-r">上传时间：</th>
+                <td><%=scheme.uploadtime %></td>
+              </tr>
+              <tr>
+                <th class="text-r">定稿时间：</th>
+                <td><%=scheme.confirmtime %></td>
+              </tr>
+              <tr>
+                <th class="text-r">状态：</th>
+                <td><%=scheme.state %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <% include ../includes/footer.ejs %>
+</body>
+</html>
