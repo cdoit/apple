@@ -27,7 +27,7 @@
                     </tr>
                     <tr>
                       <th class="text-r">购买时间：</th>
-                      <td><%=equipment.buytime %></td>
+                      <td><%= moment(equipment.buytime).format('YYYY-MM-DD HH:mm:ss') %></td>
                     </tr>
                     <tr>
                       <th class="text-r">购买人：</th>

@@ -33,11 +33,11 @@
                     </tr>
                     <tr>
                       <th class="text-r">上传时间：</th>
-                      <td><%=design.uploadtime %></td>
+                      <td><%=moment(design.uploadtime).format('YYYY-MM-DD HH:mm:ss') %></td>
                     </tr>
                     <tr>
                       <th class="text-r">定稿时间：</th>
-                      <td><%=design.confirmtime %></td>
+                      <td><%= moment(design.confirmtime).format('YYYY-MM-DD HH:mm:ss') %></td>
                     </tr>
                     <tr>
                       <th class="text-r">状态：</th>

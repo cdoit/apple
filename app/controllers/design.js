@@ -85,7 +85,7 @@ router.get('/delete', login.checkin, function (req, res, next) {
 router.get('/findById', login.checkin, function (req, res, next) {
     var designId = req.query.designId;
     db.Design.findById(designId).then(function (result) {
-        res.render('design/info.ejs',{ design: result });
+        res.render('design/info.ejs',{ design: result ,moment: require("moment")});
     }).catch(next);
 });
 

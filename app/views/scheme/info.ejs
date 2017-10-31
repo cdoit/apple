@@ -26,11 +26,11 @@
               </tr>
               <tr>
                 <th class="text-r">上传时间：</th>
-                <td><%=scheme.uploadtime %></td>
+                <td><%= moment(scheme.uploadtime).format('YYYY-MM-DD HH:mm:ss') %></td>
               </tr>
               <tr>
                 <th class="text-r">定稿时间：</th>
-                <td><%=scheme.confirmtime %></td>
+                <td><%= moment(scheme.confirmtime).format('YYYY-MM-DD HH:mm:ss')%></td>
               </tr>
               <tr>
                 <th class="text-r">状态：</th>

@@ -45,7 +45,7 @@ router.post('/addScheme', login.checkin, function (req, res, next) {
 router.get('/findById', login.checkin, function (req, res, next) {
     var schemeId = req.query.schemeId;
     db.Scheme.findById(schemeId).then(function (result) {
-        res.render('scheme/info.ejs',{ scheme: result });
+        res.render('scheme/info.ejs',{ scheme: result,moment: require("moment") });
     }).catch(next);
 });
 

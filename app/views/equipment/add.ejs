@@ -65,7 +65,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">购买日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="buytime" value="<%if(equipment!=null){%><%=equipment.buytime%><%}%>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="datemin" class="input-text Wdate">
+				<input type="text" name="buytime" value="<%if(equipment!=null){%><%=moment(equipment.buytime).format('YYYY-MM-DD HH:mm:ss')%><%}%>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="datemin" class="input-text Wdate">
 			</div>
 		</div>
 		
