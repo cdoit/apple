@@ -63,9 +63,9 @@
                                             <!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
                                             <th width="120">任务名称</th>
                                             <th width="120">任务地址</th>
-                                            <th width="120">任务分配的设计</th>
-                                            <th width="120">任务方案</th>
-                                            <th width="120">任务分配的设备</th>
+                                            <th width="120">方案详情</th>
+                                            <th width="120">设计详情</th>
+                                            <th width="120">生产设备详情</th>
                                             <th width="120">审核状态</th>
                                             <th width="120">任务进度</th>
                                             <th width="100">操作</th>
@@ -78,16 +78,16 @@
                                             <td><%=project[i].name %> </td>
                                             <td><%=project[i].address %> </td>
                                             <td>
+                                                <%if(project[i].schemeId!=null){%>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
+                                                <%}%>
+                                            </td>
+                                            <td>
                                                 <%if(project[i].designId!=null){%>
                                                     <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设计信息','/design/findById?designId=<%=project[i].designId%>','10001','360','400')">查看</u>
                                                 <%}%>
                                                 <%if(project[i].designId==null){%>
                                                     暂未绑定设计数据
-                                                <%}%>
-                                            </td>
-                                            <td>
-                                                <%if(project[i].schemeId!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
                                                 <%}%>
                                             </td>
                                             <td>
@@ -103,7 +103,7 @@
                                             <td class="f-14 product-brand-manage">
                                                 <!-- <a style="text-decoration:none" class="ml-5"  _href="/project/fenfaMap" onclick="project_fenfa('地图页面分发','/project/fenfaMap')" href="javascript:;" title="地图页面分发"><i class="Hui-iconfont">&#xe665;</i></a> -->
                                                 <%if(project[i].designId!=null){%>
-                                                <a style="text-decoration:none" _href="/project/fenfaList" onclick="project_fenfaList('列表页面分发','/project/fenfaList?projectId=<%=project[i].id %>')" href="javascript:;" title="列表页面分发"><i class="Hui-iconfont">&#xe615;</i></a>
+                                                <a style="text-decoration:none" _href="/project/fenfaList" onclick="project_fenfaList('龙骨生产设备分发','/project/fenfaList?projectId=<%=project[i].id %>')" href="javascript:;" title="列表页面分发"><i class="Hui-iconfont">&#xe615;</i></a>
                                                 <%}%>
                                             </td>
                                         </tr>
