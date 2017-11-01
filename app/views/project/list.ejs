@@ -9,34 +9,6 @@
 </head>
 
 <body>
-    <!--_header 作为公共模版分离出去-->
-    <% include ../includes/header.ejs %>
-    <!--/_header 作为公共模版分离出去-->
-
-    <aside class="Hui-aside">
-        <div class="menu_dropdown bk_2">
-                    <dl id="menu-article">
-                        <dt><i class="Hui-iconfont">&#xe616;</i> 设备管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-                        <dd >
-                            <ul>
-                                <li ><a href="/equipment/list" title="设备列表">设备列表</a></li>
-                                <li ><a href="/equipment/map" title="设备监控">设备监控</a></li>
-                            </ul>
-                        </dd>
-                    </dl>
-                    <dl id="menu-renwu">
-                        <dt><i class="Hui-iconfont">&#xe616;</i> 任务管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-                        <dd style="display:block">
-                            <ul>
-                                <li class="current"><a href="/project/list" title="任务列表">任务列表</a></li>
-                            </ul>
-                        </dd>
-                    </dl>
-                </div>
-    </aside>
-    <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>
-
-    <section class="Hui-article-box">
             <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
                 <span class="c-gray en">&gt;</span>
                 任务管理
@@ -113,7 +85,7 @@
                     </div>
                 </article>
             </div>
-        </section>
+            
         <% include ../includes/footer.ejs %>
         <script type="text/javascript" >
         
