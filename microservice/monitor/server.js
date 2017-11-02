@@ -1,12 +1,12 @@
 'use strict'
-var Seneca = require('seneca')
+var Seneca = require('seneca')();
 
-function local () {
-  Seneca().add('role:math,cmd:sum', (msg, reply) => {
-    reply(null, {answer: (msg.left + msg.right)})
+function approver () {
+  this.add('role:math, cmd:sum', (msg, reply) => {
+    reply(null, { answer: ( msg.left + msg.right )})
   })
 }
 
-Seneca()
-  .use(local)
-  .listen({type: 'tcp', port: '8270', pin: 'cmd:*'})
+Seneca
+  .use(approver)
+  .listen({type: 'tcp', port: '8000', pin: 'cmd:*'})

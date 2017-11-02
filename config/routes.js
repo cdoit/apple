@@ -59,7 +59,7 @@ function getopenid(req, res, next) {
 module.exports = function (app) {
     db.init();
 
-
+    app.get('/testmicroservice', home.testmicroservice);
     app.get('/', function (req, res) {
         res.render('manager/login.ejs');
     });
