@@ -37,16 +37,16 @@ exports.getuser = function (req, res) {
   
 };
 
-exports.testgetserver = function (req, res) {
-  // return new Promise((resolve, reject) => {
-  //   seneca()
-  //   .client({port: 8270,type: 'tcp', pin: 'cmd:run'})
-  //   .act('cmd:run', function handler (err, reply) {
-  //         res.write(JSON.stringify(reply));
-  //         res.end();
-  //     }
-  //   );
-  // })
+exports.testmicroservice = function (req, res) {
+  return new Promise((resolve, reject) => {
+    seneca()
+    .client({port: 8270,type: 'tcp', pin: 'cmd:run'})
+    .act({role: 'math', cmd: 'sum', left: 1, right: 2}, function (err, result) {
+          res.write(JSON.stringify(result));
+          res.end();
+      }
+    );
+  })
 };
 
 
