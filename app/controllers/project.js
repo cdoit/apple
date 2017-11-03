@@ -3,6 +3,8 @@ var login = require('./login');
 var router = express.Router();
 var uuid = require('node-uuid');
 const db = require("../db/");
+var seneca = require('seneca');
+var async = require('async'); 
 
 //任务（项目）列表
 router.get('/list', login.checkin, function (req, res, next) {
@@ -73,6 +75,25 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
             res.json(result);
         }).catch(next);
     }).catch(next);
+});
+
+
+  router.get('/findByEquiCode' , function (req, res, next) {
+    var equipmentCode = req.query.equipmentCode;
+    return new Promise((resolve, reject) => {
+      seneca()
+      .client({port: 8000,type: 'tcp'})
+      .act({role: 'project',cmd: 'getProject',left: equipmentCode,right: 2}, (err, result) => {
+        if (err) {
+          return console.error(err);
+        }
+        else
+        {
+            res.json(result);
+        }
+      });
+       
+    })
 });
 
 module.exports = router;

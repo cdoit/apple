@@ -13,6 +13,7 @@ const wechat = require('../wechat/wechat');
 var wechatApp = new wechat(config); 
 
 const home = require('../app/controllers/home');
+// const project = require('../app/controllers/project');
 const test = require('../app/controllers/test');
 
 var webchatTest = new test(db);
@@ -60,6 +61,10 @@ module.exports = function (app) {
     db.init();
 
     app.get('/testmicroservice', home.testmicroservice);
+    // // 微服务
+    // app.get('/findByEquiCode', project.findByEquiCode);
+
+
     app.get('/', function (req, res) {
         res.render('manager/login.ejs');
     });
