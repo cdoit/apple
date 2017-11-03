@@ -13,7 +13,7 @@ router.get('/list', login.checkin, function (req, res, next) {
                 'offset': countPerPage * (currentPage - 1)  //跳过多少条
             }
         ).then(function (result) {
-            res.render('equipment/list.ejs', { equipment: result,moment: require("moment") });
+            res.render('equipment/list2.ejs', { countPerPage:countPerPage,currentPage:currentPage,equipment: result,moment: require("moment") });
         });
     });
 
@@ -113,6 +113,21 @@ router.get('/findById', login.checkin, function (req, res, next) {
     db.Equipment.findById(equipmentId).then(function (result) {
         res.render('equipment/info.ejs',{ equipment: result ,moment: require("moment")});
     }).catch(next);
+});
+
+//设备列表（分页）
+router.get('/jsonData', function (req, res, next) {
+    var countPerPage = 10;
+    var currentPage = req.query.page;
+    db.Equipment.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1)  //跳过多少条
+        }
+    ).then(function (result) {
+        res.render('equipment/list2.ejs', { countPerPage:countPerPage,currentPage:currentPage,equipment: result,moment: require("moment") });
+        // res.json(result);
+    });
 });
 
 module.exports = router;
