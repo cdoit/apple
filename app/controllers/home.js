@@ -41,12 +41,7 @@ exports.testmicroservice = function (req, res) {
   return new Promise((resolve, reject) => {
     seneca()
     .client({port: 8000,type: 'tcp'})
-    .act({
-      role: 'math',
-      cmd: 'sum',
-      left: 1,
-      right: 2
-    }, (err, result) => {
+    .act({role: 'math',cmd: 'sum',left: 1,right: 2}, (err, result) => {
       if (err) {
         return console.error(err);
       }
@@ -56,7 +51,6 @@ exports.testmicroservice = function (req, res) {
         res.end();
       }
     });
-     
   })
 };
 
