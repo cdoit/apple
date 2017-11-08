@@ -130,4 +130,102 @@ router.get('/jsonData', function (req, res, next) {
     });
 });
 
+
+//插入设备信息的接口（GET）
+router.get('/uploadData', function (req, res, next) {
+    var mac = req.query.mac;
+    var state = req.query.state;
+    var firststartdate = req.query.firststartdate;
+    var startdate = req.query.startdate;
+    var worktimes = req.query.worktimes;
+    var output = req.query.output;
+    var cuttingtimes = req.query.cuttingtimes;
+    var project = req.query.project;
+    var latitude = req.query.latitude;
+    var longitude = req.query.longitude;
+    var elevation = req.query.elevation;
+    var temperature = req.query.temperature;
+    var supplies = req.query.supplies;
+    var speed = req.query.speed;
+    var oilpressure = req.query.oilpressure;
+
+    var equipment = {
+        id:uuid.v1(),
+        code:mac,
+        state:state,
+        firststartdate:firststartdate,
+        startdate:startdate,
+        worktimes:worktimes,
+        output:output,
+        cuttingtimes:cuttingtimes,
+        project:project,
+        latitude:latitude,
+        longitude:longitude,
+        elevation:elevation
+    };
+
+    db.Equipment.create(equipment).then(function (result) {
+        var paramenter = {
+            id:uuid.v1(),
+            equipmentId:result.id,
+            temperature:temperature,
+            supplies:supplies,
+            speed:speed,
+            oilpressure:oilpressure
+        };
+        db.Equipmentparameter.create(paramenter).then(function (result1) {
+            res.json(result1);
+        }).catch(next);
+    }).catch(next);
+});
+
+
+//插入设备信息的接口（POST）
+router.post('/uploadData', function (req, res, next) {
+    var mac = req.body.mac;
+    var state = req.body.state;
+    var firststartdate = req.body.firststartdate;
+    var startdate = req.body.startdate;
+    var worktimes = req.body.worktimes;
+    var output = req.body.output;
+    var cuttingtimes = req.body.cuttingtimes;
+    var project = req.body.project;
+    var latitude = req.body.latitude;
+    var longitude = req.body.longitude;
+    var elevation = req.body.elevation;
+    var temperature = req.body.temperature;
+    var supplies = req.body.supplies;
+    var speed = req.body.speed;
+    var oilpressure = req.body.oilpressure;
+
+    var equipment = {
+        id:uuid.v1(),
+        code:mac,
+        state:state,
+        firststartdate:firststartdate,
+        startdate:startdate,
+        worktimes:worktimes,
+        output:output,
+        cuttingtimes:cuttingtimes,
+        project:project,
+        latitude:latitude,
+        longitude:longitude,
+        elevation:elevation
+    };
+
+    db.Equipment.create(equipment).then(function (result) {
+        var paramenter = {
+            id:uuid.v1(),
+            equipmentId:result.id,
+            temperature:temperature,
+            supplies:supplies,
+            speed:speed,
+            oilpressure:oilpressure
+        };
+        db.Equipmentparameter.create(paramenter).then(function (result1) {
+            res.json(result1);
+        }).catch(next);
+    }).catch(next);
+});
+
 module.exports = router;

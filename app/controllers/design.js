@@ -89,4 +89,12 @@ router.get('/findById', login.checkin, function (req, res, next) {
     }).catch(next);
 });
 
+router.get('/download', function (req, res,next) {
+    var designId = req.query.designId;
+    db.Design.findById(designId).then(function (result) {
+        res.download(result.path);
+    }).catch(next);
+    // res.download('upload/logo-1508833808696.png');
+  });
+
 module.exports = router;

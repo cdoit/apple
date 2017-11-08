@@ -78,8 +78,13 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
 });
 
 
-  router.get('/findByEquiCode' , function (req, res, next) {
-    var equipmentCode = req.query.equipmentCode;
+router.get('/findByEquiCode' ,login.checkin, function (req, res, next) {
+    res.render('project/equipProjectList.ejs', { project: null,equipmentCode:'' });
+});
+
+
+router.post('/findByEquiCode' ,login.checkin, function (req, res, next) {
+    var equipmentCode = req.body.equipmentCode;
     return new Promise((resolve, reject) => {
       seneca()
       .client({port: 8000,type: 'tcp'})
@@ -89,7 +94,8 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
         }
         else
         {
-            res.json(result);
+            // res.json(result);
+            res.render('project/equipProjectList.ejs', { project: result,equipmentCode:equipmentCode });
         }
       });
        
