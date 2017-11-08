@@ -15,6 +15,7 @@
 
     <aside class="Hui-aside">
         <div class="menu_dropdown bk_2">
+                <%if(admin.roleId==1){%>
                     <dl id="menu-article">
                         <dt><i class="Hui-iconfont">&#xe616;</i> 设备管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                         <dd>
@@ -32,6 +33,8 @@
                             </ul>
                         </dd>
                     </dl>
+                    <%}%>
+                    <%if(admin.roleId==3){%>
                     <dl id="menu-renwu">
                         <dt><i class="Hui-iconfont">&#xe616;</i> 机器<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                         <dd >
@@ -40,6 +43,7 @@
                             </ul>
                         </dd>
                     </dl>
+                    <%}%>
                 </div>
     </aside>
 

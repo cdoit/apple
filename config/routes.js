@@ -64,6 +64,10 @@ module.exports = function (app) {
     // // 微服务
     // app.get('/findByEquiCode', project.findByEquiCode);
 
+    app.use(function(req, res, next){
+        res.locals.admin = req.session.admin;
+        next();
+    });
 
     app.get('/', function (req, res) {
         res.render('manager/login.ejs');
@@ -86,11 +90,17 @@ module.exports = function (app) {
         }).then(function (result) {
             if (result != null) {
                 req.session.admin = result;
+                // req.session.adminname = result.adminname;
                 res.redirect("/manager/index");
             } else {
                 res.render('manager/login.ejs');
             }
         });
+    });
+
+    app.get('/logout', function (req, res) {
+        req.session.admin = null;
+        res.redirect("/manager/index");
     });
 
     app.post('/uploadSingle', upload.single('logo'), function(req, res, next){
