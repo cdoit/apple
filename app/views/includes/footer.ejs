@@ -14,12 +14,16 @@
         "paging": false, // 禁止分页
         "aoColumnDefs": [
             //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-            {"orderable":false,"aTargets":[0,7]}// 不参与排序的列
+            {"orderable":false,"aTargets":[0,6]}// 不参与排序的列
         ]
     });
     function show_add(title,url,w,h){
         layer_show(title,url,w,h);
     }
+
+    function member_show(title,url,id,w,h){
+	        layer_show(title,url,w,h);
+        }
     /*-添加*/
     function equipment_add(title,url,w,h){
         var index = layer.open({

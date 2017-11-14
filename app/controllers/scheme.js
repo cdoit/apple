@@ -49,5 +49,12 @@ router.get('/findById', login.checkin, function (req, res, next) {
     }).catch(next);
 });
 
+router.get('/download', function (req, res,next) {
+    var schemeId = req.query.schemeId;
+    db.Scheme.findById(schemeId).then(function (result) {
+        res.download(result.path);
+    }).catch(next);
+    // res.download('upload/logo-1508833808696.png');
+  });
 
 module.exports = router;

@@ -26,6 +26,18 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             comment: '项目创建人员Id'
           },
+          designerId: {
+            type: DataTypes.STRING(100),
+            field: 'designer_id',
+            allowNull: true,
+            comment: '设计人员Id'
+          },
+          equipmenterId: {
+            type: DataTypes.STRING(100),
+            field: 'equipmenter_id',
+            allowNull: true,
+            comment: '分配设备人员Id'
+          },
           name: { type: DataTypes.STRING(100), allowNull: true, comment: '项目名称' },
           address: { type: DataTypes.STRING(100), allowNull: true, comment: '项目地址' },
           auditstate: { type: DataTypes.STRING(10), allowNull: true, comment: '审核状态' },

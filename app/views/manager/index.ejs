@@ -34,7 +34,7 @@
                         </dd>
                     </dl>
                     <%}%>
-                    <%if(admin.roleId==3){%>
+                    <%if(admin.roleId==5){%>
                     <dl id="menu-renwu">
                         <dt><i class="Hui-iconfont">&#xe616;</i> 机器<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
                         <dd >
@@ -44,6 +44,17 @@
                         </dd>
                     </dl>
                     <%}%>
+                    <%if(admin.roleId==3){%>
+                        <dl id="menu-renwu">
+                            <dt><i class="Hui-iconfont">&#xe616;</i> 设计<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                            <dd >
+                                <ul>
+                                    <li ><a data-href="/project/todoDesign" data-title="待设计的任务列表" href="javascript:void(0)">待设计的任务列表</a></li>
+                                    <li ><a data-href="/project/todoDesign?flag=1" data-title="已接的设计任务" href="javascript:void(0)">已接的设计任务</a></li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <%}%>
                 </div>
     </aside>
 

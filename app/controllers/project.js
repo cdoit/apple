@@ -102,4 +102,58 @@ router.post('/findByEquiCode' ,login.checkin, function (req, res, next) {
     })
 });
 
+
+// 待设计的任务列表
+router.get('/todoDesign', login.checkin, function (req, res, next) {
+    var flag = req.query.flag;
+    var designerId = null;
+    if(flag!=null&&flag!=undefined){
+        designerId = req.session.admin.id;
+    }
+    var countPerPage = 10, currentPage = 1;
+    db.Project.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1),  //跳过多少条
+            'where': {
+                equipmentId:null,
+                designId:null,
+                designerId:designerId,
+                '$not': [
+                    {'schemeId': null}
+                ]
+            }
+        }
+    ).then(function (result) {
+        res.render('project/todoDesignList.ejs', { project: result });
+    });
+});
+
+
+
+//接单操作（这里需要判断是否存在多个接单，还未处理）
+router.get('/jiedan', login.checkin, function (req, res, next) {
+    var flag = req.query.flag;
+    var adminId = null;
+    if(flag==null&&flag==undefined){
+        adminId = req.session.admin.id;
+    }
+    var projectId = req.query.projectId;
+    var filter = {
+        designerId:adminId,
+        // progress:'2'
+    }
+    db.Project.update(
+        filter,
+        {
+            where: {
+                id:projectId
+            }
+        }
+    ).then(function (result) {
+        res.redirect("/project/todoDesign");
+    }).catch(next);
+});
+
+
 module.exports = router;
