@@ -103,7 +103,7 @@ module.exports = function (app) {
         res.redirect("/manager/index");
     });
 
-    app.post('/uploadSingle', upload.single('logo'), function(req, res, next){
+    app.post('/uploadSingle', upload.single('file1'), function(req, res, next){
             var file = req.file;
         
             // console.log('文件类型：%s', file.mimetype);
@@ -126,7 +126,11 @@ module.exports = function (app) {
             console.log(Mime);
             fs.renameSync('./upload/'+file.filename,'./upload/'+file.filename+Mime);
             // res.send('./upload/'+file.filename+Mime);
-            res.json('./upload/'+file.filename+Mime);
+            //凑json数据
+            var obj = new Object;
+            obj.status = "true";
+            obj.val = './upload/'+file.filename+Mime;
+            res.json(obj);
     });
 
     app.get('/download', function (req, res,next) {

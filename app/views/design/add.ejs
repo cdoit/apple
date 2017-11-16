@@ -1,0 +1,21 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <% include ../includes/meta.ejs %>
+    <!--/meta 作为公共模版分离出去-->
+    <title>悉道设备监控与分发云平台</title>
+</head>
+
+<body>
+        
+    <form action="/design/save" method="post" enctype="multipart/form-data">
+      选择文件:<input type="file" name="file1" /><br />
+      <input type="hidden" name="projectId" value="<%=projectId %>" />
+      <input type="submit" value="上传" />
+    </form>
+      <% include ../includes/footer.ejs %>
+      
+</body>
+</html>

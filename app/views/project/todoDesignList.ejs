@@ -54,7 +54,7 @@
                                                     <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设计信息','/design/findById?designId=<%=project[i].designId%>','10001','360','400')">查看</u>
                                                 <%}%>
                                                 <%if(project[i].designId==null){%>
-                                                    暂未绑定设计数据
+                                                    暂未绑定设计数据 <u style="cursor:pointer" class="text-primary" onclick="member_show('上传设计信息','/design/add?projectId=<%=project[i].id%>','10001','360','400')">上传？</u>
                                                 <%}%>
                                             </td>
                                             <!-- <td>

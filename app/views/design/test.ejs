@@ -1,0 +1,47 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <!--/meta 作为公共模版分离出去-->
+    <title>悉道设备监控与分发云平台</title>
+</head>
+
+<body>  
+
+    
+    <form action="/uploadSingle" method="post" enctype="multipart/form-data">
+        选择文件:<input type="file" name="nimei"/><br />
+        <input type="button" value="上传" onclick="Req_ajax()" />
+    </form>
+</body>
+<script type="text/javascript" src="../../lib/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+    function Req_ajax(){
+        // var formData = new FormData();
+        // formData.append("myfile", document.getElementById("file1").files[0]);  
+        var formData = new FormData($("#file1")[0]); 
+        $.ajax({
+            url: "/uploadSingle",
+            type: "POST",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.status == "true") {
+                    alert("上传成功！");
+                }
+                // if (data.status == "error") {
+                //     alert(data.msg);
+                // }
+                // $("#imgWait").hide();
+            },
+            error: function () {
+                alert("上传失败！");
+                // $("#imgWait").hide();
+            }
+        });
+    }
+</script>
+</html>
