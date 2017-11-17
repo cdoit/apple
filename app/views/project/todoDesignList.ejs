@@ -25,7 +25,9 @@
                                             <th width="120">任务名称</th>
                                             <th width="120">任务地址</th>
                                             <th width="120">方案详情</th>
+                                            <%if(flag!=null){%>
                                             <th width="120">设计详情</th>
+                                            <% } %>  
                                             <!-- <th width="120">生产设备详情</th> -->
                                             <!-- <th width="120">  接单人   </th> -->
                                             <th width="120">审核状态</th>
@@ -49,6 +51,9 @@
                                                     暂未绑定方案数据
                                                 <%}%>
                                             </td>
+
+
+                                            <%if(flag!=null){%>
                                             <td>
                                                 <%if(project[i].designId!=null){%>
                                                     <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设计信息','/design/findById?designId=<%=project[i].designId%>','10001','360','400')">查看</u>
@@ -57,6 +62,8 @@
                                                     暂未绑定设计数据 <u style="cursor:pointer" class="text-primary" onclick="member_show('上传设计信息','/design/add?projectId=<%=project[i].id%>','10001','360','400')">上传？</u>
                                                 <%}%>
                                             </td>
+                                            <% } %>  
+
                                             <!-- <td>
                                                 <%if(project[i].equipmentId!=null){%>
                                                     <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设备信息','/equipment/findById?equipmentId=<%=project[i].equipmentId%>','10001','360','400')">查看</u>

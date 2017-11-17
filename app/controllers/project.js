@@ -109,6 +109,8 @@ router.get('/todoDesign', login.checkin, function (req, res, next) {
     var designerId = null;
     if(flag!=null&&flag!=undefined){
         designerId = req.session.admin.id;
+    }else{
+        flag = null;
     }
     var countPerPage = 10, currentPage = 1;
     db.Project.findAll(
@@ -125,7 +127,7 @@ router.get('/todoDesign', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.render('project/todoDesignList.ejs', { project: result });
+        res.render('project/todoDesignList.ejs', { project: result,flag:flag });
     });
 });
 
