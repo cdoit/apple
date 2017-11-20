@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     name: { type: DataTypes.STRING(100), allowNull: true, comment: '方案名称' },
     path: { type: DataTypes.STRING(100), allowNull: true, comment: '方案文件路径' },
-    uploadtime: { type: DataTypes.DATE, allowNull: true, comment: '上传时间' },
+    // uploadtime: { type: DataTypes.DATE, allowNull: true, comment: '上传时间' },
     confirmtime: { type: DataTypes.DATE, allowNull: true, comment: '定稿时间' },
     state: { type: DataTypes.STRING(10), allowNull: true, comment: '方案状态' }
   },

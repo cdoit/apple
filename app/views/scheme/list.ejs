@@ -1,0 +1,70 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <% include ../includes/meta.ejs %>
+    <!--/meta 作为公共模版分离出去-->
+    <title>悉道设备监控与分发云平台</title>
+</head>
+
+<body>
+        <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+            <span class="c-gray en">&gt;</span>
+            方案管理
+            <span class="c-gray en">&gt;</span>
+            方案列表
+            <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+        </nav>
+        <div class="Hui-article">
+            <article class="cl pd-20">
+                <!-- <div class="text-c">
+                    <input type="text" name="" id="" placeholder="方案名称" style="width:250px" class="input-text">
+                    <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜方案</button>
+                </div> -->
+                <div class="cl pd-5 bg-1 bk-gray mt-20">
+                    <span class="l">
+                    <!-- <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> -->
+                    <a class="btn btn-primary radius" data-title="添加方案" _href="/scheme/add" onclick="show_add('添加方案','/scheme/add')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加方案</a>
+                    </span>
+                    <span class="r">共有数据：<strong>***</strong> 条</span>
+                </div>
+                <div class="mt-20">
+                        <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+                                <thead>
+                                    <tr class="text-c">
+                                        <!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
+                                        <th width="120">方案名称</th>
+                                        <th width="120">方案文件路径</th>
+                                        <th width="120">上传时间</th>
+                                        <th width="120">定稿时间</th>
+                                        <th width="120">创建人</th>
+                                        <th width="80">方案状态</th>
+                                        <th width="100">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var i=0; i<schemes.length; ++i) { %>  
+                                    <tr class="text-c">
+                                        <!-- <td><input name="" type="checkbox" value=""></td> -->
+                                        <td><%=schemes[i].name %> </td>
+                                        <td><%=schemes[i].path %> </td>
+                                        <td><%= moment(schemes[i].uploadtime).format('YYYY-MM-DD HH:mm:ss')  %> </td>
+                                        <td><%= moment(schemes[i].confirmtime).format('YYYY-MM-DD HH:mm:ss')  %> </td>
+                                        <td><%=schemes[i].adminInfoId %> </td>
+                                        <td><%=schemes[i].state %> </td>
+                                        <td class="f-14 product-brand-manage">
+                                            <a style="text-decoration:none" onClick="show_add('编辑设备','/scheme/add?schemeId=<%=schemes[i].id %>')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
+                                            <a style="text-decoration:none" class="ml-5" onClick="list_del(this,'/scheme/delete?schemeId=<%=schemes[i].id %>')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                                        </td>
+                                    </tr>
+                                    <% } %>  
+                                </tbody>
+                            </table>
+                </div>
+            </article>
+        </div>
+        <% include ../includes/footer.ejs %>
+</body>
+
+</html>
