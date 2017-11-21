@@ -1,0 +1,50 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <% include ../includes/meta.ejs %>
+<!--/meta 作为公共模版分离出去-->
+<title>悉道设备监控与分发云平台</title>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-equipment-add" action="/project/addProject" >
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>任务名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="<%if(project!=null){%><%=project.name%><%}%>" placeholder="" id="" name="projectName">
+                <input type="hidden" class="input-text" value="<%if(project!=null){%><%=project.id%><%}%>" name="projectId">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>任务地址：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="<%if(project!=null){%><%=project.address%><%}%>" placeholder="" id="" name="address">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>对应方案：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="schemeId" class="select">
+					<% for(var i=0; i<scheme.length; ++i) { %>  
+						<option value="<%=scheme[i].id %>" <%if(scheme!=null&&project!=null&&scheme.id == project.schemeId){%> selected="selected" <%}%>><%=scheme[i].name %></option>
+					<% } %>
+				</select>
+				</span> </div>
+		</div>
+		
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="equipment_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<% include ../includes/footer.ejs %>
+
+
+</body>
+</html>
