@@ -1,13 +1,14 @@
 var express = require('express');
 var login = require('./login');
 var router = express.Router();
+var iconv = require("iconv-lite");
 var uuid = require('node-uuid');
 const db = require("../db/");
 db.init();
 
 
-var PORT = 33333;
-var HOST = '127.0.0.1';
+var PORT = 33334;
+var HOST = '192.168.31.108';
 
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
@@ -18,10 +19,11 @@ server.on('listening', function () {
 });
 
 server.on('message', function (message, remote) {
-    console.log(remote.address + ':' + remote.port +' - ' + message);
+    var html = iconv.decode(new Buffer(message), 'utf-8');
+    console.log(remote.address + ':' + remote.port +' - ' + html);
     //解析数据
     var equipmentData= new Array(); //定义一数组 
-    equipmentData = message.toString().split("#"); //字符分割
+    equipmentData = html.toString().split("#"); //字符分割
     // console.log(equipmentData);
     ///////////////////////////////////////////////////////////////
     var mac = equipmentData[0];
