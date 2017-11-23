@@ -25,7 +25,7 @@ exports.init = function () {
     
     var Equipmentparameter = sequelize.import('../models/equipmentparameter.js');
     
-    // var Equipmentposition = sequelize.import('../models/equipmentposition.js');
+    var Equipmentposition = sequelize.import('../models/equipmentposition.js');
 
     var Factoryversion = sequelize.import('../models/factoryversion.js');
     
@@ -54,8 +54,8 @@ exports.init = function () {
     Equipment.hasOne(Equipmentparameter);
     Equipmentparameter.belongsTo(Equipment);
 
-    // Equipment.hasOne(Equipmentposition);
-    // Equipmentposition.belongsTo(Equipment);
+    Equipment.hasOne(Equipmentposition);
+    Equipmentposition.belongsTo(Equipment);
 
     Equipment.hasOne(Factoryversion);
     Factoryversion.belongsTo(Equipment);
@@ -82,7 +82,7 @@ exports.init = function () {
     exports.Role = Role;
     exports.Equipment = Equipment;
     exports.Equipmentparameter = Equipmentparameter;
-    // exports.Equipmentposition = Equipmentposition;
+    exports.Equipmentposition = Equipmentposition;
     exports.Factoryversion = Factoryversion;
     exports.Project = Project;
 

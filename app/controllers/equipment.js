@@ -83,7 +83,11 @@ router.get('/delete', login.checkin, function (req, res, next) {
 
 //地图
 router.get('/map', login.checkin, function (req, res, next) {
-    res.render('equipment/map.ejs');
+    db.Sequelize.query(
+        "SELECT ep.*,e.`code`,e.`name`,e.buytime,e.customer from equipmentparameter ep JOIN equipment as e on e.id = ep.equipment_id ORDER BY ep.created_at desc"
+    ).then(function (result) {
+        res.render('equipment/map.ejs',{equipment:result[0]});
+    }).catch(next);
 });
 
 
@@ -227,5 +231,7 @@ router.post('/uploadData', function (req, res, next) {
         }).catch(next);
     }).catch(next);
 });
+
+
 
 module.exports = router;

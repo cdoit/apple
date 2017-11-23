@@ -78,97 +78,23 @@
                             <table class="table table-border table-bordered table-bg"  >
                                     <thead>
                                         <tr class="text-c">
-                                            <th width="70">报警参数</th>
-                                            <th width="120">报警参数</th>
-                                            <th width="120">报警参数</th>
-                                            <th width="120">报警参数</th>
-                                            <th width="120">报警参数</th>
-                                            <th width="120">报警参数</th>
-                                            <th width="120">报警参数</th>
-                                            
+                                            <th width="70">设备编码</th>
+                                            <th width="120">设备名称</th>
+                                            <th width="120">温度</th>
+                                            <th width="120">喷墨耗材用量</th>
+                                            <th width="120">运行速度</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="text-c">
-                                            <td>data</td>
-                                            <td>data </td>
-                                            <td>data </td>
-                                            <td>data </td>
-                                            <td>data </td>
-                                            <td>data </td>
-                                            <td>data </td>
-                                        </tr>
-                                        <tr class="text-c">
-                                                <td>data</td>
-                                                <td>data </td>
-                                                <td>data </td>
-                                                <td>data </td>
-                                                <td>data </td>
-                                                <td>data </td>
-                                                <td>data </td>
-                                            </tr>
+                                        <% for(var i=0; i<equipment.length; ++i) { %>
                                             <tr class="text-c">
-                                                    <td>data</td>
-                                                    <td>data </td>
-                                                    <td>data </td>
-                                                    <td>data </td>
-                                                    <td>data </td>
-                                                    <td>data </td>
-                                                    <td>data </td>
-                                                </tr>
-                                                <tr class="text-c">
-                                                        <td>data</td>
-                                                        <td>data </td>
-                                                        <td>data </td>
-                                                        <td>data </td>
-                                                        <td>data </td>
-                                                        <td>data </td>
-                                                        <td>data </td>
-                                                    </tr>
-                                                    <tr class="text-c">
-                                                            <td>data</td>
-                                                            <td>data </td>
-                                                            <td>data </td>
-                                                            <td>data </td>
-                                                            <td>data </td>
-                                                            <td>data </td>
-                                                            <td>data </td>
-                                                        </tr>
-                                                        <tr class="text-c">
-                                                                <td>data</td>
-                                                                <td>data </td>
-                                                                <td>data </td>
-                                                                <td>data </td>
-                                                                <td>data </td>
-                                                                <td>data </td>
-                                                                <td>data </td>
-                                                            </tr>
-                                                            <tr class="text-c">
-                                                                    <td>data</td>
-                                                                    <td>data </td>
-                                                                    <td>data </td>
-                                                                    <td>data </td>
-                                                                    <td>data </td>
-                                                                    <td>data </td>
-                                                                    <td>data </td>
-                                                                </tr>
-                                                                <tr class="text-c">
-                                                                        <td>data</td>
-                                                                        <td>data </td>
-                                                                        <td>data </td>
-                                                                        <td>data </td>
-                                                                        <td>data </td><td>data </td><td>data </td>
-                                                                    </tr>
-                                                                    <tr class="text-c">
-                                                                            <td>谁说的</td>
-                                                                            <td>谁说的</td>
-                                                                            <td>谁说的</td>
-                                                                            <td>谁说的</td>
-                                                                            <td>谁说的</td>
-                                                                            <td>谁说的</td>
-                                                                            <td>谁说的</td>
-                                                                        </tr>
-                                                                        
+                                                <td><%=equipment[i].code %></td>
+                                                <td><%=equipment[i].name %> </td>
+                                                <td><%=equipment[i].temperature %></td>
+                                                <td><%=equipment[i].supplies %></td>
+                                                <td><%=equipment[i].speed %></td>
+                                            </tr>
+                                        <% } %>                            
                                     </tbody>
                                 </table>
                     </div>
