@@ -1,21 +1,35 @@
-﻿<!--_meta 作为公共模版分离出去-->
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html>
-
 <head>
     <% include ../includes/meta.ejs %>
-    <!--/meta 作为公共模版分离出去-->
-    <title>悉道设备监控与分发云平台</title>
+<title>悉道设备监控与分发云平台</title>
 </head>
-
 <body>
-        
-    <form action="/design/save" method="post" enctype="multipart/form-data">
-      选择文件:<input type="file" name="file1" /><br />
-      <input type="hidden" name="projectId" value="<%=projectId %>" />
-      <input type="submit" value="上传" />
-    </form>
-      <% include ../includes/footer.ejs %>
-      
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-equipment-add" action="/design/save" enctype="multipart/form-data">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设计名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" name="designName">
+                <input type="hidden" class="input-text" value="<%=projectId%>" name="projectId">
+			</div>
+		</div>
+		
+        <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设计数据：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="file" name="file1" />
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="equipment_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<% include ../includes/footer.ejs %>
 </body>
 </html>

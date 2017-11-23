@@ -18,10 +18,12 @@
             </nav>
             <div class="Hui-article">
                 <article class="cl pd-20">
-                    <div class="text-c">
-                        <input type="text" name="" id="" placeholder=" 任务名称" style="width:250px" class="input-text">
-                        <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜任务</button>
-                    </div>
+                    <form class="form form-horizontal" method="post" action="/project/list" >
+                        <div class="text-c">
+                            <input type="text" name="keyword" id="" value="<%if(keyword!=null){%><%=keyword%><%}%>" placeholder=" 任务名称" style="width:250px" class="input-text">
+                            <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜任务</button>
+                        </div>
+                    </form>
                     <!-- <div class="cl pd-5 bg-1 bk-gray mt-20">
                         <span class="l">
                         <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>

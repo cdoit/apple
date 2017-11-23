@@ -8,6 +8,7 @@ var async = require('async');
 
 //任务（项目）列表
 router.get('/list', login.checkin, function (req, res, next) {
+    var keyword = req.query.keyword;
     var countPerPage = 10, currentPage = 1;
     db.Project.findAll(
         {
@@ -15,7 +16,25 @@ router.get('/list', login.checkin, function (req, res, next) {
             'offset': countPerPage * (currentPage - 1)  //跳过多少条
         }
     ).then(function (result) {
-        res.render('project/list.ejs', { project: result });
+        res.render('project/list.ejs', {keyword:keyword, project: result });
+    });
+});
+
+router.post('/list', login.checkin, function (req, res, next) {
+    var keyword = req.body.keyword;
+    var countPerPage = 10, currentPage = 1;
+    db.Project.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1),  //跳过多少条
+            'where': {
+                'name': {
+                    '$like': '%'+keyword+'%'      
+                }
+            }
+        }
+    ).then(function (result) {
+        res.render('project/list.ejs', {keyword:keyword, project: result });
     });
 });
 
@@ -104,6 +123,7 @@ router.post('/findByEquiCode', login.checkin, function (req, res, next) {
 
 //  任务列表（用于CURD）
 router.get('/projectList', login.checkin, function (req, res, next) {
+    var keyword = req.query.keyword;
     var adminInfoId = req.session.admin.id;
     var countPerPage = 10, currentPage = 1;
     db.Project.findAll(
@@ -120,7 +140,32 @@ router.get('/projectList', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.render('project/projectList.ejs', { project: result });
+        res.render('project/projectList.ejs', { keyword:keyword,project: result });
+    });
+});
+
+router.post('/projectList', login.checkin, function (req, res, next) {
+    var keyword = req.body.keyword;
+    var adminInfoId = req.session.admin.id;
+    var countPerPage = 10, currentPage = 1;
+    db.Project.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1), //跳过多少条
+            'where': {
+                equipmentId: null,
+                designId: null,
+                adminInfoId: adminInfoId,
+                'name': {
+                    '$like': '%'+keyword+'%'      
+                },
+                '$not': [
+                    { 'schemeId': null }
+                ]
+            }
+        }
+    ).then(function (result) {
+        res.render('project/projectList.ejs', { keyword:keyword,project: result });
     });
 });
 
@@ -191,6 +236,7 @@ router.get('/delete', login.checkin, function (req, res, next) {
 // 待设计的任务列表
 router.get('/todoDesign', login.checkin, function (req, res, next) {
     var flag = req.query.flag;
+    var keyword = req.query.keyword;
     var designerId = null;
     if (flag != null && flag != undefined) {
         designerId = req.session.admin.id;
@@ -212,7 +258,38 @@ router.get('/todoDesign', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.render('project/todoDesignList.ejs', { project: result, flag: flag });
+        res.render('project/todoDesignList.ejs', { keyword:keyword,project: result, flag: flag });
+    });
+});
+
+router.post('/todoDesign', login.checkin, function (req, res, next) {
+    var flag = req.body.flag;
+    var keyword = req.body.keyword;
+    var designerId = null;
+    if (flag != null && flag != undefined && flag!='') {
+        designerId = req.session.admin.id;
+    } else {
+        flag = null;
+    }
+    var countPerPage = 10, currentPage = 1;
+    db.Project.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1),  //跳过多少条
+            'where': {
+                equipmentId: null,
+                designId: null,
+                designerId: designerId,
+                'name': {
+                    '$like': '%'+keyword+'%'      
+                },
+                '$not': [
+                    { 'schemeId': null }
+                ]
+            }
+        }
+    ).then(function (result) {
+        res.render('project/todoDesignList.ejs', { keyword:keyword,project: result, flag: flag });
     });
 });
 
@@ -238,7 +315,7 @@ router.get('/jiedan', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.redirect("/project/todoDesign");
+        res.redirect("/project/todoDesign?flag=1");
     }).catch(next);
 });
 
