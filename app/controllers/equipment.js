@@ -111,6 +111,34 @@ router.get('/equipmentInfo', function (req, res, next) {
     }).catch(next);
 });
 
+//根据设备编码获取任务中的设计文件
+router.get('/getDesignByCode', function (req, res, next) {
+    var basePath = 'http://192.168.31.108:3000/';
+    var username = req.query.username;
+    var password = req.query.password;
+    var mac = req.query.mac;
+    db.AdminInfo.findOne({
+        where: {
+            adminname: username,
+            password: password
+        }
+    }).then(function (result) {
+        if (result != null) {
+            db.Sequelize.query(
+                "SELECT dg.`name`,CONCAT('"+basePath+"',dg.path) as path from project as pj LEFT JOIN design as dg ON dg.id=pj.design_id where pj.equipment_id = (SELECT eq.id from equipment as eq where eq.`code` = '"+mac+"')"
+            ).then(function (result) {
+                res.json(result[0]);
+            });
+        } else {
+            res.json("用户或密码错误！");
+        }
+    });
+});
+
+
+
+
+
 //获取设备详细信息
 router.get('/findById', login.checkin, function (req, res, next) {
     var equipmentId = req.query.equipmentId;

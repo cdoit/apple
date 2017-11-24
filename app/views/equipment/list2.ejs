@@ -68,7 +68,42 @@
                                 </tbody>
                             </table>
                 </div>
-                <div class="M-box4" style="float: right;margin-top: 10px;"></div>
+                <!-- <div class="M-box4" style="float: right;margin-top: 10px;"></div> -->
+
+                <div class="page clearfix">
+                    <form action=" " method="post" id="pageSizee">
+                       <ul class="page-left fl">
+                          <li>当前页显示<select name="pageSize" onchange="document.getElementById('pageSizee').submit();">
+                          <!-- <option value="10" <c:if test="${pagenation.pageSize ==10 }">selected="selected"</c:if>>10</option>
+                          <option value="15" <c:if test="${pagenation.pageSize ==15 }">selected="selected"</c:if>>15</option>
+                          <option value="20" <c:if test="${pagenation.pageSize ==20 }">selected="selected"</c:if>>20</option> -->
+                          </select>
+                             条</li>
+                          <li>总数量：<i>23</i></li>
+                          <li>总页数：<i>444</i></li>
+                       </ul>
+                       </form>
+                       <div class="fr">
+                       <form action="333" method="post" onsubmit="return topage();">
+                         <ul class="page-right">
+                            <li ><a href="#">首页</a></li>
+                            <li class="previous">
+                            <a href="#" onclick="return prevPage(1)">上一页</a></li>
+                            <li>
+                            <input type="text" value="1" name="pageNo">
+                            <input name="pageSize" type="hidden" value="10">
+                            </li>
+                            <li><button type="submit" class="go-page">跳转</button></li>
+                            <li class="next">
+                            <a href="#" onclick="return nextPage(1,20)">下一页</a></li>
+                            <li><a href="#">尾页</a></li>
+                         </ul>
+                         </form>
+                       </div>		 
+                    </div>	
+
+
+
             </article>
         </div>
         <% include ../includes/footer.ejs %>

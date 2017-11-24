@@ -134,20 +134,8 @@ module.exports = function (app) {
     });
 
     app.get('/download', function (req, res,next) {
-        var q = req.query;
-        // if (q.type == 'jpg') {
-      
-        //   //相对路径
-        //   res.download('public/1.jpg');
-        // }else if (q.type == 'txt') {
-      
-        //   //绝对路径
-        //   res.download(`F:/testredis/public/1.txt`);
-        // }else{
-        //   res.send('错误的请求');
-        // }
-        res.download('upload/logo-1508833808696.png');
-      });
+        res.download(req.query.path);
+    });
 
     //
     app.get("/admin/show", function (req, res, next) {

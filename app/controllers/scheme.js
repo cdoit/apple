@@ -14,7 +14,7 @@ var createFolder = function(folder){
     }  
 };
 
-var uploadFolder = './upload/';
+var uploadFolder = './public/upload/';
 
 createFolder(uploadFolder);
 
@@ -98,10 +98,10 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
         //Mime是文件的后缀
         var Mime = nameMime.join('');
         console.log(Mime);
-        fs.renameSync('./upload/'+file.filename,'./upload/'+file.filename+Mime);
-        console.log('./upload/'+file.filename+Mime);
+        fs.renameSync('./public/upload/'+file.filename,'./public/upload/'+file.filename+Mime);
+        console.log('./public/upload/'+file.filename+Mime);
         // 图片路劲
-        path = 'upload/'+file.filename+Mime;
+        path = 'public/upload/'+file.filename+Mime;
     }
 
     //判断是否新增

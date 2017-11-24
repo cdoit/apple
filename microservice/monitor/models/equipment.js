@@ -12,9 +12,9 @@ module.exports = function (sequelize, DataTypes) {
     workstate: { type: DataTypes.STRING(11), allowNull: true, comment: '工作状态' },
     buytime: { type: DataTypes.DATE, allowNull: true, comment: '购买时间' },
 
-    latitude: { type: DataTypes.STRING(20), allowNull: true, comment: '纬度' },
-    longitude: { type: DataTypes.STRING(20), allowNull: true, comment: '经度' },
-    elevation: { type: DataTypes.STRING(11), allowNull: true, comment: '高程' },
+    // latitude: { type: DataTypes.STRING(20), allowNull: true, comment: '纬度' },
+    // longitude: { type: DataTypes.STRING(20), allowNull: true, comment: '经度' },
+    // elevation: { type: DataTypes.STRING(11), allowNull: true, comment: '高程' },
 
     firststartdate: { type: DataTypes.DATE, allowNull: true, comment: '第一次开机时间' },
     startdate: { type: DataTypes.DATE, allowNull: true, comment: '最近开机时间' },
