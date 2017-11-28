@@ -6,16 +6,50 @@ const db = require("../db/");
 
 //设备列表
 router.get('/list', login.checkin, function (req, res, next) {
-        var countPerPage = 10, currentPage = 1;
-        db.Equipment.findAll(
-            {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1)  //跳过多少条
-            }
-        ).then(function (result) {
-            res.render('equipment/list2.ejs', { countPerPage:countPerPage,currentPage:currentPage,equipment: result,moment: require("moment") });
-        });
+    var keyword = req.query.keyword;
+    var countPerPage = 10, currentPage = 1;
+    db.Equipment.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1)  //跳过多少条
+        }
+    ).then(function (result) {
+        res.render('equipment/list2.ejs', { keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result,moment: require("moment") });
     });
+});
+
+router.post('/list', login.checkin, function (req, res, next) {
+    var keyword = req.body.keyword;
+    var countPerPage = 10, currentPage = 1;
+    db.Equipment.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1),  //跳过多少条
+            // 'where': {
+            //     'name': {
+            //         '$like': '%'+keyword+'%'      
+            //     },
+            //     'code': {
+            //         '$like': '%'+keyword+'%'      
+            //     }
+            // },
+
+
+            'where': {
+                '$or': [
+                    {'name': {
+                        '$like': '%'+keyword+'%'      
+                    }},
+                    {'code': {
+                        '$like': '%'+keyword+'%'      
+                    }}
+                ]
+            }
+        }
+    ).then(function (result) {
+        res.render('equipment/list2.ejs', { keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result,moment: require("moment") });
+    });
+});
 
 
 router.get('/add', login.checkin, function (req, res, next) {

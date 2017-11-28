@@ -1,6 +1,6 @@
-var express = require('express');
-var login = require('./login');
-var router = express.Router();
+﻿// var express = require('express');
+// var login = require('./login');
+// var router = express.Router();
 var iconv = require("iconv-lite");
 var uuid = require('node-uuid');
 const db = require("../db/");
