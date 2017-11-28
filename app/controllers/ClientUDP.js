@@ -1,4 +1,4 @@
-var PORT = 33334;
+var PORT = 33345;
 var HOST = '192.168.31.108';
 
 var dgram = require('dgram');

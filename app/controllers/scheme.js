@@ -117,7 +117,7 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
             name:schemeName,
             adminInfoId:admin.id,
             path:path,
-            // uploadtime:new Date(),
+            confirmtime:new Date(),
             state:0
         };
     }else{
@@ -125,7 +125,7 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
             id:schemeId,
             name:schemeName,
             adminInfoId:admin.id,
-            // uploadtime:new Date(),
+            confirmtime:new Date(),
             state:0
         };
     }
