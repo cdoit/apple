@@ -159,7 +159,7 @@ router.get('/getDesignByCode', function (req, res, next) {
     }).then(function (result) {
         if (result != null) {
             db.Sequelize.query(
-                "SELECT dg.`name`,CONCAT('"+basePath+"',dg.path) as path from project as pj LEFT JOIN design as dg ON dg.id=pj.design_id where pj.equipment_id = (SELECT eq.id from equipment as eq where eq.`code` = '"+mac+"')"
+                "SELECT dg.`name`,CONCAT('"+basePath+"',dg.path) as path,dg.size from project as pj LEFT JOIN design as dg ON dg.id=pj.design_id where pj.equipment_id = (SELECT eq.id from equipment as eq where eq.`code` = '"+mac+"')"
             ).then(function (result) {
                 res.json(result[0]);
             });

@@ -64,6 +64,8 @@ router.get('/download', function (req, res,next) {
 
     //以下代码得到文件后缀
     var name = file.originalname;
+    var size = file.size;
+    console.log('文件大小：%s', file.size);
     var nameArray = name.split('');
     var nameMime = [];
     var l = nameArray.pop();
@@ -87,7 +89,8 @@ router.get('/download', function (req, res,next) {
         path:path,
         uploadtime: new Date(),
         confirmtime:new Date(),
-        state:1
+        state:1,
+        size:size
     };
 
     db.Design.create(design).then(function (result) {
