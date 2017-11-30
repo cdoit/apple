@@ -43,7 +43,8 @@ router.get('/findById', login.checkin, function (req, res, next) {
 router.get('/download', function (req, res,next) {
     var designId = req.query.designId;
     db.Design.findById(designId).then(function (result) {
-        res.download(result.path);
+        //出于技术原因，在前面加上public
+        res.download("public/"+result.path);
     }).catch(next);
     // res.download('upload/logo-1508833808696.png');
   });
@@ -80,7 +81,7 @@ router.get('/download', function (req, res,next) {
     fs.renameSync('./public/upload/'+file.filename,'./public/upload/'+file.filename+Mime);
     console.log('./public/upload/'+file.filename+Mime);
     // 图片路劲
-    var path = 'public/upload/'+file.filename+Mime;
+    var path = 'upload/'+file.filename+Mime;
 
     var design = {
         id:uuid.v1(),

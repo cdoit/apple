@@ -101,7 +101,7 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
         fs.renameSync('./public/upload/'+file.filename,'./public/upload/'+file.filename+Mime);
         console.log('./public/upload/'+file.filename+Mime);
         // 图片路劲
-        path = 'public/upload/'+file.filename+Mime;
+        path = 'upload/'+file.filename+Mime;
     }
 
     //判断是否新增
@@ -161,7 +161,8 @@ router.get('/findById', login.checkin, function (req, res, next) {
 router.get('/download', function (req, res,next) {
     var schemeId = req.query.schemeId;
     db.Scheme.findById(schemeId).then(function (result) {
-        res.download(result.path);
+        //出于技术原因，在前面加上public
+        res.download("public/"+result.path);
     }).catch(next);
     // res.download('upload/logo-1508833808696.png');
   });
