@@ -9,11 +9,11 @@
 </head>
 
 <body>
-        <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
-            <span class="c-gray en">&gt;</span>
+        <nav class="breadcrumb"><i class="Hui-iconfont">
+            <!-- <span class="c-gray en">&gt;</span>
             方案管理
             <span class="c-gray en">&gt;</span>
-            方案列表
+            方案列表 -->
             <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
         </nav>
         <div class="Hui-article">
@@ -51,7 +51,7 @@
                                         <!-- <td><input name="" type="checkbox" value=""></td> -->
                                         <td><%=schemes[i].name %> </td>
                                         <td><%=schemes[i].path %> </td>
-                                        <td><%= moment(schemes[i].uploadtime).format('YYYY-MM-DD HH:mm:ss')  %> </td>
+                                        <td><%= moment(schemes[i].created_at).format('YYYY-MM-DD HH:mm:ss')  %> </td>
                                         <td><%= moment(schemes[i].confirmtime).format('YYYY-MM-DD HH:mm:ss')  %> </td>
                                         <td><%=schemes[i].adminInfoId %> </td>
                                         <td><%=schemes[i].state %> </td>

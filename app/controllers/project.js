@@ -51,9 +51,9 @@ router.get('/fenfaList', login.checkin, function (req, res, next) {
         {
             'limit': countPerPage,                      //每页多少条
             'offset': countPerPage * (currentPage - 1),  //跳过多少条
-            'where': {
-                workstate: '1'  //空闲
-            }
+            // 'where': {
+            //     workstate: '1'  //空闲
+            // }
         }
     ).then(function (result) {
         res.render('project/equipmentList.ejs', { equipment: result, projectId: projectId });

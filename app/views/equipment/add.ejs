@@ -71,7 +71,7 @@
 		
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="equipment_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
+				<button id="equipment_save_submit" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交审核</button>
 			</div>
 		</div>
 	</form>
@@ -85,6 +85,15 @@
 <script type="text/javascript" src="../../lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="../../lib/jquery.validation/1.14.0/messages_zh.js"></script>   
 <script type="text/javascript" src="../../lib/webuploader/0.1.5/webuploader.min.js"></script> 
-
+<script type="text/javascript" >
+	$(function(){
+		$("#form-equipment-add").ajaxForm(function(data){
+		parent.window.location.href='/equipment/list';
+		 var index = parent.layer.getFrameIndex(window.name);
+		//关闭弹出层
+		 parent.layer.close(index);
+		});     
+	});
+	</script>
 </body>
 </html>

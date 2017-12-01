@@ -8,7 +8,7 @@
 </head>
 <body>
 <article class="page-container">
-	<form class="form form-horizontal" method="post" id="form-equipment-add" action="/project/addProject" >
+	<form class="form form-horizontal" method="post" id="form-project-add" action="/project/addProject" >
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>任务名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -37,14 +37,23 @@
 		
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="equipment_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button id="project_save_submit" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
 			</div>
 		</div>
 	</form>
 </article>
 
 <% include ../includes/footer.ejs %>
-
+<script type="text/javascript" >
+	$(function(){
+		$("#form-project-add").ajaxForm(function(data){
+		parent.window.location.href='/project/projectList';
+		 var index = parent.layer.getFrameIndex(window.name);
+		//关闭弹出层
+		 parent.layer.close(index);
+		});     
+	});
+	</script>
 
 </body>
 </html>
