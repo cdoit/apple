@@ -41,9 +41,20 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-success col-lg-12">登录</button>
                     </div>
-
             </div>
         </div>
     </form>
+    <script type="text/javascript" src="../../lib/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" >
+    $(function(){
+        // var index = parent.layer.getFrameIndex(window.name);
+        var obj=window.parent.document.getElementById('iframe_box');
+        // alert(obj);
+        if(obj!=undefined && obj!=""&&obj!=null){
+            parent.window.location.href='/manager/index'; 
+        }
+          
+    });
+</script>
 </body>
 </html>

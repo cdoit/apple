@@ -266,6 +266,38 @@ router.get('/todoDesign', login.checkin, function (req, res, next) {
     });
 });
 
+router.post('/todoDesign', login.checkin, function (req, res, next) {
+    var flag = req.body.flag;
+    var keyword = req.body.keyword;
+    var designerId = null;
+    if (flag != null && flag != undefined && flag != "undefined") {
+        designerId = req.session.admin.id;
+    } else {
+        flag = null;
+    }
+    var countPerPage = 10, currentPage = 1;
+    db.Project.findAll(
+        {
+            'limit': countPerPage,                      //每页多少条
+            'offset': countPerPage * (currentPage - 1),  //跳过多少条
+            'where': {
+                equipmentId: null,
+                designId: null,
+                designerId: designerId,
+                '$not': [
+                    { 'schemeId': null }
+                ]
+            }
+        }
+    ).then(function (result) {
+        if(flag == '1'){
+            res.render('project/designedList.ejs', { keyword:keyword,project: result, flag: flag });
+        }else{
+            res.render('project/todoDesignList.ejs', { keyword:keyword,project: result, flag: flag });
+        }
+    });
+});
+
 
 
 //接单操作（这里需要判断是否存在多个接单，还未处理）
