@@ -238,7 +238,7 @@ router.get('/todoDesign', login.checkin, function (req, res, next) {
     var flag = req.query.flag;
     var keyword = req.query.keyword;
     var designerId = null;
-    if (flag != null && flag != undefined) {
+    if (flag != null && flag != undefined && flag != "undefined") {
         designerId = req.session.admin.id;
     } else {
         flag = null;
@@ -258,38 +258,11 @@ router.get('/todoDesign', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.render('project/todoDesignList.ejs', { keyword:keyword,project: result, flag: flag });
-    });
-});
-
-router.post('/todoDesign', login.checkin, function (req, res, next) {
-    var flag = req.body.flag;
-    var keyword = req.body.keyword;
-    var designerId = null;
-    if (flag != null && flag != undefined && flag!='') {
-        designerId = req.session.admin.id;
-    } else {
-        flag = null;
-    }
-    var countPerPage = 10, currentPage = 1;
-    db.Project.findAll(
-        {
-            'limit': countPerPage,                      //每页多少条
-            'offset': countPerPage * (currentPage - 1),  //跳过多少条
-            'where': {
-                equipmentId: null,
-                designId: null,
-                designerId: designerId,
-                'name': {
-                    '$like': '%'+keyword+'%'      
-                },
-                '$not': [
-                    { 'schemeId': null }
-                ]
-            }
+        if(flag == '1'){
+            res.render('project/designedList.ejs', { keyword:keyword,project: result, flag: flag });
+        }else{
+            res.render('project/todoDesignList.ejs', { keyword:keyword,project: result, flag: flag });
         }
-    ).then(function (result) {
-        res.render('project/todoDesignList.ejs', { keyword:keyword,project: result, flag: flag });
     });
 });
 
@@ -315,7 +288,7 @@ router.get('/jiedan', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.redirect("/project/todoDesign?flag=1");
+        res.redirect("/project/todoDesign?flag="+flag);
     }).catch(next);
 });
 
