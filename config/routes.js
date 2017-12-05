@@ -21,7 +21,8 @@ const login = require('../app/controllers/login');
 const weixinserver = require('../wechat/weixin');
 //
 var http = require('http');
-var multer  = require('multer')
+var multer  = require('multer');
+var md5=require("md5");
 //
 var admin = require('../app/controllers/manager');
 
@@ -93,10 +94,11 @@ module.exports = function (app) {
     app.post('/login', function (req, res, next) {
         var username = req.body.username;
         var password = req.body.password;
+        var passwordsd = md5(password)  
         db.AdminInfo.findOne({
             where: {
                 adminname: username,
-                password: password
+                password: passwordsd
             }
         }).then(function (result) {
             if (result != null) {

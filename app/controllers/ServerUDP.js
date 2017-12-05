@@ -21,7 +21,41 @@ server.on('listening', function () {
 server.on('message', function (message, remote) {
     var html = iconv.decode(new Buffer(message), 'utf-8');
     console.log(remote.address + ':' + remote.port +' - ' + html);
-    //解析数据
+    //判断是否是验证账号密码
+    var data = html.toString();
+    if(data.indexOf("valid") != -1){
+        var account = html.toString().split("#");
+        var mac = account[1];
+        var loginName = account[2];
+        var passwords = account[3];
+        var filter = {
+            code:mac
+        }
+        db.Equipment.findOne(filter).then(function (result){
+            //判断mac是否存在
+            if(result!=null){
+                db.AdminInfo.findOne(
+                {
+                    adminname:loginName,
+                    password:passwords
+                }
+            ).then(function (result2){
+                    //判断账号密码是否正确
+                    var buf = new Buffer("true");
+                    if(result2 == null){
+                        var buf = new Buffer("false");
+                    }
+                    server.send(buf,0,buf.length,remote.port,remote.address);
+                    console.log(buf);
+                });
+            }
+        });
+    }else if(data.indexOf("online") != -1){
+        var buf = new Buffer("online is ok");
+        server.send(buf,0,buf.length,remote.port,remote.address);
+        console.log(buf);
+    }else{
+        //解析数据
     var equipmentData= new Array(); //定义一数组 
     equipmentData = html.toString().split("#"); //字符分割
     // console.log(equipmentData);
@@ -104,16 +138,14 @@ server.on('message', function (message, remote) {
                     elevation:elevation
                 };
                 db.Equipmentposition.create(position).then(function (result2) {
-                    console.log(result2);
-                    // res.json(result2);
+                    //回发确认
+                    var buf = new Buffer('success');
+                    server.send(buf,0,buf.length,remote.port,remote.address);
                 });
             });
         });
-
-
-
-        // res.json(result1);
     });
+    }
 
 });
 
