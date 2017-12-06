@@ -16,6 +16,12 @@ module.exports = function (sequelize, DataTypes) {
     // longitude: { type: DataTypes.STRING(20), allowNull: true, comment: '经度' },
     // elevation: { type: DataTypes.STRING(11), allowNull: true, comment: '高程' },
 
+    length: { type: DataTypes.STRING(20), allowNull: true, comment: '长度' },
+    width: { type: DataTypes.STRING(20), allowNull: true, comment: '宽度' },
+    height: { type: DataTypes.STRING(11), allowNull: true, comment: '高度' },
+    weight: { type: DataTypes.STRING(11), allowNull: true, comment: '重量' },
+    material: { type: DataTypes.STRING(11), allowNull: true, comment: '材质' },
+
     firststartdate: { type: DataTypes.DATE, allowNull: true, comment: '第一次开机时间' },
     startdate: { type: DataTypes.DATE, allowNull: true, comment: '最近开机时间' },
     worktimes: { type: DataTypes.STRING(11), allowNull: true, comment: '设备运行时长' },
