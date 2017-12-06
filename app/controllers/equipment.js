@@ -226,12 +226,14 @@ router.get('/checkCode', function (req, res, next) {
     }).then(function (result) {
         var temp = true;
         if(code!=undefined&&code == oldCode){
-            temp = false;
+            // temp = false;
+            res.json(true);
+        }else if(result!=null){
+            // temp = false;
+            res.json(false);
+        }else{
+            res.json(true);
         }
-        if(result!=null){
-            temp = false;
-        }
-        res.json(temp);
     }).catch(next);
 });
 

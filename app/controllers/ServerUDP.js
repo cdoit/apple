@@ -76,8 +76,8 @@ server.on('message', function (message, remote) {
     var array = new Array();
     array = location.toString().split(",");
     // 暂无
-    var latitude = array[0];
-    var longitude = array[1];
+    var latitude = array[1];
+    var longitude = array[0];
     var elevation = array[2];
     // 暂无
     var temperature = equipmentData[10];
