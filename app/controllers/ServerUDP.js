@@ -7,7 +7,7 @@ const db = require("../db/");
 db.init();
 
 
-var PORT = 33334;
+var PORT = 3000;
 var HOST = '192.168.31.108';
 
 var dgram = require('dgram');
@@ -61,7 +61,9 @@ server.on('message', function (message, remote) {
     // console.log(equipmentData);
     ///////////////////////////////////////////////////////////////
     var mac = equipmentData[0];
-    var state = equipmentData[1];
+    //  默认的设备状态是1
+    var state = "1";
+    var workstate = equipmentData[1];
     var firststartdate = equipmentData[2];
     var startdate = equipmentData[3];
     var worktimes = equipmentData[4];
@@ -98,6 +100,7 @@ server.on('message', function (message, remote) {
                 id:result1.id,
                 code:mac,
                 state:state,
+                workstate:workstate,
                 firststartdate:firststartdate,
                 startdate:startdate,
                 worktimes:worktimes,
@@ -110,6 +113,7 @@ server.on('message', function (message, remote) {
                 id:uuid.v1(),
                 code:mac,
                 state:state,
+                workstate:workstate,
                 firststartdate:firststartdate,
                 startdate:startdate,
                 worktimes:worktimes,
@@ -126,6 +130,7 @@ server.on('message', function (message, remote) {
                 temperature:temperature,
                 supplies:supplies,
                 speed:speed,
+                workstate:workstate,
                 oilpressure:oilpressure
             };
             db.Equipmentparameter.create(paramenter).then(function (result1) {

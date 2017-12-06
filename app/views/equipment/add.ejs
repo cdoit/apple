@@ -12,16 +12,40 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.name%><%}%>" placeholder="" id="" name="name">
+                <input type="text" class="required input-text" value="<%if(equipment!=null){%><%=equipment.name%><%}%>" placeholder="" id="name" name="name">
                 <input type="hidden" class="input-text" value="<%if(equipment!=null){%><%=equipment.id%><%}%>" name="equipmentId">
 			</div>
         </div>
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备编号：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.code%><%}%>" placeholder="" id="" name="code">
+				<input type="text" class="required input-text" <%if(equipment!=null&&equipment.id!=null){%> readonly="readonly" <%}%>  value="<%if(equipment!=null){%><%=equipment.code%><%}%>" placeholder="" id="code" name="code" title="设备编号不能为空">
+				<input type="hidden" value="<%if(equipment!=null){%><%=equipment.code%><%}%>" id="oldCode" name="oldCode">
 			</div>
 		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="equipmenttype" class="select">
+					<% for(var j=0; j<dictionary.length; ++j) { %> 
+						<option value="<%=dictionary[j].dictvalue%>" <%if(dictionary[j]!=null&&equipment!=null&&dictionary[j].dictvalue==equipment.equipmenttype){%> selected="selected" <%}%>> <%=dictionary[j].dictleble%> </option>
+					<% } %>
+				</select>
+				</span> </div>
+		</div>
+		
+		<div class="row cl">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>加盟商：</label>
+				<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+					<select name="jiameng" class="select">
+						<% for(var j=0; j<adminInfo.length; ++j) { %> 
+							<option value="<%=adminInfo[j].id%>" <%if(adminInfo[j]!=null&&equipment!=null&&adminInfo[j].id==equipment.jiameng){%> selected="selected" <%}%>> <%=adminInfo[j].adminname%> </option>
+						<% } %>
+					</select>
+					</span> </div>
+			</div>
+
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">保修期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -29,43 +53,54 @@
 			</div>
         </div>
         <div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">购买人：</label>
+			<label class="form-label col-xs-4 col-sm-2">购买者：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.customer%><%}%>" placeholder="" id="" name="customer">
+				<input type="text" class="required input-text" value="<%if(equipment!=null){%><%=equipment.customer%><%}%>" placeholder="" id="" name="customer">
 			</div>
 		</div>
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>状态：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备状态：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="state" class="select">
 					<option value="0" <%if(equipment!=null&&equipment.state=='0'){%> selected="selected" <%}%>>已出厂</option>
 					<option value="1" <%if(equipment!=null&&equipment.state=='1'){%> selected="selected" <%}%>>维修中</option>
-					<option value="11" <%if(equipment!=null&&equipment.state=='11'){%> selected="selected" <%}%>>正常运行</option>
-					<option value="12" <%if(equipment!=null&&equipment.state=='12'){%> selected="selected" <%}%>>已报修</option>
+					<option value="11" <%if(equipment!=null&&equipment.state=='2'){%> selected="selected" <%}%>>正常运行</option>
+					<option value="12" <%if(equipment!=null&&equipment.state=='3'){%> selected="selected" <%}%>>已报修</option>
 				</select>
 				</span> </div>
 		</div>
-		<div class="row cl">
+		<!-- <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运行状态：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="workstate" class="select">
-					<option value="0" <%if(equipment!=null&&equipment.workstate=='0'){%> selected="selected" <%}%>>满负荷</option>
-					<option value="1" <%if(equipment!=null&&equipment.workstate=='1'){%> selected="selected" <%}%>>空闲</option>
-					<option value="2" <%if(equipment!=null&&equipment.workstate=='2'){%> selected="selected" <%}%>>饱和</option>
+					<option value="0" <%if(equipment!=null&&equipment.workstate=='0'){%> selected="selected" <%}%>>正常</option>
+					<option value="1" <%if(equipment!=null&&equipment.workstate=='1'){%> selected="selected" <%}%>>材料不足</option>
+					<option value="2" <%if(equipment!=null&&equipment.workstate=='2'){%> selected="selected" <%}%>>材料用尽</option>
+					<option value="3" <%if(equipment!=null&&equipment.workstate=='3'){%> selected="selected" <%}%>>切刀试用期限到</option>
+					<option value="4" <%if(equipment!=null&&equipment.workstate=='4'){%> selected="selected" <%}%>>润滑油不足</option>
+					<option value="5" <%if(equipment!=null&&equipment.workstate=='5'){%> selected="selected" <%}%>>伺服无使能</option>
+					<option value="6" <%if(equipment!=null&&equipment.workstate=='6'){%> selected="selected" <%}%>>伺服故障</option>
+					<option value="7" <%if(equipment!=null&&equipment.workstate=='7'){%> selected="selected" <%}%>>材料用尽</option>
+					<option value="8" <%if(equipment!=null&&equipment.workstate=='8'){%> selected="selected" <%}%>>材料用尽</option>
+					<option value="9" <%if(equipment!=null&&equipment.workstate=='9'){%> selected="selected" <%}%>>材料用尽</option>
+					<option value="10" <%if(equipment!=null&&equipment.workstate=='10'){%> selected="selected" <%}%>>材料用尽</option>
+					<option value="11" <%if(equipment!=null&&equipment.workstate=='11'){%> selected="selected" <%}%>>材料用尽</option>
+					<option value="12" <%if(equipment!=null&&equipment.workstate=='12'){%> selected="selected" <%}%>>油压过低</option>
+					<option value="13" <%if(equipment!=null&&equipment.workstate=='13'){%> selected="selected" <%}%>>油温过高</option>
 				</select>
 				</span> </div>
-		</div>
+		</div> -->
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">排序值：</label>
+			<label class="form-label col-xs-4 col-sm-2">设备所在地：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="<%if(equipment!=null){%><%=equipment.priority%><%}%>" onkeyup="value=value.replace(/[^\d]/g,'') " id="" name="priority">
+				<input type="text" class="required input-text" value="<%if(equipment!=null){%><%=equipment.location%><%}%>" id="location" name="location">
 			</div>
 		</div>
 		
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">购买日期：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" name="buytime" value="<%if(equipment!=null){%><%=moment(equipment.buytime).format('YYYY-MM-DD HH:mm:ss')%><%}%>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="datemin" class="input-text Wdate">
+				<input type="text" name="buytime" value="<%if(equipment!=null){%><%=moment(equipment.buytime).format('YYYY-MM-DD HH:mm:ss')%><%}%>" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="datemin" class="required input-text Wdate">
 			</div>
 		</div>
 		
@@ -85,15 +120,41 @@
 <script type="text/javascript" src="../../lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="../../lib/jquery.validation/1.14.0/messages_zh.js"></script>   
 <script type="text/javascript" src="../../lib/webuploader/0.1.5/webuploader.min.js"></script> 
-<script type="text/javascript" >
-	$(function(){
-		$("#form-equipment-add").ajaxForm(function(data){
-		parent.window.location.href='/equipment/list';
-		 var index = parent.layer.getFrameIndex(window.name);
-		//关闭弹出层
-		 parent.layer.close(index);
-		});     
-	});
+
+<script type="text/javascript">
+	$(document).ready(function() {
+				var code = $("#code").val();
+				$("#name").focus();
+				$("#form-equipment-add").validate({
+					focusInvalid: false,
+					rules : {
+								code : {
+									remote : "/equipment/checkCode?oldCode=" + encodeURIComponent(code)
+								}
+							},
+							messages : {
+								code : {
+									remote : "该设备编码已存在"
+								}
+							},
+					submitHandler: function(form){   //表单提交句柄,为一回调函数，带一个参数：form   
+                    	// alert(form);   
+						// form.submit();   //提交表单  
+						
+						$(form).ajaxSubmit(function(data){
+							parent.window.location.href='/equipment/list';
+							var index = parent.layer.getFrameIndex(window.name);
+							//关闭弹出层
+							parent.layer.close(index);
+						}); 
+						
+
+					}
+					
+				});
+
+
+			});
 	</script>
 </body>
 </html>

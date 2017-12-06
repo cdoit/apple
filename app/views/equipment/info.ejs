@@ -14,37 +14,169 @@
                 <table class="table">
                   <tbody>
                     <tr>
-                      <th class="text-r" width="80">设备名称：</th>
+                      <th class="text-r" width="100">设备名称：</th>
                       <td><%= equipment.name %></td>
-                    </tr>
-                    <tr>
+                     <!-- </tr> 
+
+                     <tr>  -->
                       <th class="text-r">设备编号：</th>
                       <td><%= equipment.code %></td>
+                    <!-- </tr>
+
+                    <tr>  -->
+                        <th class="text-r">设备类型：</th>
+                        <td>
+                          <!-- <%= equipment.equipmenttype %> -->
+                          <% for(var j=0; j<equipmentType.length; ++j) { %> 
+                              <%if(equipmentType[j]!=null&&equipmentType[j].dictvalue==equipment.equipmenttype){%>
+                                  <%=equipmentType[j].dictleble %>
+                              <%}%>
+                          <% } %> 
+                        </td>
+                      <!-- </tr>
+
+                      <tr>  -->
+                          <th class="text-r">加盟商：</th>
+                          <td>
+                            <% for(var k=0; k<adminInfo.length; ++k) { %> 
+                                <%if(adminInfo[k]!=null&&adminInfo[k].id==equipment.jiameng){%>
+                                    <%=adminInfo[k].adminname %>
+                                <%}%>
+                            <% } %> 
+                            <!-- <%= equipment.jiameng %> -->
+                          </td>
+                        </tr>
+                    <tr>
+
                     </tr>
+                      <th class="text-r">长度：</th>
+                      <td><%=equipment.length %></td>
+
+                      <th class="text-r">宽度：</th>
+                      <td><%=equipment.width %></td>
+
+                      <th class="text-r">高度：</th>
+                      <td><%=equipment.height %></td>
+
+                      <th class="text-r">重量：</th>
+                      <td><%=equipment.weight %></td>
                     <tr>
                       <th class="text-r">保修期：</th>
                       <td><%=equipment.warrantyperiod %></td>
-                    </tr>
-                    <tr>
+                    <!-- </tr>
+                    <tr> -->
                       <th class="text-r">购买时间：</th>
                       <td><%= moment(equipment.buytime).format('YYYY-MM-DD HH:mm:ss') %></td>
-                    </tr>
-                    <tr>
-                      <th class="text-r">购买人：</th>
+                    <!-- </tr>
+
+                    <tr> -->
+                      <th class="text-r">购买者：</th>
                       <td><%=equipment.customer %></td>
-                    </tr>
+                    <!-- </tr>
+
+                    <tr> -->
+                        <th class="text-r">设备所在地：</th>
+                        <td><%=equipment.location %></td>
+                      </tr>
+                      
                     <tr>
-                      <th class="text-r">状态：</th>
-                      <td><%=equipment.state %></td>
-                    </tr>
-                    <tr>
+                      <th class="text-r">设备状态：</th>
+                      <td>
+                          <% for(var j=0; j<equipmentState.length; ++j) { %> 
+                              <%if(equipmentState[j]!=null&&equipmentState[j].dictvalue==equipment.state){%>
+                                <%=equipmentState[j].dictleble %>
+                              <%}%>
+                          <% } %> 
+                        <!-- <%=equipment.state %> -->
+                      </td>
+                    <!-- </tr>
+                    <tr> -->
                         <th class="text-r">运行状态：</th>
-                        <td><%=equipment.workstate %></td>
+                        <td>
+                            <% for(var j=0; j<workState.length; ++j) { %> 
+                                <%if(workState[j]!=null&&workState[j].dictvalue==equipment.workstate){%>
+                                    <%=workState[j].dictleble %>
+                                <%}%>
+                            <% } %> 
+                          <!-- <%=equipment.workstate %> -->
+                        </td>
+
+                        <th class="text-r">第一次开机时间：</th>
+                        <td>
+                            <%= moment(equipment.firststartdate).format('YYYY-MM-DD HH:mm:ss') %>
+                        </td>
+
+                        <th class="text-r">最近的开机时间：</th>
+                        <td>
+                            <%= moment(equipment.startdate).format('YYYY-MM-DD HH:mm:ss') %>
+                        </td>
+
+                      </tr>
+                      <tr>
+                          <th class="text-r">设备运行时长：</th>
+                          <td>
+                              <%=equipment.worktimes %>
+                          </td>
+
+                          <th class="text-r">设备总的产量（长度）</th>
+                          <td>
+                              <%=equipment.output %>
+                          </td>
+
+                          <th class="text-r">设备切刀总次数</th>
+                          <td>
+                              <%=equipment.cuttingtimes %>
+                          </td>
+
+                          <th class="text-r">材质：</th>
+                          <td><%=equipment.material %></td>
                       </tr>
                   </tbody>
                 </table>
               </div>
    
+
+              <div class="mt-20">
+                  <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备参数</h3>
+                  <table class="table table-border table-bordered table-bg table-hover  table-responsive">
+                          <thead>
+                              <tr class="text-c">
+                                  <!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
+                                  <th width="120">温度</th>
+                                  <th width="120">湿度</th>
+                                  <th width="120">喷墨耗材用量</th>
+                                  <th width="120">设备运行速度</th>
+                                  <th width="120">运行状态</th>
+                                  <th width="120">设备油压</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr class="text-c">
+                                  <!-- <%if(equipParams!=null&&equipParams.length>0){%> -->
+                                      <% for(var i=0; i<equipParams.length; ++i) { %>
+                                        <tr>
+                                          <td> <%=equipParams[i].temperature %></td>
+                                          <td><%=equipParams[i].humidity %></td>
+                                          <td><%=equipParams[i].supplies %></td>
+                                          <td><%=equipParams[i].speed %></td>
+                                          <td>
+
+                                              <% for(var j=0; j<workState.length; ++j) { %> 
+                                                  <%if(workState[j]!=null&&workState[j].dictvalue==equipParams[i].workstate){%>
+                                                      <%=workState[j].dictleble %>
+                                                  <%}%>
+                                              <% } %>
+
+                                            <!-- <%=equipParams[i].workstate %> -->
+                                          </td>
+                                          <td><%=equipParams[i].oilpressure %></td>
+                                        </tr>
+                                      <%}%>
+                                  <!-- <%}%> -->
+                              </tr>
+                          </tbody>
+                      </table>
+          </div>
     
         <% include ../includes/footer.ejs %>
    

@@ -19,7 +19,14 @@
             <article class="cl pd-20">
                 <form class="form form-horizontal" method="post" action="/equipment/list" >
                     <div class="text-c">
-                        <input type="text" name="keyword" id="" value="<%if(keyword!=null){%><%=keyword%><%}%>" placeholder=" 设备名称、设备编码" style="width:250px" class="input-text">
+                            <span class="select-box inline">
+                                <select name="equipmenttype" class="select">
+                                    <% for(var j=0; j<dictionary.length; ++j) { %> 
+                                            <option value="<%=dictionary[j].dictvalue%>" <%if(dictionary[j]!=null&&dictionary[j].dictvalue==equipmenttype){%> selected="selected" <%}%>> <%=dictionary[j].dictleble%> </option>
+                                    <% } %>
+                                </select>
+                            </span>
+                        <input type="text" name="keyword" id="" value="<%if(keyword!=null){%><%=keyword%><%}%>" placeholder=" 设备名称、设备编码、所在地" style="width:250px" class="input-text">
                         <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜设备</button>
                     </div>
                 </form>
@@ -34,13 +41,16 @@
                         <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
                                 <thead>
                                     <tr class="text-c">
-                                        <th width="25"><input type="checkbox" name="" value=""></th>
+                                        <!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
                                         <th width="120">设备名称</th>
                                         <th width="120">设备编号</th>
+                                        <th width="120">设备类型</th>
+                                        <th width="120">加盟商</th>
                                         <th width="120">保修期</th>
                                         <th width="120">购买时间</th>
-                                        <th width="120">购买人</th>
-                                        <th width="80">状态</th>
+                                        <th width="120">购买者</th>
+                                        <th width="120">设备所在地</th>
+                                        <th width="80">设备状态</th>
                                         <th width="80">运行状态</th>
                                         <th width="100">操作</th>
                                     </tr>
@@ -48,15 +58,93 @@
                                 <tbody>
                                     <% for(var i=0; i<equipment.length; ++i) { %>  
                                     <tr class="text-c">
-                                        <td><input name="" type="checkbox" value=""></td>
-                                        <td><%=equipment[i].name %> </td>
+                                        <!-- <td><input name="" type="checkbox" value=""></td> -->
+                                        <td>
+                                            <a style="text-decoration:none;color:red" _href="/equipment/info" onclick="equipment_add('设备详情','/equipment/info?equipmentId=<%=equipment[i].id %>')" href="javascript:;" title="设备详情"><%=equipment[i].name %> </a>
+                                            
+                                        </td>
                                         <td><%=equipment[i].code %> </td>
+
+                                        <td>
+                                            <% for(var j=0; j<dictionary.length; ++j) { %> 
+                                                    <%if(dictionary[j]!=null&&dictionary[j].dictvalue==equipment[i].equipmenttype){%>
+                                                        <%=dictionary[j].dictleble %>
+                                                    <%}%>
+                                            <% } %> 
+                                        </td>
+                                        <td>
+
+                                            <% for(var k=0; k<adminInfo.length; ++k) { %> 
+                                                    <%if(adminInfo[k]!=null&&adminInfo[k].id==equipment[k].jiameng){%>
+                                                        <%=adminInfo[k].adminname %>
+                                                    <%}%>
+                                            <% } %> 
+
+                                            <!-- <%=equipment[i].jiameng %> -->
+                                        </td>
+
                                         <td><%=equipment[i].warrantyperiod %> </td>
-                                        <td><%= moment(equipment[i].buytime).format('YYYY-MM-DD HH:mm:ss')  %> </td>
+                                        <td><%= moment(equipment[i].buytime).format('YYYY-MM-DD ')  %> </td>
                                         <td><%=equipment[i].customer %> </td>
-                                        <td><%=equipment[i].state %> </td>
-                                        <td><%=equipment[i].workstate %> </td>
-                                        <!-- <td class="text-l">东鹏陶瓷被评为“中国名牌”、“国家免检产品”、“中国驰名商标”、http://www.dongpeng.net/</td> -->
+                                        <td><%=equipment[i].location %> </td>
+                                        <td>
+                                                <%if(equipment[i]!=null&&equipment[i].state=='0'){%>
+                                                    已出厂
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].state=='1'){%>
+                                                    维修中
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].state=='2'){%>
+                                                    正常运行
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].state=='3'){%>
+                                                    已报修
+                                                <%}%>
+                                        </td>
+                                        <td>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='0'){%>
+                                                    正常
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='1'){%>
+                                                    材料不足
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='2'){%>
+                                                    材料用尽
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='3'){%>
+                                                    切刀使用期限到
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='4'){%>
+                                                    润滑油不足
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='5'){%>
+                                                    伺服无使能
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='6'){%>
+                                                    伺服故障
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='7'){%>
+                                                    伺服温度过高
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='8'){%>
+                                                    油泵使用期限到
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='9'){%>
+                                                    油泵停止
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='10'){%>
+                                                    油压过载
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='11'){%>
+                                                    急停按下油泵停止
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='12'){%>
+                                                    油压过低
+                                                <%}%>
+                                                <%if(equipment[i]!=null&&equipment[i].workstate=='13'){%>
+                                                    油温过高
+                                                <%}%>
+                                        </td>
                                         <td class="f-14 product-brand-manage">
                                             <a style="text-decoration:none" onClick="show_add('编辑设备','/equipment/add?equipmentId=<%=equipment[i].id %>')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
                                             <a style="text-decoration:none" class="ml-5" onClick="list_del(this,'/equipment/delete?equipmentId=<%=equipment[i].id %>')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
