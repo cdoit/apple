@@ -6,6 +6,9 @@ const db = require("../db/");
 
 //设备列表
 router.get('/list', login.checkin, function (req, res, next) {
+    //sign用来区别是否跳分配设备
+    var sign = req.query.sign;
+    var projectId = req.query.projectId;
     var keyword = req.query.keyword;
     var equipmenttype = req.query.equipmenttype;
     var countPerPage = 10, currentPage = 1;
@@ -28,7 +31,7 @@ router.get('/list', login.checkin, function (req, res, next) {
         })
         ]).then(function(result){
             res.render('equipment/list2.ejs', 
-                { equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+                { projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
 });
@@ -79,6 +82,7 @@ router.post('/list', login.checkin, function (req, res, next) {
 
 router.get('/info', login.checkin, function (req, res, next) {
     var equipmentId = req.query.equipmentId;
+    var countPerPage = 10, currentPage = 1;
     Promise.all([
         db.Equipment.findById(equipmentId),
         db.Dictionary.findAll({
@@ -263,7 +267,7 @@ router.get('/getDesignByCode', function (req, res, next) {
     }).then(function (result) {
         if (result != null) {
             db.Sequelize.query(
-                "SELECT dg.`name`,CONCAT('"+basePath+"',dg.path) as path,dg.size from project as pj LEFT JOIN design as dg ON dg.id=pj.design_id where pj.equipment_id = (SELECT eq.id from equipment as eq where eq.`code` = '"+mac+"')"
+                "SELECT pj.`name`,CONCAT('"+basePath+"',dg.path) as path,dg.size from project as pj LEFT JOIN design as dg ON dg.id=pj.design_id where pj.equipment_id = (SELECT eq.id from equipment as eq where eq.`code` = '"+mac+"')"
             ).then(function (result) {
                 res.json(result[0]);
             });

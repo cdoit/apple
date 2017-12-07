@@ -6,11 +6,12 @@
 </head>
 <body>
 <article class="page-container">
-	<form class="form form-horizontal" method="post" id="form-equipment-add" action="/design/save" enctype="multipart/form-data">
+	<form class="form form-horizontal" method="post" id="form-design-add" action="/design/save" enctype="multipart/form-data">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设计名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" name="designName">
+				<input type="text" class="required input-text" name="designName" id="designName">
+				<input type="hidden" name="oldDesignName" id="oldDesignName">
                 <input type="hidden" class="input-text" value="<%=projectId%>" name="projectId">
 			</div>
 		</div>
@@ -18,18 +19,49 @@
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设计数据：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="file" name="file1" />
+				<input type="file" name="file1" class="required"/>
 			</div>
 		</div>
 		
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="equipment_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button id="design_save_submit" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
 			</div>
 		</div>
 	</form>
 </article>
 
 <% include ../includes/footer.ejs %>
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/messages_zh.js"></script>   
+<script type="text/javascript" src="../../lib/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" >
+		$(document).ready(function() {
+			var designName = $("#designName").val();
+			$("#designName").focus();
+			$("#form-design-add").validate({
+				focusInvalid: false,
+				rules : {
+						designName : {
+								remote : "/design/checkName?oldDesignName=" + encodeURIComponent(designName)
+							}
+						},
+						messages : {
+							schemeName : {
+								remote : "该设计名称已存在"
+							}
+						},
+				submitHandler: function(form){  
+					$(form).ajaxSubmit(function(data){
+						parent.window.location.href='/project/designed';
+						var index = parent.layer.getFrameIndex(window.name);
+						//关闭弹出层
+						parent.layer.close(index);
+					}); 
+				}
+			});
+		});
+</script>
 </body>
 </html>

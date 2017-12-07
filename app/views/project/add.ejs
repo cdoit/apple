@@ -12,22 +12,23 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>任务名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="<%if(project!=null){%><%=project.name%><%}%>" placeholder="" id="" name="projectName">
-                <input type="hidden" class="input-text" value="<%if(project!=null){%><%=project.id%><%}%>" name="projectId">
+                <input type="text" class="required input-text" value="<%if(project!=null){%><%=project.name%><%}%>" <%if(project!=null&&project.id!=null){%> readonly="readonly" <%}%> id="projectName" name="projectName">
+				<input type="hidden" class="input-text" value="<%if(project!=null){%><%=project.id%><%}%>" name="projectId">
+				<input type="hidden" value="<%if(project!=null){%><%=project.name%><%}%>" id="oldProjectName" name="oldProjectName">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>任务地址：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="<%if(project!=null){%><%=project.address%><%}%>" placeholder="" id="" name="address">
+                <input type="text" class="required input-text" value="<%if(project!=null){%><%=project.address%><%}%>" placeholder="" id="address" name="address">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>对应方案：</label>
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select name="schemeId" class="select">
+				<select name="schemeId" class="required select">
 					<% for(var i=0; i<scheme.length; ++i) { %>  
 						<option value="<%=scheme[i].id %>" <%if(scheme!=null&&project!=null&&scheme.id == project.schemeId){%> selected="selected" <%}%>><%=scheme[i].name %></option>
 					<% } %>
@@ -44,16 +45,35 @@
 </article>
 
 <% include ../includes/footer.ejs %>
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/messages_zh.js"></script>  
 <script type="text/javascript" >
-	$(function(){
-		$("#form-project-add").ajaxForm(function(data){
-		parent.window.location.href='/project/projectList';
-		 var index = parent.layer.getFrameIndex(window.name);
-		//关闭弹出层
-		 parent.layer.close(index);
-		});     
+	$(document).ready(function() {
+		var projectName = $("#projectName").val();
+		$("#projectName").focus();
+		$("#form-project-add").validate({
+			focusInvalid: false,
+			rules : {
+					projectName : {
+							remote : "/project/checkName?oldProjectName=" + encodeURIComponent(projectName)
+						}
+					},
+					messages : {
+						projectName : {
+							remote : "该任务名称已存在"
+						}
+					},
+			submitHandler: function(form){  
+				$(form).ajaxSubmit(function(data){
+					parent.window.location.href='/project/projectList';
+					var index = parent.layer.getFrameIndex(window.name);
+					//关闭弹出层
+					parent.layer.close(index);
+				}); 
+			}
+		});
 	});
 	</script>
-
 </body>
 </html>

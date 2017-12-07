@@ -15,6 +15,7 @@ function approver () {
 function getProject () {
   this.add('role:project, cmd:getProject', (msg, reply) => {
     var equipmentCode = msg.left;
+    var equipmentCode = msg.right;
     db.Sequelize.query(
       "SELECT p.* from equipment as e JOIN project as p ON e.id = p.equipment_id where e.`code` = '"+equipmentCode+"'"
     ).then(function (result) {
