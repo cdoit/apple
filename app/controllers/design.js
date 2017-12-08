@@ -100,7 +100,8 @@ router.get('/download', function (req, res,next) {
             db.Project.update(
                 {
                     designerId:admin.id,
-                    designId:result.id
+                    designId:result.id,
+                    progress:'3'
                 }
                 ,
                 {
@@ -109,12 +110,29 @@ router.get('/download', function (req, res,next) {
                     }
                 }
             ).then(function (result) {
-                res.write("上传成功，并且关联成功！");
-                res.end();
+                res.redirect("/project/designed");
             }).catch(next);
         }
     }).catch(next);
   });
   
+
+  router.get('/checkName', function (req, res, next) {
+    var designName = req.query.designName;
+    var oldDesignName = req.query.oldDesignName;
+    db.Design.findAll({
+        "where":{
+            name:designName
+        }
+    }).then(function (result) {
+        if(designName!=undefined&&designName == oldDesignName){
+            res.json(true);
+        }else if(result!=null && result.length>0){
+            res.json(false);
+        }else{
+            res.json(true);
+        }
+    }).catch(next);
+});
 
 module.exports = router;

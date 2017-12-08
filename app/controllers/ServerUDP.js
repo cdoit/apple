@@ -62,7 +62,7 @@ server.on('message', function (message, remote) {
     ///////////////////////////////////////////////////////////////
     var mac = equipmentData[0];
     //  默认的设备状态是1
-    var state = "1";
+    var state = "2";
     var workstate = equipmentData[1];
     var firststartdate = equipmentData[2];
     var startdate = equipmentData[3];

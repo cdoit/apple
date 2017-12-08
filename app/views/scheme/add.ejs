@@ -12,15 +12,16 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>方案名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="<%if(scheme!=null){%><%=scheme.name%><%}%>" placeholder="" id="" name="schemeName">
-                <input type="hidden" class="input-text" value="<%if(scheme!=null){%><%=scheme.id%><%}%>" name="schemeId">
+                <input type="text" class="required input-text" value="<%if(scheme!=null){%><%=scheme.name%><%}%>" <%if(scheme!=null&&scheme.id!=null){%> readonly="readonly" <%}%> id="schemeName" name="schemeName">
+				<input type="hidden" class="input-text" value="<%if(scheme!=null){%><%=scheme.id%><%}%>" name="schemeId">
+				<input type="hidden" value="<%if(scheme!=null){%><%=scheme.name%><%}%>" id="oldName" name="oldName">
 			</div>
 		</div>
 		
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>数据文件：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="file" name="file1" />
+				<input class="required" type="file" name="file1" />
 			</div>
 		</div>
 		
@@ -41,14 +42,32 @@
 <script type="text/javascript" src="../../lib/jquery.validation/1.14.0/messages_zh.js"></script>   
 <script type="text/javascript" src="../../lib/webuploader/0.1.5/webuploader.min.js"></script>
 <script type="text/javascript" >
-$(function(){
-	$("#form-scheme-add").ajaxForm(function(data){
-	parent.window.location.href='/scheme/list';
-	 var index = parent.layer.getFrameIndex(window.name);
-	//关闭弹出层
-	 parent.layer.close(index);
-	});     
-});
+		$(document).ready(function() {
+			var schemeName = $("#schemeName").val();
+			$("#schemeName").focus();
+			$("#form-scheme-add").validate({
+				focusInvalid: false,
+				rules : {
+						schemeName : {
+								remote : "/scheme/checkName?oldName=" + encodeURIComponent(schemeName)
+							}
+						},
+						messages : {
+							schemeName : {
+								remote : "该方案名称已存在"
+							}
+						},
+				submitHandler: function(form){  
+					$(form).ajaxSubmit(function(data){
+						parent.window.location.href='/scheme/list';
+						var index = parent.layer.getFrameIndex(window.name);
+						//关闭弹出层
+						parent.layer.close(index);
+					}); 
+				}
+			});
+		});
+
 </script>
 
 </body>

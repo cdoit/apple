@@ -132,7 +132,7 @@
                     content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
                     content.push("电话：010-64733333");
                     content.push("出厂日期："+markers[i].buytime);
-                    content.push("<a href='http://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
+                    content.push("<a href='/equipment/info?equipmentId="+markers[i].equipmentId+"'>详细信息</a>");
                     var infoWindow = new AMap.InfoWindow({
                         isCustom: true,  //使用自定义窗体
                         content: createInfoWindow(title, content.join("<br/>")),

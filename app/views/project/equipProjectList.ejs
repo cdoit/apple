@@ -9,17 +9,22 @@
 </head>
 
 <body>
-            <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
-                <span class="c-gray en">&gt;</span>
-                当前机器的任务列表
+            <nav class="breadcrumb"><i class="Hui-iconfont">
                 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
             </nav>
             <div class="Hui-article">
                 <article class="cl pd-20">
-                    <form action="/project/findByEquiCode" method="post" role="form">
+                    <form action="/project/equipProjectList" method="post" role="form">
                         <div class="text-c">
-                            <input type="text" name="equipmentCode" value="<%=equipmentCode %>" id="" placeholder="机器编码" style="width:250px" class="input-text">
-                            <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜任务</button>
+                            <span class="select-box inline">
+                                <select name="equipmentId" class="select">
+                                    <% for(var j=0; j<equipment.length; ++j) { %> 
+                                            <option value="<%=equipment[j].id%>" <%if(equipment[j]!=null&&equipment[j].id==equipmentId){%> selected="selected" <%}%>> <%=equipment[j].name%>（<%=equipment[j].code%>） </option>
+                                    <% } %>
+                                </select>
+                            </span>
+                            <input type="text" name="keyword" id="keyword" value="<%if(keyword!=null){%><%=keyword%><%}%>" placeholder=" 任务名称、地址" style="width:250px" class="input-text">
+                            <button name="" id="equipProjectListSubmit" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜任务</button>
                         </div>
                     </form>
                     <!-- <div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -40,7 +45,6 @@
                                             <th width="120">生产设备详情</th>
                                             <th width="120">审核状态</th>
                                             <th width="120">任务进度</th>
-                                            <th width="100">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,36 +56,41 @@
                                             <td><%=project[i].name %> </td>
                                             <td><%=project[i].address %> </td>
                                             <td>
-                                                <%if(project[i].scheme_id!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/scheme/findById?schemeId=<%=project[i].scheme_id%>','10001','360','400')">查看</u>
+                                                <%if(project[i].schemeId!=null){%>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
                                                 <%}%>
-                                                <%if(project[i].scheme_id==null){%>
+                                                <%if(project[i].schemeId==null){%>
                                                     暂未绑定方案数据
                                                 <%}%>
                                             </td>
                                             <td>
-                                                <%if(project[i].design_id!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设计信息','/design/findById?designId=<%=project[i].design_id%>','10001','360','400')">查看</u>
+                                                <%if(project[i].designId!=null){%>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设计信息','/design/findById?designId=<%=project[i].designId%>','10001','360','400')">查看</u>
                                                 <%}%>
-                                                <%if(project[i].design_id==null){%>
+                                                <%if(project[i].designId==null){%>
                                                     暂未绑定设计数据
                                                 <%}%>
                                             </td>
                                             <td>
-                                                <%if(project[i].equipment_id!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设备信息','/equipment/findById?equipmentId=<%=project[i].equipment_id%>','10001','360','400')">查看</u>
+                                                <%if(project[i].equipmentId!=null){%>
+                                                    <!-- <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设备信息','/equipment/findById?equipmentId=<%=project[i].equipmentId%>','10001','360','400')">查看</u> -->
+                                                    <u style="cursor:pointer" class="text-primary" onclick="equipment_add('设备详情','/equipment/info?equipmentId=<%=project[i].equipmentId %>')">查看</u>
                                                 <%}%>
-                                                <%if(project[i].equipment_id==null){%>
+                                                <%if(project[i].equipmentId==null){%>
                                                     暂未绑定设备数据
                                                 <%}%>
                                             </td>
-                                            <td><%=project[i].auditstate %> </td>
-                                            <td><%=project[i].progress %> </td>
-                                            <td class="f-14 product-brand-manage">
-                                                <!-- <a style="text-decoration:none" class="ml-5"  _href="/project/fenfaMap" onclick="project_fenfa('地图页面分发','/project/fenfaMap')" href="javascript:;" title="地图页面分发"><i class="Hui-iconfont">&#xe665;</i></a> -->
-                                                <%if(project[i].designId!=null){%>
-                                                <a style="text-decoration:none" _href="/project/fenfaList" onclick="project_fenfaList('龙骨生产设备分发','/project/fenfaList?projectId=<%=project[i].id %>')" href="javascript:;" title="列表页面分发"><i class="Hui-iconfont">&#xe615;</i></a>
-                                                <%}%>
+                                            <td>
+                                                已审核
+                                                <!-- <%=project[i].auditstate %>  -->
+                                            </td>
+                                            <td>
+                                                <% for(var j=0; j<projectProgress.length; ++j) { %> 
+                                                        <%if(projectProgress[j]!=null&&projectProgress[j].dictvalue==project[i].progress){%>
+                                                            <%=projectProgress[j].dictleble %>
+                                                        <%}%>
+                                                <% } %>
+                                                <!-- <%=project[i].progress %>  -->
                                             </td>
                                         </tr>
                                         <% }} %>  
@@ -94,6 +103,13 @@
         <% include ../includes/footer.ejs %>
         <script type="text/javascript" >
         
+        // $(document).ready(function() {
+        //     var keyword = $("#keyword").val();
+        //     if(keyword == ''){
+        //         $("#equipProjectListSubmit").click();
+        //     }
+	    // });
+
         function member_show(title,url,id,w,h){
 	        layer_show(title,url,w,h);
         }

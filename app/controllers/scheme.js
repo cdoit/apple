@@ -34,19 +34,24 @@ var upload = multer({ storage: storage })
 
 //方案列表
 router.get('/list', login.checkin, function (req, res, next) {
+    var admin = req.session.admin;
     var keyword = req.query.keyword;
     var countPerPage = 10, currentPage = 1;
     db.Scheme.findAll(
         {
             'limit': countPerPage,                      //每页多少条
-            'offset': countPerPage * (currentPage - 1)  //跳过多少条
+            'offset': countPerPage * (currentPage - 1),  //跳过多少条
+            'where': {
+                'adminInfoId': admin.id
+            }
         }
     ).then(function (result) {
-        res.render('scheme/list.ejs', {keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
+        res.render('scheme/list.ejs', {admin:admin,keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
     });
 });
 
 router.post('/list', login.checkin, function (req, res, next) {
+    var admin = req.session.admin;
     var keyword = req.body.keyword;
     var countPerPage = 10, currentPage = 1;
     db.Scheme.findAll(
@@ -54,14 +59,36 @@ router.post('/list', login.checkin, function (req, res, next) {
             'limit': countPerPage,                      //每页多少条
             'offset': countPerPage * (currentPage - 1) , //跳过多少条
             'where': {
+                'adminInfoId': admin.id,
                 'name': {
                     '$like': '%'+keyword+'%'      
                 }
             }
         }
     ).then(function (result) {
-        res.render('scheme/list.ejs', {keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
+        res.render('scheme/list.ejs', {admin:admin,keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
     });
+});
+
+router.get('/checkName', function (req, res, next) {
+    var schemeName = req.query.schemeName;
+    var oldName = req.query.oldName;
+    db.Scheme.findAll({
+        "where":{
+            name:schemeName
+        }
+    }).then(function (result) {
+        var temp = true;
+        if(schemeName!=undefined&&schemeName == oldName){
+            // temp = false;
+            res.json(true);
+        }else if(result!=null&&result.length>0){
+            // temp = false;
+            res.json(false);
+        }else{
+            res.json(true);
+        }
+    }).catch(next);
 });
 
 router.get('/add', login.checkin, function (req, res, next) {
@@ -145,9 +172,23 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
                     id:schemeId
                 }
             }
-            db.Scheme.destroy(filter).then(function (result) {
-                res.json(result);
+            //判断该方案是否关联任务了
+            db.Project.findAll({
+                "where":{
+                    schemeId:schemeId
+                }
+            }).then(function (result) {
+                if(result!=null){
+                    res.json("0");
+                }else{
+                    db.Scheme.destroy(filter).then(function (result) {
+                        res.json("1");
+                    });
+                }
             }).catch(next);
+            // db.Scheme.destroy(filter).then(function (result) {
+            //     res.json(result);
+            // }).catch(next);
     });
 
 //获取方案详细信息
