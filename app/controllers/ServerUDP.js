@@ -54,6 +54,25 @@ server.on('message', function (message, remote) {
         var buf = new Buffer("online is ok");
         server.send(buf,0,buf.length,remote.port,remote.address);
         console.log(buf);
+    }else if(data.indexOf("downloadComplete") != -1){
+        //下载完成后的操作（项目已完成）
+        var projectarr = new Array(); //定义一数组 
+        projectarr = html.toString().split("#"); //字符分割
+        var mac = projectarr[1];
+        var projectname = projectarr[2];
+        var filter = {
+            progress:'5'
+        }
+        db.Project.update(
+            filter,
+            {
+                where: {
+                    name: projectname
+                }
+            }
+        ).then(function (result) {
+            console.log("项目完成");
+        }).catch(next);
     }else{
         //解析数据
     var equipmentData= new Array(); //定义一数组 

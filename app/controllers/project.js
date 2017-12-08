@@ -568,5 +568,73 @@ router.get('/nojiedan', login.checkin, function (req, res, next) {
     }).catch(next);
 });
 
+//项目状态接口
+router.get('/getProjectState', function (req, res, next) {
+    Promise.all([
+        db.Sequelize.query("SELECT COUNT(0) as value from project where progress=1" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from project where progress=2" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from project where progress=3" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from project where progress=4" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from project where progress=5" ),
+        ]).then(function(results){
+        var obj = new Object;
+        var name = new Array;
+        var code = new Array;
+        name.push("已开始");
+        name.push("已接单");
+        name.push("已完成设计");
+        name.push("已完成分配");
+        name.push("项目已完成");
+        var code1= new Object;
+        code1.name = "已开始";
+        code1.value = results[0][0][0].value;
+        code.push(code1);
+        var code2 = new Object;
+        code2.name = "已接单";
+        code2.value = results[1][0][0].value;
+        code.push(code2);
+        var code3 = new Object;
+        code3.name = "已完成设计";
+        code3.value = results[2][0][0].value;
+        code.push(code3);
+        var code4 = new Object;
+        code4.name = "已完成分配";
+        code4.value = results[3][0][0].value;
+        code.push(code4);
+        var ccod5 = new Object;
+        ccod5.name = "项目已完成";
+        ccod5.value = results[4][0][0].value;
+        code.push(ccod5);
+        obj.name = name;
+        obj.code = code;
+        res.json(obj);
+      }).catch(next);
+});
+
+
+router.get('/getProjectCount', function (req, res, next) {
+    var date=new Date;
+    var year=date.getFullYear(); 
+    var month=date.getMonth()+1;
+    var monthsd =(month<10 ? "0"+month:month); 
+    var mydate = (year.toString()+"-"+month.toString());
+    //获取当月之前的所有月份
+    var result = [];
+    var str ;
+    for(var i = 1; i <= month; i++) {
+        if(i<10){ 
+            result.push("'"+year.toString() + "-" + "0"+i+"'");
+        }else{
+            result.push("'"+year.toString() + "-" + i+"'");
+        }
+    }
+    console.log("ss"); //'2017-11','2017-12'
+
+    db.Sequelize.query(
+        "SELECT COUNT(0) as num , DATE_FORMAT(created_at,'%Y-%m') as ind from project where DATE_FORMAT(created_at,'%Y-%m') in ("+result+") group by DATE_FORMAT(created_at,'%Y-%m')"
+    ).then(function (results) {
+        res.json(results[0]);
+    }).catch(next);
+});
 
 module.exports = router;

@@ -46,12 +46,48 @@
             <div id="rightDiv2"></div>
     </div>
     <!-- ECharts单文件引入 -->
-    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript" src="../../lib/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../../lib/build/dist/echarts.js"></script>
     <script type="text/javascript">
+
+    function chinanum(num){  
+        var china = new Array('零','一','二','三','四','五','六','七','八','九');  
+        var arr = new Array();  
+        var english = num.split("")  
+        for(var i=0;i<english.length;i++){  
+            arr[i] = china[english[i]];  
+        }  
+        return arr.join("")  
+    } 
+
+    function NoToChinese(num) { 
+        if (!/^\d*(\.\d*)?$/.test(num)) { alert("Number is wrong!"); return "Number is wrong!"; } 
+        var AA = new Array("零", "一", "二", "三", "四", "五", "六", "七", "八", "九"); 
+        var BB = new Array("", "十", "佰", "仟", "萬", "億", "点", ""); 
+        var a = ("" + num).replace(/(^0*)/g, "").split("."), k = 0, re = ""; 
+        for (var i = a[0].length - 1; i >= 0; i--) { 
+        switch (k) { 
+        case 0: re = BB[7] + re; break; 
+        case 4: if (!new RegExp("0{4}\\d{" + (a[0].length - i - 1) + "}$").test(a[0])) 
+        re = BB[4] + re; break; 
+        case 8: re = BB[5] + re; BB[7] = BB[5]; k = 0; break; 
+        } 
+        if (k % 4 == 2 && a[0].charAt(i + 2) != 0 && a[0].charAt(i + 1) == 0) re = AA[0] + re; 
+        if (a[0].charAt(i) != 0) re = AA[a[0].charAt(i)] + BB[k % 4] + re; k++; 
+        } 
+
+        if (a.length > 1) //加上小数部分(如果有小数部分) 
+        { 
+        re += BB[6]; 
+        for (var i = 0; i < a[1].length; i++) re += AA[a[1].charAt(i)]; 
+        } 
+        return re; 
+        } 
+
         // 路径配置
         require.config({
             paths: {
-                echarts: 'http://echarts.baidu.com/build/dist'
+                echarts: '../../lib/build/dist'
             }
         });
         
@@ -59,21 +95,79 @@
         require(
             [
                 'echarts',
-                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/pie', 
+                'echarts/chart/funnel', 
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载echarts.js:1 
             ],
             function (ec) {
                 // 基于准备好的dom，初始化echarts图表
+
+
+                //option1的数据
+                var xAxisDataJson2 = [];  
+                var temp = []; 
+                var seriesDataJson2 = [];  
+                $.ajax({  
+                    url:"/project/getProjectCount",  
+                    type:"get",  
+                    async:false,  
+                    success:function(data){
+                        // var jsonObj=eval("("+data+")");  
+                        $.each(data, function (i, item) {  
+                            // alert(item.id + ","  + item.name); 
+                            seriesDataJson2.push(item.num);
+                            temp.push(item.ind);
+                        });   
+                    }  
+                });  
+
+                //操作temp
+                $.each(temp, function (i, item) {
+                    var yue = item.substr(item.length-2,item.length);
+                    // var shifou = item.substr(item.length-2,item.length-1);
+                    // var yue = '09';
+                    if(parseInt(yue)<10){
+                        yue = item.substr(item.length-1,item.length);
+                    }
+                    // var yuefen = NoToChinese(yue);
+                    xAxisDataJson2.push(yue+"月");
+                }); 
+              
+                var barData1 = {  
+                        xAxisData:function(){  
+                            return xAxisDataJson2;  
+                        },  
+                        seriesData:function(){  
+                            return seriesDataJson2;  
+                        }  
+                };  
+
+
                 var option2 = {
                     tooltip: {
-                        show: true
+                        show: true,
+                        trigger: 'axis'
                     },
-                    legend: {
-                        data:['每月项目数量统计']
+                    title : {
+                        text: '每月项目数量统计',
+                        subtext: '',
+                        x:'center'
                     },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    // legend: {
+                    //     data:['每月项目数量统计']
+                    // },
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+                            data:xAxisDataJson2,
+                            // data : ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
                         }
                     ],
                     yAxis : [
@@ -83,12 +177,55 @@
                     ],
                     series : [
                         {
-                            "name":"产量",
+                            "name":"项目总量",
                             "type":"bar",
-                            "data":[5, 20, 40, 10, 10, 20,5, 20, 40, 10, 10, 20]
+                            "data":seriesDataJson2,
+                            itemStyle : {  
+                                    normal : {  
+                                        //柱状图颜色  
+                                        color : function(params) {  
+                                            // 颜色列表  
+                                            var colorList = [ 'rgba(194,35,43)',  
+                                                    'rgb(194,35,43)', 'rgb(182,196,53)','rgb(253,206,15)', 'rgb(233,125,38)',  
+                                                    'rgb(39,115,124)', 'rgb(255,131,99)','rgb(251,218,97)', 'rgb(95,192,221)',  
+                                                    'rgb(226,80,75)', 'rgb(213, 75, 68)','rgb(285, 121, 29)'];  
+                                            //返回颜色  
+                                            return colorList[params.dataIndex];
+                                        },  
+                                        //柱状图圆角  
+                                        barBorderRadius : 3  
+                                    }  
+                            }
                         }
                     ]
                 };
+
+
+
+                //option1的数据
+                var xAxisDataJson1 ;  
+                var seriesDataJson1 ;  
+                $.ajax({  
+                    url:"/project/getProjectState",  
+                    type:"get",  
+                    async:false,  
+                    success:function(data){  
+                        xAxisDataJson1=data.name;
+                        seriesDataJson1=data.code;
+                    }  
+                });  
+              
+                var barData1 = {  
+                        xAxisData:function(){  
+                            return xAxisDataJson1;  
+                        },  
+                        seriesData:function(){  
+                            return seriesDataJson1;  
+                        }  
+                };  
+                
+
+
 
                 var option1 = {
                     title : {
@@ -103,25 +240,11 @@
                     legend: {
                         orient : 'vertical',
                         x : 'left',
-                        data:['正常','进行中','完成']
+                        data:xAxisDataJson1
                     },
                     toolbox: {
                         show : true,
                         feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
-                            magicType : {
-                                show: true, 
-                                type: ['pie', 'funnel'],
-                                option: {
-                                    funnel: {
-                                        x: '25%',
-                                        width: '50%',
-                                        funnelAlign: 'left',
-                                        max: 1548
-                                    }
-                                }
-                            },
                             restore : {show: true},
                             saveAsImage : {show: true}
                         }
@@ -129,15 +252,12 @@
                     calculable : true,
                     series : [
                         {
-                            name:'访问来源',
+                            // name:'访问来源',
                             type:'pie',
                             radius : '55%',
                             center: ['50%', '60%'],
-                            data:[
-                                {value:335, name:'正常'},
-                                {value:310, name:'进行中'},
-                                {value:234, name:'完成'}
-                            ]
+
+                            data:seriesDataJson1
                         }
                     ]
                 };
@@ -146,7 +266,7 @@
                     title : {
                         text: '设备状态统计',
                         subtext: '',
-                        x:'center'
+                        x:'center',
                     },
                     tooltip : {
                         trigger: 'item',
@@ -160,20 +280,6 @@
                     toolbox: {
                         show : true,
                         feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
-                            magicType : {
-                                show: true, 
-                                type: ['pie', 'funnel'],
-                                option: {
-                                    funnel: {
-                                        x: '25%',
-                                        width: '50%',
-                                        funnelAlign: 'left',
-                                        max: 1548
-                                    }
-                                }
-                            },
                             restore : {show: true},
                             saveAsImage : {show: true}
                         }
@@ -195,11 +301,23 @@
                 };
 
                 var option4 = {
+                    title : {
+                        text: '每月设备生产量统计',
+                        subtext: '',
+                        x:'center',
+                    },
                     tooltip: {
                         show: true
                     },
-                    legend: {
-                        data:['每月设备生产量统计']
+                    // legend: {
+                    //     data:['每月设备生产量统计']
+                    // },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
                     },
                     xAxis : [
                         {
@@ -216,9 +334,26 @@
                         {
                             "name":"产量",
                             "type":"bar",
-                            "data":[5, 20, 40, 10, 10, 20,5, 20, 40, 10, 10, 20]
-                        }
-                    ]
+                            "data":[5, 20, 40, 10, 10, 20,5, 20, 40, 10, 10, 20],
+                            itemStyle : {  
+                                    normal : {  
+                                        //柱状图颜色  
+                                        color : function(params) {  
+                                            // 颜色列表  
+                                            var colorList = [ 'rgba(194,35,43)',  
+                                                    'rgb(194,35,43)', 'rgb(182,196,53)','rgb(253,206,15)', 'rgb(233,125,38)',  
+                                                    'rgb(39,115,124)', 'rgb(255,131,99)','rgb(251,218,97)', 'rgb(95,192,221)',  
+                                                    'rgb(226,80,75)', 'rgb(213, 75, 68)','rgb(285, 121, 29)'];  
+                                            //返回颜色  
+                                            return colorList[params.dataIndex];  
+                                        },  
+                                        //柱状图圆角  
+                                        barBorderRadius : 3  
+                                    }  
+                            }
+                            }
+                        ]
+                    
                 };
 
 

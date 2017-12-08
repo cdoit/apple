@@ -211,10 +211,15 @@ router.get('/map', login.checkin, function (req, res, next) {
 });
 
 
+router.get('/statistic', function (req, res, next) {
+    res.render('equipment/statistic.ejs' );
+});
+
+
 //设备数据接口
 router.get('/equipmentData', function (req, res, next) {
     db.Sequelize.query(
-        "SELECT ep.*,e.id as equipmentId,e.`code`,e.`name`,e.buytime,e.customer from equipmentposition ep JOIN equipment as e on e.id = ep.equipment_id where NOT exists (SELECT 1 FROM equipmentposition where ep.equipment_id = equipment_id and created_at>ep.created_at)"
+        "SELECT ep.*,e.id as equipmentId,e.location,e.`code`,e.`name`,e.buytime,e.customer from equipmentposition ep JOIN equipment as e on e.id = ep.equipment_id where NOT exists (SELECT 1 FROM equipmentposition where ep.equipment_id = equipment_id and created_at>ep.created_at)"
     ).then(function (result) {
         res.json(result[0]);
     }).catch(next);
