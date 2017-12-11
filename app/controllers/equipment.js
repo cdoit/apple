@@ -206,7 +206,7 @@ router.get('/map', login.checkin, function (req, res, next) {
     db.Sequelize.query(
         "SELECT ep.*,e.`code`,e.`name`,e.buytime,e.customer from equipmentparameter ep JOIN equipment as e on e.id = ep.equipment_id ORDER BY ep.created_at desc"
     ).then(function (result) {
-        res.render('equipment/map.ejs',{equipment:result[0]});
+        res.render('equipment/map.ejs',{moment: require("moment"),equipment:result[0]});
     }).catch(next);
 });
 
@@ -216,10 +216,103 @@ router.get('/statistic', function (req, res, next) {
 });
 
 
+//设备状态接口   (暂时统计会导致停机的运行状态)
+router.get('/getEquipmentState', function (req, res, next) {
+    Promise.all([
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=0" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=2" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=5" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=6" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=9" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=10" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=11" ),
+        db.Sequelize.query("SELECT COUNT(0) as value from equipment where workstate=12" ),
+        ]).then(function(results){
+        var obj = new Object;
+        var name = new Array;
+        var code = new Array;
+        name.push("正常");
+        name.push("材料用尽");
+        name.push("伺服无使能");
+        name.push("伺服故障");
+        name.push("油泵停止");
+        name.push("油压过载");
+        name.push("急停按下，油泵停止");
+        name.push("油压过低");
+        var code1= new Object;
+        code1.name = "正常";
+        code1.value = results[0][0][0].value;
+        code.push(code1);
+        var code2 = new Object;
+        code2.name = "材料用尽";
+        code2.value = results[1][0][0].value;
+        code.push(code2);
+        var code3 = new Object;
+        code3.name = "伺服无使能";
+        code3.value = results[2][0][0].value;
+        code.push(code3);
+        var code4 = new Object;
+        code4.name = "伺服故障";
+        code4.value = results[3][0][0].value;
+        code.push(code4);
+        var ccod5 = new Object;
+        ccod5.name = "油泵停止";
+        ccod5.value = results[4][0][0].value;
+        code.push(ccod5);
+
+
+        var ccod6 = new Object;
+        ccod6.name = "油压过载";
+        ccod6.value = results[4][0][0].value;
+        code.push(ccod6);
+
+        var ccod7 = new Object;
+        ccod7.name = "急停按下，油泵停止";
+        ccod7.value = results[4][0][0].value;
+        code.push(ccod7);
+
+        var ccod8 = new Object;
+        ccod8.name = "油压过低";
+        ccod8.value = results[4][0][0].value;
+        code.push(ccod8);
+
+
+        obj.name = name;
+        obj.code = code;
+        res.json(obj);
+      }).catch(next);
+});
+
+
+router.get('/getOutputCount', function (req, res, next) {
+    var date=new Date;
+    var year=date.getFullYear(); 
+    var month=date.getMonth()+1;
+    var monthsd =(month<10 ? "0"+month:month); 
+    var mydate = (year.toString()+"-"+month.toString());
+    //获取当月之前的所有月份
+    var result = [];
+    var str ;
+    for(var i = 1; i <= month; i++) {
+        if(i<10){ 
+            result.push("'"+year.toString() + "-" + "0"+i+"'");
+        }else{
+            result.push("'"+year.toString() + "-" + i+"'");
+        }
+    }
+    console.log("ss"); //'2017-11','2017-12'
+
+    db.Sequelize.query(
+        "SELECT  SUM(e.output) as num , DATE_FORMAT(e.created_at,'%Y-%m') as ind from equipment as e where DATE_FORMAT(e.created_at,'%Y-%m') in ("+result+") group by DATE_FORMAT(e.created_at,'%Y-%m')"
+    ).then(function (results) {
+        res.json(results[0]);
+    }).catch(next);
+});
+
 //设备数据接口
 router.get('/equipmentData', function (req, res, next) {
     db.Sequelize.query(
-        "SELECT ep.*,e.id as equipmentId,e.location,e.`code`,e.`name`,e.buytime,e.customer from equipmentposition ep JOIN equipment as e on e.id = ep.equipment_id where NOT exists (SELECT 1 FROM equipmentposition where ep.equipment_id = equipment_id and created_at>ep.created_at)"
+        "SELECT ep.*,e.id as equipmentId,e.location,e.`code`,e.`name`,DATE_FORMAT(e.buytime,'%Y-%m-%d') as buytime,e.customer from equipmentposition ep JOIN equipment as e on e.id = ep.equipment_id where NOT exists (SELECT 1 FROM equipmentposition where ep.equipment_id = equipment_id and created_at>ep.created_at)"
     ).then(function (result) {
         res.json(result[0]);
     }).catch(next);
