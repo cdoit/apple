@@ -59,6 +59,22 @@
             });		
         });
     }
+
+    function nextPage(pageNo,totalPage){
+        pageNo = parseInt(pageNo);
+        totalPage = parseInt(totalPage);
+        if(pageNo >= totalPage){
+            return false;
+        }
+        return true;
+    }
+
+    function prevPage(pageNo){
+        if(pageNo == '1'){
+            return false;
+        }
+        return true;
+    }
 </script>
 <!--/_footer /作为公共模版分离出去-->
 

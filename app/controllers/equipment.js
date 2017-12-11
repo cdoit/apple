@@ -11,7 +11,19 @@ router.get('/list', login.checkin, function (req, res, next) {
     var projectId = req.query.projectId;
     var keyword = req.query.keyword;
     var equipmenttype = req.query.equipmenttype;
-    var countPerPage = 10, currentPage = 1;
+    var currentPage = req.query.currentPage;
+    var countPerPage = req.query.countPerPage;
+    if(countPerPage ==undefined || countPerPage == "" || countPerPage == null){
+        countPerPage = 10;
+    }else{
+        countPerPage = parseInt(countPerPage);
+    }
+    if(currentPage == undefined || currentPage == "" || currentPage == null){
+        currentPage = 1;
+    }else{
+        currentPage = parseInt(currentPage);
+    }
+    // var countPerPage = 10, currentPage = 1;
     Promise.all([
         db.Equipment.findAll(
             {
@@ -28,10 +40,13 @@ router.get('/list', login.checkin, function (req, res, next) {
             'where': {
                 roleId:5
             }
-        })
+        }),
+        db.Equipment.count()
         ]).then(function(result){
+            var total = result[3];
+            var totalPage = Math.ceil(result[3] / countPerPage);
             res.render('equipment/list2.ejs', 
-                { projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+                {totalPage:totalPage, total:result[3],projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
 });
@@ -40,8 +55,21 @@ router.get('/list', login.checkin, function (req, res, next) {
 
 router.post('/list', login.checkin, function (req, res, next) {
     var keyword = req.body.keyword;
+    var projectId = req.body.projectId;
     var equipmenttype = req.body.equipmenttype;
-    var countPerPage = 10, currentPage = 1;
+    var currentPage = req.body.currentPage;
+    var countPerPage = req.body.countPerPage;
+    if(countPerPage ==undefined || countPerPage == "" || countPerPage == null){
+        countPerPage = 10;
+    }else{
+        countPerPage = parseInt(countPerPage);
+    }
+    if(currentPage == undefined || currentPage == "" || currentPage == null){
+        currentPage = 1;
+    }else{
+        currentPage = parseInt(currentPage);
+    }
+    // var countPerPage = 10, currentPage = 1;
     Promise.all([
         db.Equipment.findAll(
             {
@@ -72,10 +100,13 @@ router.post('/list', login.checkin, function (req, res, next) {
             'where': {
                 roleId:5
             }
-        })
+        }),
+        db.Equipment.count()
         ]).then(function(result){
+            var total = result[3];
+            var totalPage = Math.ceil(result[3] / countPerPage);
             res.render('equipment/list2.ejs', 
-                { equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+                {totalPage:totalPage, total:result[3], projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
 });
@@ -303,7 +334,7 @@ router.get('/getOutputCount', function (req, res, next) {
     console.log("ss"); //'2017-11','2017-12'
 
     db.Sequelize.query(
-        "SELECT  SUM(e.output) as num , DATE_FORMAT(e.created_at,'%Y-%m') as ind from equipment as e where DATE_FORMAT(e.created_at,'%Y-%m') in ("+result+") group by DATE_FORMAT(e.created_at,'%Y-%m')"
+        "SELECT IFNULL(SUM(e.output),0) as num , DATE_FORMAT(e.created_at,'%Y-%m') as ind from equipment as e where DATE_FORMAT(e.created_at,'%Y-%m') in ("+result+") group by DATE_FORMAT(e.created_at,'%Y-%m')"
     ).then(function (results) {
         res.json(results[0]);
     }).catch(next);
