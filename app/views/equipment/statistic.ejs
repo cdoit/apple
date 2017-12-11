@@ -102,8 +102,7 @@
             function (ec) {
                 // 基于准备好的dom，初始化echarts图表
 
-
-                //option1的数据
+                //option2的数据
                 var xAxisDataJson2 = [];  
                 var temp = []; 
                 var seriesDataJson2 = [];  
@@ -133,14 +132,14 @@
                     xAxisDataJson2.push(yue+"月");
                 }); 
               
-                var barData1 = {  
-                        xAxisData:function(){  
-                            return xAxisDataJson2;  
-                        },  
-                        seriesData:function(){  
-                            return seriesDataJson2;  
-                        }  
-                };  
+                // var barData1 = {  
+                //         xAxisData:function(){  
+                //             return xAxisDataJson2;  
+                //         },  
+                //         seriesData:function(){  
+                //             return seriesDataJson2;  
+                //         }  
+                // };  
 
 
                 var option2 = {
@@ -214,18 +213,6 @@
                         seriesDataJson1=data.code;
                     }  
                 });  
-              
-                var barData1 = {  
-                        xAxisData:function(){  
-                            return xAxisDataJson1;  
-                        },  
-                        seriesData:function(){  
-                            return seriesDataJson1;  
-                        }  
-                };  
-                
-
-
 
                 var option1 = {
                     title : {
@@ -262,6 +249,21 @@
                     ]
                 };
 
+
+
+                 //option3的数据
+                 var xAxisDataJson3 ;  
+                var seriesDataJson3 ;  
+                $.ajax({  
+                    url:"/equipment/getEquipmentState",  
+                    type:"get",  
+                    async:false,  
+                    success:function(data){  
+                        xAxisDataJson3=data.name;
+                        seriesDataJson3=data.code;
+                    }  
+                });  
+
                 var option3 = {
                     title : {
                         text: '设备状态统计',
@@ -275,7 +277,7 @@
                     legend: {
                         orient : 'vertical',
                         x : 'left',
-                        data:['正常状态','维修状态','报废状态']
+                        data:xAxisDataJson3
                     },
                     toolbox: {
                         show : true,
@@ -287,18 +289,46 @@
                     calculable : true,
                     series : [
                         {
-                            name:'访问来源',
+                            // name:'访问来源',
                             type:'pie',
                             radius : '55%',
                             center: ['50%', '60%'],
-                            data:[
-                                {value:335, name:'正常状态'},
-                                {value:310, name:'维修状态'},
-                                {value:234, name:'报废状态'}
-                            ]
+                            data:seriesDataJson3
+                            // [
+                            //     {value:335, name:'正常状态'},
+                            //     {value:310, name:'维修状态'},
+                            //     {value:234, name:'报废状态'}
+                            // ]
                         }
                     ]
                 };
+
+
+                //option4的数据
+                var xAxisDataJson4 = [];  
+                var temp4 = []; 
+                var seriesDataJson4 = [];  
+                $.ajax({  
+                    url:"/equipment/getOutputCount",  
+                    type:"get",  
+                    async:false,  
+                    success:function(data){ 
+                        $.each(data, function (i, item) {  
+                            seriesDataJson4.push(item.num);
+                            temp4.push(item.ind);
+                        });   
+                    }  
+                });  
+
+                //操作temp
+                $.each(temp4, function (i, item) {
+                    var yue = item.substr(item.length-2,item.length);
+                    if(parseInt(yue)<10){
+                        yue = item.substr(item.length-1,item.length);
+                    }
+                    xAxisDataJson4.push(yue+"月");
+                }); 
+
 
                 var option4 = {
                     title : {
@@ -322,7 +352,7 @@
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+                            data : xAxisDataJson4
                         }
                     ],
                     yAxis : [
@@ -334,13 +364,13 @@
                         {
                             "name":"产量",
                             "type":"bar",
-                            "data":[5, 20, 40, 10, 10, 20,5, 20, 40, 10, 10, 20],
+                            "data":seriesDataJson4,
                             itemStyle : {  
                                     normal : {  
                                         //柱状图颜色  
                                         color : function(params) {  
                                             // 颜色列表  
-                                            var colorList = [ 'rgba(194,35,43)',  
+                                            var colorList = [ 'rgba(213, 75, 68)',  
                                                     'rgb(194,35,43)', 'rgb(182,196,53)','rgb(253,206,15)', 'rgb(233,125,38)',  
                                                     'rgb(39,115,124)', 'rgb(255,131,99)','rgb(251,218,97)', 'rgb(95,192,221)',  
                                                     'rgb(226,80,75)', 'rgb(213, 75, 68)','rgb(285, 121, 29)'];  

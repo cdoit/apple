@@ -129,9 +129,10 @@
                     var title = markers[i].customer+'<span style="font-size:11px;color:#F00;">设备编号:'+markers[i].code+'</span>',
                         content = [];
                     
-                    content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
-                    content.push("电话：010-64733333");
-                    content.push("出厂日期："+markers[i].buytime);
+                    // content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
+                    content.push("地址："+markers[i].location);
+                    // content.push("电话：010-64733333");
+                    content.push("出厂日期："+ markers[i].buytime);
                     content.push("<a href='/equipment/info?equipmentId="+markers[i].equipmentId+"'>详细信息</a>");
                     var infoWindow = new AMap.InfoWindow({
                         isCustom: true,  //使用自定义窗体
