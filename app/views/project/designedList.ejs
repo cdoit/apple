@@ -65,7 +65,8 @@
 
                                             <td>
                                                 <%if(project[i].equipmentId!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设备信息','/equipment/findById?equipmentId=<%=project[i].equipmentId%>','10001','360','400')">查看</u>
+                                                    <!-- <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设备信息','/equipment/findById?equipmentId=<%=project[i].equipmentId%>','10001','360','400')">查看</u> -->
+                                                    <u style="cursor:pointer" class="text-primary" onclick="equipment_add('设备详情','/equipment/info?equipmentId=<%=project[i].equipmentId %>')">查看</u>
                                                 <%}%>
 
                                                 <%if(project[i].equipmentId==null){%>
