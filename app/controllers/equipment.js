@@ -386,12 +386,12 @@ router.get('/getDesignByCode', function (req, res, next) {
     var basePath = 'http://192.168.31.108:3000/';
     var username = req.query.username;
     var password = req.query.password;
-    var passwordsd = md5(password);
+    // var passwordsd = md5(password);
     var mac = req.query.mac;
     db.AdminInfo.findOne({
         where: {
             adminname: username,
-            password: passwordsd
+            password: password
         }
     }).then(function (result) {
         if (result != null) {

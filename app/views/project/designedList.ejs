@@ -17,9 +17,14 @@
                     <form class="form form-horizontal" method="post" action="/project/designed" >
                         <div class="text-c">
                             <input type="text" name="keyword" id="" value="<%if(keyword!=null){%><%=keyword%><%}%>" placeholder="任务名称、地址" style="width:250px" class="input-text">
+                            <input type="hidden" name="pageNo" value="<%=pageNo%>">
+                            <input type="hidden" name="pageSize" value="<%=pageSize%>">
                             <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜任务</button>
                         </div>
                     </form>
+                    <div class="cl pd-5 bg-1 bk-gray mt-20">
+                        <span class="r">共有数据：<strong><%=total %></strong> 条</span>
+                    </div>
                     <div class="mt-20">
                             <table class="table table-border table-bordered table-bg table-sort">
                                     <thead>
@@ -102,6 +107,11 @@
                                         <% }} %>  
                                     </tbody>
                                 </table>
+                    </div>
+                    <div id="pagination" style="float: right;margin-top: 10px;">
+                        共<span><%=totalPage%></span>页 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/project/designed?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
+                        <a href="/project/designed?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
                     </div>
                 </article>
             </div>

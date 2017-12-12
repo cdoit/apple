@@ -9,37 +9,27 @@ var async = require('async');
 //任务（项目）列表
 router.get('/list', login.checkin, function (req, res, next) {
     var keyword = req.query.keyword;
-    var countPerPage = 10, currentPage = 1;
+    var pageNo = req.query.pageNo;
+    var pageSize = req.query.pageSize;
+    if(keyword ==  undefined || keyword == null){
+        keyword = "";
+    }
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
     Promise.all([
         db.Project.findAll(
             {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1)  //跳过多少条
-            }
-        ),
-        db.Dictionary.findAll({
-            'where': {
-                dicttype:"project_progress"
-            }
-        })
-        ]).then(function(result){
-        res.render('project/list.ejs', {projectProgress:result[1],keyword:keyword, project: result[0] });
-      }).catch(next);
-});
-
-router.post('/list', login.checkin, function (req, res, next) {
-    var keyword = req.body.keyword;
-    var countPerPage = 10, currentPage = 1;
-
-    Promise.all([
-        db.Project.findAll(
-            {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1),  //跳过多少条
-                'where': {
-                    // 'name': {
-                    //     '$like': '%'+keyword+'%'      
-                    // }
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1),  //跳过多少条
+                'where':{
                     '$or': [
                         {'name': {
                             '$like': '%'+keyword+'%'      
@@ -55,9 +45,85 @@ router.post('/list', login.checkin, function (req, res, next) {
             'where': {
                 dicttype:"project_progress"
             }
-        })
+        }),
+        db.Project.count(
+            {
+                'where':{
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
-        res.render('project/list.ejs', {projectProgress:result[1],keyword:keyword, project: result[0] });
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/list.ejs', 
+            {pageNo:pageNo,pageSize:pageSize,total:total,totalPage:totalPage,projectProgress:result[1],keyword:keyword, project: result[0] });
+      }).catch(next);
+});
+
+router.post('/list', login.checkin, function (req, res, next) {
+    var keyword = req.body.keyword;
+    // var countPerPage = 10, currentPage = 1;
+    var pageNo = req.body.pageNo;
+    var pageSize = req.body.pageSize;
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    Promise.all([
+        db.Project.findAll(
+            {
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1),  //跳过多少条
+                'where': {
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ]
+                }
+            }
+        ),
+        db.Dictionary.findAll({
+            'where': {
+                dicttype:"project_progress"
+            }
+        }),
+        db.Project.count(
+            {
+                'where': {
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ]
+                }
+            }
+        )
+        ]).then(function(result){
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/list.ejs', 
+            {pageNo:pageNo,pageSize:pageSize,total:total,totalPage:totalPage,projectProgress:result[1],keyword:keyword, project: result[0] });
       }).catch(next);
 });
 
@@ -152,12 +218,27 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
 router.get('/projectList', login.checkin, function (req, res, next) {
     var keyword = req.query.keyword;
     var adminInfoId = req.session.admin.id;
-    var countPerPage = 10, currentPage = 1;
+    var pageNo = req.query.pageNo;
+    var pageSize = req.query.pageSize;
+    if(keyword ==  undefined || keyword == null){
+        keyword = "";
+    }
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // var countPerPage = 10, currentPage = 1;
     Promise.all([
         db.Project.findAll(
             {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1), //跳过多少条
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1), //跳过多少条
                 'where': {
                     equipmentId: null,
                     designId: null,
@@ -172,29 +253,13 @@ router.get('/projectList', login.checkin, function (req, res, next) {
             'where': {
                 dicttype:"project_progress"
             }
-        })
-        ]).then(function(result){
-        res.render('project/projectList.ejs', {projectProgress:result[1], keyword:keyword,project: result[0] });
-      }).catch(next);
-});
-
-router.post('/projectList', login.checkin, function (req, res, next) {
-    var keyword = req.body.keyword;
-    var adminInfoId = req.session.admin.id;
-    var countPerPage = 10, currentPage = 1;
-    Promise.all([
-        db.Project.findAll(
+        }),
+        db.Project.count(
             {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1), //跳过多少条
                 'where': {
                     equipmentId: null,
                     designId: null,
                     adminInfoId: adminInfoId,
-                    // 'name': {
-                    //     '$like': '%'+keyword+'%'      
-                    // },
-
                     '$or': [
                         {'name': {
                             '$like': '%'+keyword+'%'      
@@ -203,7 +268,53 @@ router.post('/projectList', login.checkin, function (req, res, next) {
                             '$like': '%'+keyword+'%'      
                         }}
                     ],
+                    '$not': [
+                        { 'schemeId': null }
+                    ]
+                }
+            }
+        )
+        ]).then(function(result){
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/projectList.ejs', 
+            {total:total,totalPage:totalPage,projectProgress:result[1],pageNo:pageNo,pageSize:pageSize, keyword:keyword,project: result[0] });
+      }).catch(next);
+});
 
+router.post('/projectList', login.checkin, function (req, res, next) {
+    var keyword = req.body.keyword;
+    var adminInfoId = req.session.admin.id;
+    var pageNo = req.body.pageNo;
+    var pageSize = req.body.pageSize;
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // var countPerPage = 10, currentPage = 1;
+    Promise.all([
+        db.Project.findAll(
+            {
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1), //跳过多少条
+                'where': {
+                    equipmentId: null,
+                    designId: null,
+                    adminInfoId: adminInfoId,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
                     '$not': [
                         { 'schemeId': null }
                     ]
@@ -214,9 +325,32 @@ router.post('/projectList', login.checkin, function (req, res, next) {
             'where': {
                 dicttype:"project_progress"
             }
-        })
+        }),
+        db.Project.count(
+            {
+                'where': {
+                    equipmentId: null,
+                    designId: null,
+                    adminInfoId: adminInfoId,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
+                    '$not': [
+                        { 'schemeId': null }
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
-        res.render('project/projectList.ejs', {projectProgress:result[1], keyword:keyword,project: result[0] });
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/projectList.ejs', 
+            {total:total,totalPage:totalPage,projectProgress:result[1],pageSize:pageSize,pageNo:pageNo, keyword:keyword,project: result[0] });
       }).catch(next);
 });
 
@@ -387,41 +521,27 @@ router.get('/checkName', function (req, res, next) {
 // 待设计的任务列表
 router.get('/todoDesign', login.checkin, function (req, res, next) {
     var keyword = req.query.keyword;
-    var countPerPage = 10, currentPage = 1;
+    var pageNo = req.query.pageNo;
+    var pageSize = req.query.pageSize;
+    if(keyword ==  undefined || keyword == null){
+        keyword = "";
+    }
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // var countPerPage = 10, currentPage = 1;
     Promise.all([
         db.Project.findAll(
             {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1),  //跳过多少条
-                'where': {
-                    equipmentId: null,
-                    designId: null,
-                    designerId: null,
-                    progress:'1',
-                    '$not': [
-                        { 'schemeId': null }
-                    ]
-                }
-            }
-        ),
-        db.Dictionary.findAll({
-            'where': {
-                dicttype:"project_progress"
-            }
-        })
-        ]).then(function(result){
-            res.render('project/todoDesignList.ejs', {projectProgress:result[1], keyword:keyword,project: result[0] });
-        }).catch(next);
-});
-
-router.post('/todoDesign', login.checkin, function (req, res, next) {
-    var keyword = req.body.keyword;
-    var countPerPage = 10, currentPage = 1;
-    Promise.all([
-        db.Project.findAll(
-            {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1),  //跳过多少条
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1),  //跳过多少条
                 'where': {
                     equipmentId: null,
                     designId: null,
@@ -445,9 +565,106 @@ router.post('/todoDesign', login.checkin, function (req, res, next) {
             'where': {
                 dicttype:"project_progress"
             }
-        })
+        }),
+        db.Project.count(
+            {
+                'where': {
+                    equipmentId: null,
+                    designId: null,
+                    designerId: null,
+                    progress:'1',
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
+                    '$not': [
+                        { 'schemeId': null }
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
-            res.render('project/todoDesignList.ejs', {projectProgress:result[1], keyword:keyword,project: result[0]  });
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/todoDesignList.ejs', 
+            {total:total,totalPage:totalPage,pageNo:pageNo,pageSize:pageSize,projectProgress:result[1], keyword:keyword,project: result[0] });
+        }).catch(next);
+});
+
+router.post('/todoDesign', login.checkin, function (req, res, next) {
+    var keyword = req.body.keyword;
+    var pageNo = req.body.pageNo;
+    var pageSize = req.body.pageSize;
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // var countPerPage = 10, currentPage = 1;
+    Promise.all([
+        db.Project.findAll(
+            {
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1),  //跳过多少条
+                'where': {
+                    equipmentId: null,
+                    designId: null,
+                    designerId: null,
+                    progress:'1',
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
+                    '$not': [
+                        { 'schemeId': null }
+                    ]
+                }
+            }
+        ),
+        db.Dictionary.findAll({
+            'where': {
+                dicttype:"project_progress"
+            }
+        }),
+        db.Project.count(
+            {
+                'where': {
+                    equipmentId: null,
+                    designId: null,
+                    designerId: null,
+                    progress:'1',
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
+                    '$not': [
+                        { 'schemeId': null }
+                    ]
+                }
+            }
+        )
+        ]).then(function(result){
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/todoDesignList.ejs', 
+            {total:total,totalPage:totalPage,pageNo:pageNo,pageSize:pageSize,projectProgress:result[1], keyword:keyword,project: result[0] });
        }).catch(next);
 
 });
@@ -460,17 +677,40 @@ router.post('/todoDesign', login.checkin, function (req, res, next) {
 router.get('/designed', login.checkin, function (req, res, next) {
     var keyword = req.query.keyword;
     var designerId = req.session.admin.id;
-    var countPerPage = 10, currentPage = 1;
+    var pageNo = req.query.pageNo;
+    var pageSize = req.query.pageSize;
+    if(keyword ==  undefined || keyword == null){
+        keyword = "";
+    }
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // var countPerPage = 10, currentPage = 1;
     Promise.all([
         db.Project.findAll(
             {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1),  //跳过多少条
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1),  //跳过多少条
                 'where': {
                     // equipmentId: null,
                     // designId: null,
                     designerId: designerId,
                     // progress:'2',
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
                     '$not': [
                         { 'schemeId': null },
                         {'progress':'1'}
@@ -482,21 +722,55 @@ router.get('/designed', login.checkin, function (req, res, next) {
             'where': {
                 dicttype:"project_progress"
             }
-        })
+        }),
+        db.Project.count(
+            {
+                'where': {
+                    designerId: designerId,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
+                    '$not': [
+                        { 'schemeId': null },
+                        {'progress':'1'}
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
-            res.render('project/designedList.ejs', {projectProgress:result[1], keyword:keyword,project: result[0]});
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/designedList.ejs', 
+            {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,projectProgress:result[1], keyword:keyword,project: result[0]});
       }).catch(next);
 });
 
 router.post('/designed', login.checkin, function (req, res, next) {
     var keyword = req.body.keyword;
     var designerId = req.session.admin.id;
-    var countPerPage = 10, currentPage = 1;
+    var pageNo = req.body.pageNo;
+    var pageSize = req.body.pageSize;
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // var countPerPage = 10, currentPage = 1;
     Promise.all([
         db.Project.findAll(
             {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1),  //跳过多少条
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1),  //跳过多少条
                 'where': {
                     // equipmentId: null,
                     // designId: null,
@@ -520,9 +794,30 @@ router.post('/designed', login.checkin, function (req, res, next) {
             'where': {
                 dicttype:"project_progress"
             }
-        })
+        }),
+        db.Project.count(
+            {
+                'where': {
+                    designerId: designerId,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ],
+                    '$not': [
+                        { 'schemeId': null }
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
-            res.render('project/designedList.ejs', {projectProgress:result[1], keyword:keyword,project: result[0] });
+            var total = result[2];
+            var totalPage = Math.ceil(result[2] / pageSize);
+            res.render('project/designedList.ejs', 
+            {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,projectProgress:result[1], keyword:keyword,project: result[0]});
       }).catch(next);
 
 });

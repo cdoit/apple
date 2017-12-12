@@ -28,30 +28,43 @@ server.on('message', function (message, remote) {
         var mac = account[1];
         var loginName = account[2];
         var passwords = account[3];
+        
         var filter = {
-            code:mac
+            'where': {
+                code:mac
+            }
         }
         db.Equipment.findOne(filter).then(function (result){
             //判断mac是否存在
             if(result!=null){
                 db.AdminInfo.findOne(
                 {
-                    adminname:loginName,
-                    password:passwords
+                    'where': {
+                        adminname: loginName,
+                        password:passwords
+                    }
                 }
             ).then(function (result2){
+                // console.log(result2);
                     //判断账号密码是否正确
-                    var buf = new Buffer("true");
-                    if(result2 == null){
-                        var buf = new Buffer("false");
+                    var buf;
+                    if(result2 != null){
+                        buf = new Buffer("true");
+                    }else{
+                        buf = new Buffer("2");
                     }
                     server.send(buf,0,buf.length,remote.port,remote.address);
-                    console.log(buf);
+                    console.log(buf+"");
                 });
+            }else{
+                //这里mac地址不存在
+                var buf = new Buffer("1");
+                server.send(buf,0,buf.length,remote.port,remote.address);
+                console.log(buf+"");
             }
         });
     }else if(data.indexOf("online") != -1){
-        var buf = new Buffer("online is ok");
+        var buf = new Buffer("true");
         server.send(buf,0,buf.length,remote.port,remote.address);
         console.log(buf);
     }else if(data.indexOf("downloadComplete") != -1){
