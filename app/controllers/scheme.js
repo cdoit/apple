@@ -36,38 +36,126 @@ var upload = multer({ storage: storage })
 router.get('/list', login.checkin, function (req, res, next) {
     var admin = req.session.admin;
     var keyword = req.query.keyword;
-    var countPerPage = 10, currentPage = 1;
-    db.Scheme.findAll(
-        {
-            'limit': countPerPage,                      //每页多少条
-            'offset': countPerPage * (currentPage - 1),  //跳过多少条
-            'where': {
-                'adminInfoId': admin.id
+    var pageNo = req.query.pageNo;
+    var pageSize = req.query.pageSize;
+    if(keyword ==  undefined || keyword == null){
+        keyword = "";
+    }
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // var countPerPage = 10, currentPage = 1;
+    // db.Scheme.findAll(
+    //     {
+    //         'limit': countPerPage,                      //每页多少条
+    //         'offset': countPerPage * (currentPage - 1),  //跳过多少条
+    //         'where': {
+    //             'adminInfoId': admin.id
+    //         }
+    //     }
+    // ).then(function (result) {
+    //     res.render('scheme/list.ejs', {admin:admin,keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
+    // });
+
+    Promise.all([
+        db.Scheme.findAll(
+            {
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1) , //跳过多少条
+                'where': {
+                    'adminInfoId': admin.id,
+                    'name': {
+                        '$like': '%'+keyword+'%'      
+                    }
+                }
             }
-        }
-    ).then(function (result) {
-        res.render('scheme/list.ejs', {admin:admin,keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
-    });
+        ),
+        db.Scheme.count(
+            {
+                'where': {
+                    'adminInfoId': admin.id,
+                    'name': {
+                        '$like': '%'+keyword+'%'      
+                    }
+                }
+            }
+        )
+        ]).then(function(result){
+            var total = result[1];
+            var totalPage = Math.ceil(result[1] / pageSize);
+            res.render('scheme/list.ejs', 
+            {total:total,totalPage:totalPage,admin:admin,keyword:keyword,pageSize:pageSize,pageNo:pageNo, schemes: result[0] ,moment: require("moment")});
+      }).catch(next);
+
 });
 
 router.post('/list', login.checkin, function (req, res, next) {
     var admin = req.session.admin;
     var keyword = req.body.keyword;
-    var countPerPage = 10, currentPage = 1;
-    db.Scheme.findAll(
-        {
-            'limit': countPerPage,                      //每页多少条
-            'offset': countPerPage * (currentPage - 1) , //跳过多少条
-            'where': {
-                'adminInfoId': admin.id,
-                'name': {
-                    '$like': '%'+keyword+'%'      
+    var pageNo = req.body.pageNo;
+    var pageSize = req.body.pageSize;
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+    // db.Scheme.findAll(
+    //     {
+    //         'limit': pageSize,                      //每页多少条
+    //         'offset': pageSize * (pageNo - 1) , //跳过多少条
+    //         'where': {
+    //             'adminInfoId': admin.id,
+    //             'name': {
+    //                 '$like': '%'+keyword+'%'      
+    //             }
+    //         }
+    //     }
+    // ).then(function (result) {
+    //     res.render('scheme/list.ejs', {admin:admin,keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
+    // });
+
+    Promise.all([
+        db.Scheme.findAll(
+            {
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1) , //跳过多少条
+                'where': {
+                    'adminInfoId': admin.id,
+                    'name': {
+                        '$like': '%'+keyword+'%'      
+                    }
                 }
             }
-        }
-    ).then(function (result) {
-        res.render('scheme/list.ejs', {admin:admin,keyword:keyword,countPerPage:countPerPage,currentPage:currentPage, schemes: result ,moment: require("moment")});
-    });
+        ),
+        db.Scheme.count(
+            {
+                'where': {
+                    'adminInfoId': admin.id,
+                    'name': {
+                        '$like': '%'+keyword+'%'      
+                    }
+                }
+            }
+        )
+        ]).then(function(result){
+            var total = result[1];
+            var totalPage = Math.ceil(result[1] / pageSize);
+            res.render('scheme/list.ejs', 
+            {total:total,totalPage:totalPage,admin:admin,keyword:keyword,pageSize:pageSize,pageNo:pageNo, schemes: result[0] ,moment: require("moment")});
+      }).catch(next);
+
 });
 
 router.get('/checkName', function (req, res, next) {
@@ -178,7 +266,7 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
                     schemeId:schemeId
                 }
             }).then(function (result) {
-                if(result!=null){
+                if(result!=null && result.length>0){
                     res.json("0");
                 }else{
                     db.Scheme.destroy(filter).then(function (result) {

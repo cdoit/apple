@@ -30,7 +30,7 @@
 			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
 				<select name="schemeId" class="required select">
 					<% for(var i=0; i<scheme.length; ++i) { %>  
-						<option value="<%=scheme[i].id %>" <%if(scheme!=null&&project!=null&&scheme.id == project.schemeId){%> selected="selected" <%}%>><%=scheme[i].name %></option>
+						<option value="<%=scheme[i].id %>" <%if(scheme!=null&&project!=null&&scheme[i].id == project.schemeId){%> selected="selected" <%}%>><%=scheme[i].name %></option>
 					<% } %>
 				</select>
 				</span> </div>
