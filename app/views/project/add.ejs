@@ -12,7 +12,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>任务名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="required input-text" value="<%if(project!=null){%><%=project.name%><%}%>" <%if(project!=null&&project.id!=null){%> readonly="readonly" <%}%> id="projectName" name="projectName">
+                <input type="text" class="required input-text" onkeyup="value=value.replace(/#/g,'')" value="<%if(project!=null){%><%=project.name%><%}%>" <%if(project!=null&&project.id!=null){%> readonly="readonly" <%}%> id="projectName" name="projectName">
 				<input type="hidden" class="input-text" value="<%if(project!=null){%><%=project.id%><%}%>" name="projectId">
 				<input type="hidden" value="<%if(project!=null){%><%=project.name%><%}%>" id="oldProjectName" name="oldProjectName">
 			</div>
@@ -21,7 +21,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>任务地址：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="required input-text" value="<%if(project!=null){%><%=project.address%><%}%>" placeholder="" id="address" name="address">
+                <input type="text" class="required input-text" onkeyup="value=value.replace(/#/g,'')" value="<%if(project!=null){%><%=project.address%><%}%>" placeholder="" id="address" name="address">
 			</div>
 		</div>
 

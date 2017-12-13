@@ -1,5 +1,6 @@
 ﻿var express = require('express');
 var login = require('./login');
+var constant = require('./constant');
 var router = express.Router();
 var uuid = require('node-uuid');
 const db = require("../db/");
@@ -383,7 +384,7 @@ router.get('/equipmentInfo', function (req, res, next) {
 
 //根据设备编码获取任务中的设计文件
 router.get('/getDesignByCode', function (req, res, next) {
-    var basePath = 'http://192.168.31.108:3000/';
+    var basePath = constant.basePath;
     var username = req.query.username;
     var password = req.query.password;
     // var passwordsd = md5(password);

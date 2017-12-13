@@ -10,7 +10,7 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设计名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="required input-text" name="designName" id="designName">
+				<input type="text" class="required input-text" onkeyup="value=value.replace(/#/g,'')" name="designName" id="designName">
 				<input type="hidden" name="oldDesignName" id="oldDesignName">
                 <input type="hidden" class="input-text" value="<%=projectId%>" name="projectId">
 			</div>
@@ -19,7 +19,7 @@
         <div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设计数据：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="file" name="file1" class="required"/>
+				<input type="file" accept=".zip" name="file1" id="file1" class="required"/>
 			</div>
 		</div>
 		
@@ -40,11 +40,29 @@
 		$(document).ready(function() {
 			var designName = $("#designName").val();
 			$("#designName").focus();
+
+			jQuery.validator.addMethod("checkfile", function(value, element) {
+				var filepath=$("#file1").val();
+				//获得上传文件名
+				var fileArr=filepath.split("\\");
+				var fileTArr=fileArr[fileArr.length-1].toLowerCase().split(".");
+				var filetype=fileTArr[fileTArr.length-1];
+				//切割出后缀文件名
+				if(filetype != "zip"){
+					return false;
+				}else{
+					return true;
+				}
+			}, "上传文件格式必须为zip");
+
 			$("#form-design-add").validate({
 				focusInvalid: false,
 				rules : {
 						designName : {
 								remote : "/design/checkName?oldDesignName=" + encodeURIComponent(designName)
+							},
+						file1 : {
+							checkfile:true
 							}
 						},
 						messages : {
