@@ -14,6 +14,12 @@ router.get('/list', login.checkin, function (req, res, next) {
     var equipmenttype = req.query.equipmenttype;
     var currentPage = req.query.currentPage;
     var countPerPage = req.query.countPerPage;
+    if(keyword ==  undefined || keyword == null){
+        keyword = "";
+    }
+    if(equipmenttype == undefined || equipmenttype == null || equipmenttype == ""){
+        equipmenttype = "longgu";
+    }
     if(countPerPage ==undefined || countPerPage == "" || countPerPage == null){
         countPerPage = 10;
     }else{
@@ -29,7 +35,21 @@ router.get('/list', login.checkin, function (req, res, next) {
         db.Equipment.findAll(
             {
                 'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1)  //跳过多少条
+                'offset': countPerPage * (currentPage - 1),  //跳过多少条
+                'where': {
+                    equipmenttype:equipmenttype,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'code': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'location': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ]
+                }
             }
         ),
         db.Dictionary.findAll({
@@ -42,12 +62,29 @@ router.get('/list', login.checkin, function (req, res, next) {
                 roleId:5
             }
         }),
-        db.Equipment.count()
+        db.Equipment.count(
+            {
+                'where': {
+                    equipmenttype:equipmenttype,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'code': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'location': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
             var total = result[3];
             var totalPage = Math.ceil(result[3] / countPerPage);
             res.render('equipment/list2.ejs', 
-                {totalPage:totalPage, total:result[3],projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+                {totalPage:totalPage, total:total,projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
 });
@@ -102,12 +139,29 @@ router.post('/list', login.checkin, function (req, res, next) {
                 roleId:5
             }
         }),
-        db.Equipment.count()
+        db.Equipment.count(
+            {
+                'where': {
+                    equipmenttype:equipmenttype,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'code': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'location': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
             var total = result[3];
             var totalPage = Math.ceil(result[3] / countPerPage);
             res.render('equipment/list2.ejs', 
-                {totalPage:totalPage, total:result[3], projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+                {totalPage:totalPage, total:total, projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
 });
