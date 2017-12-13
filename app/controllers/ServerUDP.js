@@ -85,7 +85,7 @@ server.on('message', function (message, remote) {
             }
         ).then(function (result) {
             console.log("项目完成");
-        }).catch(next);
+        });
     }else{
         //解析数据
     var equipmentData= new Array(); //定义一数组 
