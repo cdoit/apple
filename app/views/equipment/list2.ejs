@@ -163,12 +163,20 @@
                                 </tbody>
                             </table>
                 </div>
+                <%if(projectId!=null && projectId!=''){%>
                 <div id="pagination" style="float: right;margin-top: 10px;">
                     共<span><%=totalPage%></span>页 &nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="/equipment/list?currentPage=<%=currentPage-1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&projectId=<%=projectId%>" onclick="return prevPage('<%=currentPage %>')">上一页</a>
                     <a href="/equipment/list?currentPage=<%=currentPage+1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&projectId=<%=projectId%>" onclick="return nextPage('<%=currentPage %>','<%=totalPage %>')">下一页</a>
                 </div>
-
+                <%}%>
+                <%if(projectId==null || projectId==""){%>
+                    <div id="pagination" style="float: right;margin-top: 10px;">
+                        共<span><%=totalPage%></span>页 &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/equipment/list?currentPage=<%=currentPage-1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>" onclick="return prevPage('<%=currentPage %>')">上一页</a>
+                        <a href="/equipment/list?currentPage=<%=currentPage+1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>" onclick="return nextPage('<%=currentPage %>','<%=totalPage %>')">下一页</a>
+                    </div>
+                <%}%>
             </article>
         </div>
         <% include ../includes/footer.ejs %>
