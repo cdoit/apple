@@ -8,7 +8,8 @@ db.init();
 
 
 var PORT = 3000;
-var HOST = '192.168.31.108';
+// var HOST = '192.168.31.108';
+var HOST = 'http://www.faruxue1688.com';
 
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
