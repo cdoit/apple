@@ -49,7 +49,7 @@ router.get('/download', function (req, res,next) {
     // res.download('upload/logo-1508833808696.png');
   });
 
-  router.get('/add', function (req, res,next) {
+  router.get('/add',login.checkin, function (req, res,next) {
     var projectId = req.query.projectId;
     res.render('design/add.ejs',{ projectId: projectId });
   });

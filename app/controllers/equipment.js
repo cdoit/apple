@@ -17,8 +17,23 @@ router.get('/list', login.checkin, function (req, res, next) {
     if(keyword ==  undefined || keyword == null){
         keyword = "";
     }
-    if(equipmenttype == undefined || equipmenttype == null || equipmenttype == ""){
-        equipmenttype = "longgu";
+    var filter = {
+            // equipmenttype:equipmenttype,
+            '$or': [
+                {'name': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'code': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'location': {
+                    '$like': '%'+keyword+'%'      
+                }}
+            ]
+    }
+    if(equipmenttype != undefined && equipmenttype != null && equipmenttype != "" && equipmenttype !="undefined"){
+        // equipmenttype = null;
+        filter.equipmenttype = equipmenttype;
     }
     if(countPerPage ==undefined || countPerPage == "" || countPerPage == null){
         countPerPage = 10;
@@ -36,20 +51,21 @@ router.get('/list', login.checkin, function (req, res, next) {
             {
                 'limit': countPerPage,                      //每页多少条
                 'offset': countPerPage * (currentPage - 1),  //跳过多少条
-                'where': {
-                    equipmenttype:equipmenttype,
-                    '$or': [
-                        {'name': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'code': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'location': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-                }
+                'where': filter
+                // {
+                //     equipmenttype:equipmenttype,
+                //     '$or': [
+                //         {'name': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'code': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'location': {
+                //             '$like': '%'+keyword+'%'      
+                //         }}
+                //     ]
+                // }
             }
         ),
         db.Dictionary.findAll({
@@ -64,20 +80,21 @@ router.get('/list', login.checkin, function (req, res, next) {
         }),
         db.Equipment.count(
             {
-                'where': {
-                    equipmenttype:equipmenttype,
-                    '$or': [
-                        {'name': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'code': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'location': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-                }
+                'where': filter
+                // {
+                //     equipmenttype:equipmenttype,
+                //     '$or': [
+                //         {'name': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'code': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'location': {
+                //             '$like': '%'+keyword+'%'      
+                //         }}
+                //     ]
+                // }
             }
         )
         ]).then(function(result){
@@ -97,6 +114,25 @@ router.post('/list', login.checkin, function (req, res, next) {
     var equipmenttype = req.body.equipmenttype;
     var currentPage = req.body.currentPage;
     var countPerPage = req.body.countPerPage;
+    var filter = {
+            // equipmenttype:equipmenttype,
+            '$or': [
+                {'name': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'code': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'location': {
+                    '$like': '%'+keyword+'%'      
+                }}
+            ]
+    }
+    if(equipmenttype != undefined && equipmenttype != null && equipmenttype != "" && equipmenttype !="undefined"){
+        // equipmenttype = null;
+        filter.equipmenttype = equipmenttype;
+    }
+
     if(countPerPage ==undefined || countPerPage == "" || countPerPage == null){
         countPerPage = 10;
     }else{
@@ -113,20 +149,21 @@ router.post('/list', login.checkin, function (req, res, next) {
             {
                 'limit': countPerPage,                      //每页多少条
                 'offset': countPerPage * (currentPage - 1),  //跳过多少条
-                'where': {
-                    equipmenttype:equipmenttype,
-                    '$or': [
-                        {'name': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'code': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'location': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-                }
+                'where': filter
+                // {
+                //     equipmenttype:equipmenttype,
+                //     '$or': [
+                //         {'name': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'code': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'location': {
+                //             '$like': '%'+keyword+'%'      
+                //         }}
+                //     ]
+                // }
             }
         ),
         db.Dictionary.findAll({
@@ -141,20 +178,21 @@ router.post('/list', login.checkin, function (req, res, next) {
         }),
         db.Equipment.count(
             {
-                'where': {
-                    equipmenttype:equipmenttype,
-                    '$or': [
-                        {'name': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'code': {
-                            '$like': '%'+keyword+'%'      
-                        }},
-                        {'location': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-                }
+                'where': filter
+                // {
+                //     equipmenttype:equipmenttype,
+                //     '$or': [
+                //         {'name': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'code': {
+                //             '$like': '%'+keyword+'%'      
+                //         }},
+                //         {'location': {
+                //             '$like': '%'+keyword+'%'      
+                //         }}
+                //     ]
+                // }
             }
         )
         ]).then(function(result){
@@ -300,6 +338,162 @@ router.get('/map', login.checkin, function (req, res, next) {
 router.get('/statistic', function (req, res, next) {
     res.render('equipment/statistic.ejs' );
 });
+
+
+
+
+//任务分发的设备列表
+router.get('/fenfaList', login.checkin, function (req, res, next) {
+    var projectId = req.query.projectId;
+    var keyword = req.query.keyword;
+    //以下三个是上个页面的页码页数以及关键字
+    var fkeyword = req.query.fkeyword;
+    var fpageNo = req.query.fpageNo;
+    var fpageSize = req.query.fpageSize;
+    //存进session
+    req.session.fkeyword = fkeyword;
+    req.session.fpageNo = fpageNo;
+    req.session.fpageSize = fpageSize;
+    /////////////////////////////////////
+    var equipmenttype = req.query.equipmenttype;
+    var currentPage = req.query.currentPage;
+    var countPerPage = req.query.countPerPage;
+    if(keyword ==  undefined || keyword == null){
+        keyword = "";
+    }
+    var filter = {
+            '$or': [
+                {'name': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'code': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'location': {
+                    '$like': '%'+keyword+'%'      
+                }}
+            ]
+    }
+    if(equipmenttype != undefined && equipmenttype != null && equipmenttype != "" && equipmenttype !="undefined"){
+        // equipmenttype = null;
+        filter.equipmenttype = equipmenttype;
+    }
+    if(countPerPage ==undefined || countPerPage == "" || countPerPage == null){
+        countPerPage = 10;
+    }else{
+        countPerPage = parseInt(countPerPage);
+    }
+    if(currentPage == undefined || currentPage == "" || currentPage == null){
+        currentPage = 1;
+    }else{
+        currentPage = parseInt(currentPage);
+    }
+    Promise.all([
+        db.Equipment.findAll(
+            {
+                'limit': countPerPage,                      //每页多少条
+                'offset': countPerPage * (currentPage - 1),  //跳过多少条
+                'where': filter
+            }
+        ),
+        db.Dictionary.findAll({
+            'where': {
+                dicttype:"equipment_type"
+            }
+        }),
+        db.AdminInfo.findAll({
+            'where': {
+                roleId:5
+            }
+        }),
+        db.Equipment.count(
+            {
+                'where': filter
+            }
+        )
+        ]).then(function(result){
+            var total = result[3];
+            var totalPage = Math.ceil(result[3] / countPerPage);
+            res.render('equipment/fenfaList.ejs', 
+                {totalPage:totalPage, total:total,projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+            );
+      }).catch(next);
+});
+
+
+
+router.post('/fenfaList', login.checkin, function (req, res, next) {
+    var keyword = req.body.keyword;
+    var projectId = req.body.projectId;
+    var equipmenttype = req.body.equipmenttype;
+    var currentPage = req.body.currentPage;
+    var countPerPage = req.body.countPerPage;
+    var filter = {
+            '$or': [
+                {'name': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'code': {
+                    '$like': '%'+keyword+'%'      
+                }},
+                {'location': {
+                    '$like': '%'+keyword+'%'      
+                }}
+            ]
+    }
+    if(equipmenttype != undefined && equipmenttype != null && equipmenttype != "" && equipmenttype !="undefined"){
+        // equipmenttype = null;
+        filter.equipmenttype = equipmenttype;
+    }
+
+    if(countPerPage ==undefined || countPerPage == "" || countPerPage == null){
+        countPerPage = 10;
+    }else{
+        countPerPage = parseInt(countPerPage);
+    }
+    if(currentPage == undefined || currentPage == "" || currentPage == null){
+        currentPage = 1;
+    }else{
+        currentPage = parseInt(currentPage);
+    }
+    Promise.all([
+        db.Equipment.findAll(
+            {
+                'limit': countPerPage,                      //每页多少条
+                'offset': countPerPage * (currentPage - 1),  //跳过多少条
+                'where': filter
+            }
+        ),
+        db.Dictionary.findAll({
+            'where': {
+                dicttype:"equipment_type"
+            }
+        }),
+        db.AdminInfo.findAll({
+            'where': {
+                roleId:5
+            }
+        }),
+        db.Equipment.count(
+            {
+                'where': filter
+            }
+        )
+        ]).then(function(result){
+            var total = result[3];
+            var totalPage = Math.ceil(result[3] / countPerPage);
+            res.render('equipment/fenfaList.ejs', 
+                {totalPage:totalPage, total:total, projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+            );
+      }).catch(next);
+});
+
+
+
+
+
+
+
 
 
 //设备状态接口   (暂时统计会导致停机的运行状态)

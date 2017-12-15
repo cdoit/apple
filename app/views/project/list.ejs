@@ -1,5 +1,4 @@
-﻿<!--_meta 作为公共模版分离出去-->
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <html>
 
 <head>
@@ -36,7 +35,7 @@
                                             <th width="120">设计详情</th>
                                             <th width="120">生产设备详情</th>
                                             <th width="120">审核状态</th>
-                                            <th width="120">任务进度</th>
+                                            <th width="120" style="text-align:center">任务进度</th>
                                             <th width="100">操作</th>
                                         </tr>
                                     </thead>
@@ -71,18 +70,15 @@
                                                 已审核
                                                 <!-- <%=project[i].auditstate %>  -->
                                             </td>
-                                            <td>
-                                                <% for(var j=0; j<projectProgress.length; ++j) { %> 
-                                                        <%if(projectProgress[j]!=null&&projectProgress[j].dictvalue==project[i].progress){%>
-                                                            <%=projectProgress[j].dictleble %>
-                                                        <%}%>
-                                                <% } %>
-                                                <!-- <%=project[i].progress %>  -->
-                                            </td>
+                                            <td><% for(var j=0; j<projectProgress.length; ++j) { %> 
+                                                    <%if(projectProgress[j]!=null&&projectProgress[j].dictvalue==project[i].progress){%>
+                                                        <%=projectProgress[j].dictleble %>
+                                                    <%}%>
+                                                <% } %></td>
                                             <td class="f-14 product-brand-manage">
                                                 <!-- <a style="text-decoration:none" class="ml-5"  _href="/project/fenfaMap" onclick="project_fenfa('地图页面分发','/project/fenfaMap')" href="javascript:;" title="地图页面分发"><i class="Hui-iconfont">&#xe665;</i></a> -->
                                                 <%if(project[i].designId!=null && project[i].equipmentId==null){%>
-                                                <a style="text-decoration:none" _href="/project/fenfaList" onclick="project_fenfaList('设备分发','/equipment/list?projectId=<%=project[i].id %>')" href="javascript:;" title="设备分发"><i class="Hui-iconfont">&#xe615;</i></a>
+                                                <a style="text-decoration:none" _href="/equipment/fenfaList" onclick="project_fenfaList('设备分发','/equipment/fenfaList?projectId=<%=project[i].id %>&fpageNo=<%=pageNo %>&fpageSize=<%=pageSize %>&fkeyword=<%=keyword%>')" href="javascript:;" title="设备分发"><i class="Hui-iconfont">&#xe615;</i></a>
                                                 <%}%>
                                             </td>
                                         </tr>
@@ -90,10 +86,16 @@
                                     </tbody>
                                 </table>
                     </div>
-                    <div id="pagination" style="float: right;margin-top: 10px;">
-                        共<span><%=totalPage%></span>页 &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="/project/list?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
-                        <a href="/project/list?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
+                    <div id="pagination" >
+                        <div style="float: left;margin-top: 10px;">
+                            第<span><%=pageNo%></span>页
+                            ,
+                            共<span><%=totalPage%></span>页 
+                        </div>
+                        <div style="float: right;margin-top: 10px;">
+                            <a href="/project/list?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
+                            <a href="/project/list?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
+                        </div>
                     </div>
                 </article>
             </div>

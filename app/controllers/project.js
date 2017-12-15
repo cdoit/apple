@@ -11,7 +11,7 @@ router.get('/list', login.checkin, function (req, res, next) {
     var keyword = req.query.keyword;
     var pageNo = req.query.pageNo;
     var pageSize = req.query.pageSize;
-    if(keyword ==  undefined || keyword == null){
+    if(keyword ==  undefined || keyword == null || keyword == "undefined"){
         keyword = "";
     }
     if(pageSize ==undefined || pageSize == "" || pageSize == null){
@@ -154,6 +154,15 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
     var equipmentId = req.query.equipmentId;
     var projectId = req.query.projectId;
     var admin = req.session.admin;
+    //分配后就会跳转到任务列表 ，  取出fkeyword、fpageNo、fpageSize
+    var fpageSize = req.session.fpageSize;
+    var fpageNo = req.session.fpageNo;
+    var fkeyword = req.session.fkeyword;
+    //拼凑返回值
+    var obj = new Object;
+    obj.fpageNo = fpageNo;
+    obj.fpageSize = fpageSize;
+    obj.fkeyword = fkeyword;
     // if(equipmentId != undefined || equipmentId != null){
     //将设备id与该任务管理，并且改任务状态
     var filter = {
@@ -170,7 +179,8 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.json(result);
+        obj.result = result;
+        res.json(obj);
         //并且改equipment表的状态
         // var contdition = {
         //     workstate: '2'

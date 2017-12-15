@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>悉道物联网监控云平台用户登录</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css" />
-    <script src="../../js/bootstrap.min.js"></script>
+    <!-- <script src="../../js/bootstrap.min.js"></script> -->
     <style type="text/css">
         body {
             background: url(../../img/login_bg.jpg) #f8f6e9;
@@ -48,12 +48,20 @@
 <script type="text/javascript" >
     $(function(){
         // var index = parent.layer.getFrameIndex(window.name);
-        var obj=window.parent.document.getElementById('iframe_box');
-        // alert(obj);
-        if(obj!=undefined && obj!=""&&obj!=null){
+        //最大父frame
+        var zobj=window.parent.document.getElementById('iframe_box');
+        //二级父frame
+        var robj = window.parent.parent.document.getElementById('iframe_box');
+
+        console.log(zobj);
+        console.log(robj);
+        // alert("1:"+zobj+"  2:"+robj);
+        if(zobj!=undefined && zobj!=""&&zobj!=null){
             parent.window.location.href='/manager/index'; 
         }
-          
+        if(robj!=undefined && robj!=""&&robj!=null){
+            parent.parent.window.location.href='/manager/index'; 
+        }
     });
 </script>
 </body>

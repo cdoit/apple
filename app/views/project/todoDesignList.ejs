@@ -101,11 +101,25 @@
                                     </tbody>
                                 </table>
                     </div>
-                    <div id="pagination" style="float: right;margin-top: 10px;">
+                    <!-- <div id="pagination" style="float: right;margin-top: 10px;">
                         共<span><%=totalPage%></span>页 &nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="/project/todoDesign?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
                         <a href="/project/todoDesign?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
-                    </div>
+                    </div> -->
+
+
+                    <div id="pagination" >
+                            <div style="float: left;margin-top: 10px;">
+                                第<span><%=pageNo%></span>页
+                                ,
+                                共<span><%=totalPage%></span>页 
+                            </div>
+                            <div style="float: right;margin-top: 10px;">
+                                <a href="/project/todoDesign?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
+                                <a href="/project/todoDesign?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
+                            </div>
+                        </div>
+
                 </article>
             </div>
             
