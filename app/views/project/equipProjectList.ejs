@@ -27,6 +27,9 @@
                             <button name="" id="equipProjectListSubmit" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜任务</button>
                         </div>
                     </form>
+                    <div class="cl pd-5 bg-1 bk-gray mt-20">
+                        <span class="r">共有数据：<strong><%=total %></strong> 条</span>
+                    </div>
                     <!-- <div class="cl pd-5 bg-1 bk-gray mt-20">
                         <span class="l">
                         <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
@@ -96,6 +99,17 @@
                                         <% }} %>  
                                     </tbody>
                                 </table>
+                    </div>
+                    <div id="pagination" >
+                        <div style="float: left;margin-top: 10px;">
+                            第<span><%=pageNo%></span>页
+                            ,
+                            共<span><%=totalPage%></span>页 
+                        </div>
+                        <div style="float: right;margin-top: 10px;">
+                            <a href="/project/equipProjectList?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>&equipmentId=<%=equipmentId%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
+                            <a href="/project/equipProjectList?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>&equipmentId=<%=equipmentId%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
+                        </div>
                     </div>
                 </article>
             </div>

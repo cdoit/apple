@@ -25,7 +25,7 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
-        cb(null, file.fieldname + '-' + Date.now());  
+        cb(null, file.originalname);
     }
 });
 
@@ -201,22 +201,24 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
     var path ;
     if(file!=undefined){
         //以下代码得到文件后缀
-        var name = file.originalname;
-        var nameArray = name.split('');
-        var nameMime = [];
-        var l = nameArray.pop();
-        nameMime.unshift(l);
-        while (nameArray.length != 0 && l != '.') {
-            l = nameArray.pop();
-            nameMime.unshift(l);
-        }
-        //Mime是文件的后缀
-        var Mime = nameMime.join('');
-        console.log(Mime);
-        fs.renameSync('./public/upload/'+file.filename,'./public/upload/'+file.filename+Mime);
-        console.log('./public/upload/'+file.filename+Mime);
+        // var name = file.originalname;
+        // var nameArray = name.split('');
+        // var nameMime = [];
+        // var l = nameArray.pop();
+        // nameMime.unshift(l);
+        // while (nameArray.length != 0 && l != '.') {
+        //     l = nameArray.pop();
+        //     nameMime.unshift(l);
+        // }
+        // //Mime是文件的后缀
+        // var Mime = nameMime.join('');
+        // console.log(Mime);
+        // fs.renameSync('./public/upload/'+file.filename,'./public/upload/'+file.filename+Mime);
+        // console.log('./public/upload/'+file.filename+Mime);
+        console.log('./public/upload/'+file.originalname);
         // 图片路劲
-        path = 'upload/'+file.filename+Mime;
+        // path = 'upload/'+file.filename+Mime;
+        path = 'upload/'+file.originalname;
     }
 
     //判断是否新增

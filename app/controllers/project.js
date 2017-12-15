@@ -165,38 +165,43 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
     obj.fkeyword = fkeyword;
     // if(equipmentId != undefined || equipmentId != null){
     //将设备id与该任务管理，并且改任务状态
-    var filter = {
-        equipmentId: equipmentId,
-        equipmenterId:admin.id,
-        progress: '4'
-
-    }
-    db.Project.update(
-        filter,
-        {
-            where: {
-                id: projectId
-            }
+    //1、判断设备是否已经被分配
+    db.Project.findAll({
+        'where':{
+            equipmentId: equipmentId,
+            '$not': [
+                { 'progress': '5' }
+            ]
         }
-    ).then(function (result) {
-        obj.result = result;
-        res.json(obj);
-        //并且改equipment表的状态
-        // var contdition = {
-        //     workstate: '2'
+    }).then(function (result1) {
+        if(result1!=null && result1.length>0){
+            obj.isValid = 'no';
+            res.json(obj);
+        }else{
+            //可以分配
+            var filter = {
+                equipmentId: equipmentId,
+                equipmenterId:admin.id,
+                progress: '4'
+        
+            }
+            db.Project.update(
+                filter,
+                {
+                    where: {
+                        id: projectId
+                    }
+                }
+            ).then(function (result) {
+                obj.result = result;
+                res.json(obj);
+            }).catch(next);
+        }
+    })
 
-        // }
-        // db.Equipment.update(
-        //     contdition,
-        //     {
-        //         where: {
-        //             id: equipmentId
-        //         }
-        //     }
-        // ).then(function (result) {
-        //     res.json(result);
-        // }).catch(next);
-    }).catch(next);
+
+
+    
 });
 
 
@@ -393,14 +398,64 @@ router.get('/equipProjectList', login.checkin, function (req, res, next) {
     var keyword = req.query.keyword;
     var equipmentId = req.query.equipmentId;
     var adminInfoId = req.session.admin.id;
-    var countPerPage = 10, currentPage = 1;
+    // var countPerPage = 10, currentPage = 1;
+    var pageNo = req.query.pageNo;
+    var pageSize = req.query.pageSize;
+    var filter = {
+        // equipmentId: equipmentId,
+        '$or': [
+            {'name': {
+                '$like': '%'+keyword+'%'      
+            }},
+            {'address': {
+                '$like': '%'+keyword+'%'      
+            }}
+        ]
+    }
+    if(equipmentId!=undefined && equipmentId !=null && equipmentId !="undefined"){
+        filter.equipmentId = equipmentId;
+    }
+    if(keyword ==  undefined || keyword == null || keyword == "undefined"){
+        keyword = "";
+    }
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
 
-    db.Equipment.findAll({
-        'where': {
-            jiameng:adminInfoId
-        }
-    }).then(function (result) {
-        res.render('project/equipProjectList', {project:null,equipmentId:equipmentId,keyword:keyword,equipment: result});
+    Promise.all([
+        db.Project.findAll(
+            {
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1), //跳过多少条
+                'where': filter
+            }
+        ),
+        db.Equipment.findAll({
+            'where': {
+                jiameng:adminInfoId
+            }
+        }),
+        db.Dictionary.findAll({
+            'where': {
+                dicttype:"project_progress"
+            }
+        }),
+        db.Project.count(
+            {
+                'where': filter
+            }
+        )
+        ]).then(function (result) {
+        var total = result[3];
+        var totalPage = Math.ceil(result[3] / pageSize);
+        res.render('project/equipProjectList', {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,projectProgress:result[2],project:result[0],equipmentId:equipmentId,keyword:keyword,equipment: result[1]});
     }).catch(next);
 });
 
@@ -408,12 +463,27 @@ router.post('/equipProjectList', login.checkin, function (req, res, next) {
     var keyword = req.body.keyword;
     var equipmentId = req.body.equipmentId;
     var adminInfoId = req.session.admin.id;
-    var countPerPage = 10, currentPage = 1;
+    var pageNo = req.query.pageNo;
+    var pageSize = req.query.pageSize;
+    if(keyword ==  undefined || keyword == null || keyword == "undefined"){
+        keyword = "";
+    }
+    if(pageSize ==undefined || pageSize == "" || pageSize == null){
+        pageSize = 10;
+    }else{
+        pageSize = parseInt(pageSize);
+    }
+    if(pageNo == undefined || pageNo == "" || pageNo == null){
+        pageNo = 1;
+    }else{
+        pageNo = parseInt(pageNo);
+    }
+
     Promise.all([
         db.Project.findAll(
             {
-                'limit': countPerPage,                      //每页多少条
-                'offset': countPerPage * (currentPage - 1), //跳过多少条
+                'limit': pageSize,                      //每页多少条
+                'offset': pageSize * (pageNo - 1), //跳过多少条
                 'where': {
                     equipmentId: equipmentId,
                     '$or': [
@@ -436,9 +506,27 @@ router.post('/equipProjectList', login.checkin, function (req, res, next) {
             'where': {
                 dicttype:"project_progress"
             }
-        })
+        }),
+        db.Project.count(
+            {
+                'where': {
+                    equipmentId: equipmentId,
+                    '$or': [
+                        {'name': {
+                            '$like': '%'+keyword+'%'      
+                        }},
+                        {'address': {
+                            '$like': '%'+keyword+'%'      
+                        }}
+                    ]
+                }
+            }
+        )
         ]).then(function(result){
-        res.render('project/equipProjectList.ejs', {equipmentId:equipmentId,projectProgress:result[2],equipment:result[1], keyword:keyword,project: result[0] });
+        var total = result[3];
+        var totalPage = Math.ceil(result[3] / pageSize);
+        res.render('project/equipProjectList.ejs', 
+        {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,equipmentId:equipmentId,projectProgress:result[2],equipment:result[1], keyword:keyword,project: result[0] });
       }).catch(next);
 });
 
