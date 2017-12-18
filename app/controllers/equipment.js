@@ -11,6 +11,7 @@ router.get('/list', login.checkin, function (req, res, next) {
     var sign = req.query.sign;
     var projectId = req.query.projectId;
     var keyword = req.query.keyword;
+    var messenge = req.query.messenge;
     var equipmenttype = req.query.equipmenttype;
     var currentPage = req.query.currentPage;
     var countPerPage = req.query.countPerPage;
@@ -101,7 +102,7 @@ router.get('/list', login.checkin, function (req, res, next) {
             var total = result[3];
             var totalPage = Math.ceil(result[3] / countPerPage);
             res.render('equipment/list2.ejs', 
-                {totalPage:totalPage, total:total,projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
+                {messenge:messenge,totalPage:totalPage, total:total,projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
 });
@@ -303,11 +304,20 @@ router.post('/addEquipment', login.checkin, function (req, res, next) {
         jiameng:jiameng,
         equipmenttype:equipmenttype
     }
-
-    db.Equipment.insertOrUpdate(equipment).then(function (result) {
-        res.redirect("/equipment/list");
-    }).catch(next);
-        
+    //判断设备编码是否存在
+    db.Equipment.findOne({
+        'where': {
+            code:code
+        }
+    }).then(function (resultsd) {
+        if(resultsd==null){
+            db.Equipment.insertOrUpdate(equipment).then(function (result) {
+                res.redirect("/equipment/list");
+            }).catch(next);
+        }else{
+            res.redirect("/equipment/list?messenge=1");
+        }
+    }) 
     });
 
 router.get('/delete', login.checkin, function (req, res, next) {
@@ -361,18 +371,20 @@ router.get('/fenfaList', login.checkin, function (req, res, next) {
     if(keyword ==  undefined || keyword == null){
         keyword = "";
     }
+    //这里只显示正常运行的设备
     var filter = {
-            '$or': [
-                {'name': {
-                    '$like': '%'+keyword+'%'      
-                }},
-                {'code': {
-                    '$like': '%'+keyword+'%'      
-                }},
-                {'location': {
-                    '$like': '%'+keyword+'%'      
-                }}
-            ]
+        state:2,
+        '$or': [
+            {'name': {
+                '$like': '%'+keyword+'%'      
+            }},
+            {'code': {
+                '$like': '%'+keyword+'%'      
+            }},
+            {'location': {
+                '$like': '%'+keyword+'%'      
+            }}
+        ]
     }
     if(equipmenttype != undefined && equipmenttype != null && equipmenttype != "" && equipmenttype !="undefined"){
         // equipmenttype = null;

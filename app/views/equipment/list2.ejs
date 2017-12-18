@@ -27,10 +27,11 @@
                                     <% } %>
                                 </select>
                             </span>
-                        <input type="text" name="keyword" id="" value="<%if(keyword!=null&&keyword!='undefined'){%><%=keyword%><%}%>" placeholder=" 设备名称、设备编码、所在地" style="width:250px" class="input-text">
+                        <input type="text" name="keyword" id="" value="<%if(keyword!=null&&keyword!='undefined'){%><%=keyword%><%}%>" placeholder="设备名称、设备编码、所在地" style="width:250px" class="input-text">
                         <input type="hidden" name="projectId" id="" value="<%if(projectId!=null){%><%=projectId%><%}%>" >
                         <input type="hidden" name="currentPage" value="<%=currentPage%>">
                         <input type="hidden" name="countPerPage" value="<%=countPerPage%>">
+                        <input type="hidden" id="messenge" name="messenge" value="<%if(messenge!=null){%><%=messenge%><%}%>">
                         <button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜设备</button>
                     </div>
                 </form>
@@ -203,7 +204,12 @@
         </div>
         <% include ../includes/footer.ejs %>
         <script type="text/javascript" >
-        
+        $(document).ready(function() {
+            var messenge = $("#messenge").val();
+            if(messenge == '1'){
+                layer.msg('设备编码已存在,加入失败!',{icon:1,time:1000});
+            }
+		});
 
         function equipment_fenpei(obj,id,idw){
             layer.confirm('确认要分配该设备吗？',function(index){

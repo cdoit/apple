@@ -126,7 +126,7 @@
 				var code = $("#code").val();
 				$("#name").focus();
 				$("#form-equipment-add").validate({
-					focusInvalid: false,
+					// focusInvalid: false,
 					rules : {
 								code : {
 									remote : "/equipment/checkCode?oldCode=" + encodeURIComponent(code)
