@@ -305,19 +305,22 @@ router.post('/addEquipment', login.checkin, function (req, res, next) {
         equipmenttype:equipmenttype
     }
     //判断设备编码是否存在
-    db.Equipment.findOne({
-        'where': {
-            code:code
-        }
-    }).then(function (resultsd) {
-        if(resultsd==null){
-            db.Equipment.insertOrUpdate(equipment).then(function (result) {
-                res.redirect("/equipment/list");
-            }).catch(next);
-        }else{
-            res.redirect("/equipment/list?messenge=1");
-        }
-    }) 
+    // db.Equipment.findOne({
+    //     'where': {
+    //         code:code
+    //     }
+    // }).then(function (resultsd) {
+    //     if(resultsd==null){
+    //         db.Equipment.insertOrUpdate(equipment).then(function (result) {
+    //             res.redirect("/equipment/list");
+    //         }).catch(next);
+    //     }else{
+    //         res.redirect("/equipment/list?messenge=1");
+    //     }
+    // }) 
+    db.Equipment.insertOrUpdate(equipment).then(function (result) {
+        res.redirect("/equipment/list");
+    }).catch(next);
     });
 
 router.get('/delete', login.checkin, function (req, res, next) {
