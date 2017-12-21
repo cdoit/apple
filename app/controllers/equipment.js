@@ -444,6 +444,7 @@ router.post('/fenfaList', login.checkin, function (req, res, next) {
     var currentPage = req.body.currentPage;
     var countPerPage = req.body.countPerPage;
     var filter = {
+        state:2,
             '$or': [
                 {'name': {
                     '$like': '%'+keyword+'%'      
