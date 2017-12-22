@@ -166,38 +166,60 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
     // if(equipmentId != undefined || equipmentId != null){
     //将设备id与该任务管理，并且改任务状态
     //1、判断设备是否已经被分配
-    db.Project.findAll({
-        'where':{
-            equipmentId: equipmentId,
-            '$not': [
-                { 'progress': '5' }
-            ]
-        }
-    }).then(function (result1) {
-        if(result1!=null && result1.length>0){
-            obj.isValid = 'no';
-            res.json(obj);
-        }else{
-            //可以分配
-            var filter = {
-                equipmentId: equipmentId,
-                equipmenterId:admin.id,
-                progress: '4'
+    // db.Project.findAll({
+    //     'where':{
+    //         equipmentId: equipmentId,
+    //         '$not': [
+    //             { 'progress': '5' }
+    //         ]
+    //     }
+    // }).then(function (result1) {
+    //     if(result1!=null && result1.length>0){
+    //         obj.isValid = 'no';
+    //         res.json(obj);
+    //     }else{
+    //         //可以分配
+    //         var filter = {
+    //             equipmentId: equipmentId,
+    //             equipmenterId:admin.id,
+    //             progress: '4'
         
-            }
-            db.Project.update(
-                filter,
-                {
-                    where: {
-                        id: projectId
-                    }
-                }
-            ).then(function (result) {
-                obj.result = result;
-                res.json(obj);
-            }).catch(next);
+    //         }
+    //         db.Project.update(
+    //             filter,
+    //             {
+    //                 where: {
+    //                     id: projectId
+    //                 }
+    //             }
+    //         ).then(function (result) {
+    //             obj.result = result;
+    //             res.json(obj);
+    //         }).catch(next);
+    //     }
+    // })
+
+
+
+        //可以分配
+        var filter = {
+            equipmentId: equipmentId,
+            equipmenterId:admin.id,
+            progress: '4'
+
         }
-    })
+        db.Project.update(
+            filter,
+            {
+                where: {
+                    id: projectId
+                }
+            }
+        ).then(function (result) {
+            obj.result = result;
+            res.json(obj);
+        }).catch(next);
+
 
 
 
