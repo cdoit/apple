@@ -204,15 +204,15 @@
                     dataType: 'json',
                     success: function(data){
                         // $(obj).parents("tr").remove();
-                        if(data.isValid == 'no'){
-                            layer.msg('该设备已被分配且正在运行，不可被分配!',{icon:1,time:1000});
-                        }else{
+                        // if(data.isValid == 'no'){
+                        //     layer.msg('该设备已被分配且正在运行，不可被分配!',{icon:1,time:1000});
+                        // }else{
                             layer.msg('已完成!',{icon:1,time:1000});
                             parent.window.location.href='/project/list?pageNo='+data.fpageNo+'&pageSize='+data.fpageSize+'&keyword='+data.fkeyword;
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭弹出层
                             parent.layer.close(index);
-                        }
+                        // }
                         
                     },
                     error:function(data) {

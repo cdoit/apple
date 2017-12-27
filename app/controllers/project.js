@@ -219,10 +219,6 @@ router.get('/fenpei', login.checkin, function (req, res, next) {
             obj.result = result;
             res.json(obj);
         }).catch(next);
-
-
-
-
     
 });
 
