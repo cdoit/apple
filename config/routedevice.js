@@ -17,7 +17,7 @@ const test = require('../app/device/controllers/test');
 
 var webchatTest = new test(db);
 const login = require('../app/device/controllers/login');
-const weixinserver = require('../wechat/weixin');
+
 //
 var http = require('http');
 var multer  = require('multer');
@@ -181,8 +181,6 @@ module.exports = function (app) {
     });
 
 
-
-    app.get('/wx/qrcode', weixinserver.qrcode);
 
     app.post('/login', function (req, res, next) {
 
