@@ -3,7 +3,7 @@ var login = require('./login');
 var constant = require('./constant');
 var router = express.Router();
 var uuid = require('node-uuid');
-const db = require("../db/");
+const db = require("../../db/");
 
 //设备列表
 router.get('/list', login.checkin, function (req, res, next) {

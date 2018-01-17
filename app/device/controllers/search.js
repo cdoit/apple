@@ -1,7 +1,7 @@
 var express = require('express');
 var login = require('./login');
 var router = express.Router();
-const db = require("../db/");
+const db = require("../../db/");
 var uuid = require('node-uuid');
 
 router.get('/www', function (req, res) {

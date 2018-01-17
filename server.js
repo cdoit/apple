@@ -16,6 +16,8 @@ module.exports = {
 
 require('./config/express.js')(app);
 require('./config/routes.js')(app);
+require('./config/routedevice.js')(app);
+require('./config/routematerial.js')(app);
 
 listen();
 

@@ -2,7 +2,7 @@
 var login = require('./login');
 var router = express.Router();
 var uuid = require('node-uuid');
-const db = require("../db/");
+const db = require("../../db/");
 var seneca = require('seneca');
 var async = require('async');
 

@@ -4,7 +4,7 @@ var router = express.Router();
 var iconv = require("iconv-lite");
 var uuid = require('node-uuid');
 var fs = require('fs');
-const db = require("../db/");
+const db = require("../../db/");
 db.init();
 
 

@@ -36,7 +36,7 @@ module.exports = function (app) {
 
 
     // 设置视图模板引擎
-    app.set('views', "App/views");
+    app.set('views', "device/App/views");
     app.set('view engine', 'ejs');
 
 

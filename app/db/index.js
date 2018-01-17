@@ -17,38 +17,38 @@ exports.init = function () {
     );
 
     
-    var Company = sequelize.import('../models/company.js');
+    var Company = sequelize.import('../device/models/company.js');
     
-    var Design = sequelize.import('../models/design.js');
+    var Design = sequelize.import('../device/models/design.js');
     
-    var Equipment = sequelize.import('../models/equipment.js');
+    var Equipment = sequelize.import('../device/models/equipment.js');
     
-    var Equipmentparameter = sequelize.import('../models/equipmentparameter.js');
+    var Equipmentparameter = sequelize.import('../device/models/equipmentparameter.js');
     
-    var Equipmentposition = sequelize.import('../models/equipmentposition.js');
+    var Equipmentposition = sequelize.import('../device/models/equipmentposition.js');
 
-    var Factoryversion = sequelize.import('../models/factoryversion.js');
+    var Factoryversion = sequelize.import('../device/models/factoryversion.js');
     
-    var Project = sequelize.import('../models/project.js');
+    var Project = sequelize.import('../device/models/project.js');
     
     //管理员
-    var AdminInfo = sequelize.import('../models/adminInfo.js');
+    var AdminInfo = sequelize.import('../device/models/adminInfo.js');
     //权限
-    var Function_ = sequelize.import('../models/function.js');
-    var Role = sequelize.import('../models/role.js');
+    var Function_ = sequelize.import('../device/models/function.js');
+    var Role = sequelize.import('../device/models/role.js');
     //日志
-    var Log = sequelize.import('../models/log.js');
-    var Systemlog = sequelize.import('../models/systemlog.js');
+    var Log = sequelize.import('../device/models/log.js');
+    var Systemlog = sequelize.import('../device/models/systemlog.js');
 
 
 
     //数据字典
-    var Dictionary = sequelize.import('../models/dictionary.js');
+    var Dictionary = sequelize.import('../device/models/dictionary.js');
     //省市区
-    var County = sequelize.import('../models/county.js');
-    var City = sequelize.import('../models/city.js');
-    var Province = sequelize.import('../models/province.js');
-    var Scheme = sequelize.import('../models/scheme.js');
+    var County = sequelize.import('../device/models/county.js');
+    var City = sequelize.import('../device/models/city.js');
+    var Province = sequelize.import('../device/models/province.js');
+    var Scheme = sequelize.import('../device/models/scheme.js');
 
 
     Equipment.hasOne(Equipmentparameter);
