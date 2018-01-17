@@ -72,7 +72,7 @@ module.exports = function (app) {
     });
 
     app.get('/', function (req, res) {
-        res.render('manager/login.ejs');
+        res.render('device/views/manager/login.ejs');
     });
 
     app.get('/login', function (req, res) {
