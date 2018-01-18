@@ -52,7 +52,7 @@
             layer.confirm('确认要分配该设备吗？',function(index){
                 $.ajax({
                     type: 'GET',
-                    url: '/project/fenpei?projectId='+idw+'&equipmentId='+id,
+                    url: '/device/project/fenpei?projectId='+idw+'&equipmentId='+id,
                     dataType: 'json',
                     success: function(data){
                         // $(obj).parents("tr").remove();

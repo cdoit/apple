@@ -14,7 +14,7 @@
         </nav>
         <div class="Hui-article">
             <article class="cl pd-20">
-                <form class="form form-horizontal" method="post" action="/equipment/fenfaList" >
+                <form class="form form-horizontal" method="post" action="/device/equipment/fenfaList" >
                     <div class="text-c">
                             <span class="select-box inline">
                                 <select name="equipmenttype" class="select">
@@ -171,8 +171,8 @@
                             共<span><%=totalPage%></span>页
                         </div>
                         <div style="float: right;margin-top: 10px;">
-                            <a href="/equipment/list?currentPage=<%=currentPage-1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&projectId=<%=projectId%>&equipmenttype=<%=equipmenttype%>" onclick="return prevPage('<%=currentPage %>')">上一页</a>
-                            <a href="/equipment/list?currentPage=<%=currentPage+1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&projectId=<%=projectId%>&equipmenttype=<%=equipmenttype%>" onclick="return nextPage('<%=currentPage %>','<%=totalPage %>')">下一页</a>
+                            <a href="/device/equipment/list?currentPage=<%=currentPage-1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&projectId=<%=projectId%>&equipmenttype=<%=equipmenttype%>" onclick="return prevPage('<%=currentPage %>')">上一页</a>
+                            <a href="/device/equipment/list?currentPage=<%=currentPage+1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&projectId=<%=projectId%>&equipmenttype=<%=equipmenttype%>" onclick="return nextPage('<%=currentPage %>','<%=totalPage %>')">下一页</a>
                         </div>
                     </div>
 
@@ -185,8 +185,8 @@
                                 共<span><%=totalPage%></span>页
                             </div>
                             <div style="float: right;margin-top: 10px;">
-                                <a href="/equipment/list?currentPage=<%=currentPage-1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&equipmenttype=<%=equipmenttype%>" onclick="return prevPage('<%=currentPage %>')">上一页</a>
-                                <a href="/equipment/list?currentPage=<%=currentPage+1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&equipmenttype=<%=equipmenttype%>" onclick="return nextPage('<%=currentPage %>','<%=totalPage %>')">下一页</a>
+                                <a href="/device/equipment/list?currentPage=<%=currentPage-1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&equipmenttype=<%=equipmenttype%>" onclick="return prevPage('<%=currentPage %>')">上一页</a>
+                                <a href="/device/equipment/list?currentPage=<%=currentPage+1 %>&countPerPage=<%=countPerPage %>&keyword=<%=keyword%>&equipmenttype=<%=equipmenttype%>" onclick="return nextPage('<%=currentPage %>','<%=totalPage %>')">下一页</a>
                             </div>
                         </div>
                 <%}%>
@@ -200,7 +200,7 @@
             layer.confirm('确认要分配该设备吗？',function(index){
                 $.ajax({
                     type: 'GET',
-                    url: '/project/fenpei?projectId='+idw+'&equipmentId='+id,
+                    url: '/device/project/fenpei?projectId='+idw+'&equipmentId='+id,
                     dataType: 'json',
                     success: function(data){
                         // $(obj).parents("tr").remove();
@@ -208,7 +208,7 @@
                         //     layer.msg('该设备已被分配且正在运行，不可被分配!',{icon:1,time:1000});
                         // }else{
                             layer.msg('已完成!',{icon:1,time:1000});
-                            parent.window.location.href='/project/list?pageNo='+data.fpageNo+'&pageSize='+data.fpageSize+'&keyword='+data.fkeyword;
+                            parent.window.location.href='/device/project/list?pageNo='+data.fpageNo+'&pageSize='+data.fpageSize+'&keyword='+data.fkeyword;
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭弹出层
                             parent.layer.close(index);

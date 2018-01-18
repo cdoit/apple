@@ -35,7 +35,7 @@ var upload = multer({ storage: storage })
 router.get('/findById', login.checkin, function (req, res, next) {
     var designId = req.query.designId;
     db.Design.findById(designId).then(function (result) {
-        res.render('design/info.ejs',{ design: result ,moment: require("moment")});
+        res.render('device/views/design/info.ejs',{ design: result ,moment: require("moment")});
     }).catch(next);
 });
 
@@ -50,7 +50,7 @@ router.get('/download', function (req, res,next) {
 
   router.get('/add',login.checkin, function (req, res,next) {
     var projectId = req.query.projectId;
-    res.render('design/add.ejs',{ projectId: projectId });
+    res.render('device/views/design/add.ejs',{ projectId: projectId });
   });
 
   

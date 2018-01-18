@@ -63,7 +63,7 @@ router.get('/list', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/list.ejs', 
+            res.render('device/views/project/list.ejs', 
             {pageNo:pageNo,pageSize:pageSize,total:total,totalPage:totalPage,projectProgress:result[1],keyword:keyword, project: result[0] });
       }).catch(next);
 });
@@ -122,14 +122,14 @@ router.post('/list', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/list.ejs', 
+            res.render('device/views/project/list.ejs', 
             {pageNo:pageNo,pageSize:pageSize,total:total,totalPage:totalPage,projectProgress:result[1],keyword:keyword, project: result[0] });
       }).catch(next);
 });
 
 //任务分配（地图）
 router.get('/fenfaMap', login.checkin, function (req, res, next) {
-    res.render('project/map.ejs');
+    res.render('device/views/project/map.ejs');
 });
 
 //任务分配（列表）  分配机器
@@ -146,7 +146,7 @@ router.get('/fenfaList', login.checkin, function (req, res, next) {
             }
         }
     ).then(function (result) {
-        res.render('project/equipmentList.ejs', { equipment: result, projectId: projectId });
+        res.render('device/views/project/equipmentList.ejs', { equipment: result, projectId: projectId });
     });
 });
 
@@ -310,7 +310,7 @@ router.get('/projectList', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/projectList.ejs', 
+            res.render('device/views/project/projectList.ejs', 
             {total:total,totalPage:totalPage,projectProgress:result[1],pageNo:pageNo,pageSize:pageSize, keyword:keyword,project: result[0] });
       }).catch(next);
 });
@@ -382,7 +382,7 @@ router.post('/projectList', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/projectList.ejs', 
+            res.render('device/views/project/projectList.ejs', 
             {total:total,totalPage:totalPage,projectProgress:result[1],pageSize:pageSize,pageNo:pageNo, keyword:keyword,project: result[0] });
       }).catch(next);
 });
@@ -473,7 +473,7 @@ router.get('/equipProjectList', login.checkin, function (req, res, next) {
         ]).then(function (result) {
         var total = result[3];
         var totalPage = Math.ceil(result[3] / pageSize);
-        res.render('project/equipProjectList', {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,projectProgress:result[2],project:result[0],equipmentId:equipmentId,keyword:keyword,equipment: result[1]});
+        res.render('device/views/project/equipProjectList', {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,projectProgress:result[2],project:result[0],equipmentId:equipmentId,keyword:keyword,equipment: result[1]});
     }).catch(next);
 });
 
@@ -543,7 +543,7 @@ router.post('/equipProjectList', login.checkin, function (req, res, next) {
         ]).then(function(result){
         var total = result[3];
         var totalPage = Math.ceil(result[3] / pageSize);
-        res.render('project/equipProjectList.ejs', 
+        res.render('device/views/project/equipProjectList.ejs', 
         {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,equipmentId:equipmentId,projectProgress:result[2],equipment:result[1], keyword:keyword,project: result[0] });
       }).catch(next);
 });
@@ -567,7 +567,7 @@ router.get('/add', login.checkin, function (req, res, next) {
         db.Project.findOne(filter),
         db.Scheme.findAll(schemeFilter)
     ]).then(function (results) {
-        res.render('project/add.ejs', { project: results[0], scheme: results[1] });
+        res.render('device/views/project/add.ejs', { project: results[0], scheme: results[1] });
     }).catch(next);
 
 });
@@ -706,7 +706,7 @@ router.get('/todoDesign', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/todoDesignList.ejs', 
+            res.render('device/views/project/todoDesignList.ejs', 
             {total:total,totalPage:totalPage,pageNo:pageNo,pageSize:pageSize,projectProgress:result[1], keyword:keyword,project: result[0] });
         }).catch(next);
 });
@@ -779,7 +779,7 @@ router.post('/todoDesign', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/todoDesignList.ejs', 
+            res.render('device/views/project/todoDesignList.ejs', 
             {total:total,totalPage:totalPage,pageNo:pageNo,pageSize:pageSize,projectProgress:result[1], keyword:keyword,project: result[0] });
        }).catch(next);
 
@@ -861,7 +861,7 @@ router.get('/designed', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/designedList.ejs', 
+            res.render('device/views/project/designedList.ejs', 
             {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,projectProgress:result[1], keyword:keyword,project: result[0]});
       }).catch(next);
 });
@@ -932,7 +932,7 @@ router.post('/designed', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[2];
             var totalPage = Math.ceil(result[2] / pageSize);
-            res.render('project/designedList.ejs', 
+            res.render('device/views/project/designedList.ejs', 
             {total:total,totalPage:totalPage,pageSize:pageSize,pageNo:pageNo,projectProgress:result[1], keyword:keyword,project: result[0]});
       }).catch(next);
 
