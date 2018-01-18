@@ -5,7 +5,7 @@ const db = require("../../db/");
 
 //访问管理页面
 router.get('/index', login.checkin, function (req, res, next) {
-    res.render('manager/index.ejs');
+    res.render('device/views/manager/index.ejs');
 });
 
 //欢迎页面
