@@ -3,7 +3,7 @@
 var Sequelize = require('sequelize');
 
 //��ʼ����ǰ���ݿ���Ϣ
-exports.init = function () {
+exports.initdevice = function () {
 
     var sequelize = new Sequelize('cdoapple', 'test', 'test',
         {
@@ -97,5 +97,21 @@ exports.init = function () {
     exports.Province = Province;
     exports.County = County;
     exports.City = City;
+    // exports.Project = Project;
+}
+
+exports.initmaterial = function () {
+
+    var sequelize = new Sequelize('cdoapple', 'test', 'test',
+        {
+            host: '192.168.31.108',
+            port: 3306,
+            dialect: 'mysql',
+            logging: console.log,
+            //东八时区
+            timezone: '+08:00'
+        }
+    );
+
     // exports.Project = Project;
 }

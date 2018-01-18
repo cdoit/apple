@@ -12,5 +12,5 @@ const wechat = require('../wechat/wechat');
 var wechatApp = new wechat(config); 
 
 module.exports = function (app) {
-
+    db.initmaterial();
 };

@@ -60,7 +60,7 @@ function getopenid(req, res, next) {
 }
 
 module.exports = function (app) {
-
+    db.initdevice();
     app.get('/testmicroservice', home.testmicroservice);
     // // 微服务
     // app.get('/findByEquiCode', project.findByEquiCode);
