@@ -7,7 +7,7 @@ exports.init = function () {
 
     var sequelize = new Sequelize('cdoapple', 'test', 'test',
         {
-            host: 'localhost',
+            host: '192.168.31.108',
             port: 3306,
             dialect: 'mysql',
             logging: console.log,
