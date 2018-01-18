@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: '物料Id'
     },
     name: { type: DataTypes.STRING(200), allowNull: true, comment: ' ' },
-    projectid: { type: DataTypes.STRING(200), allowNull: true, comment: ' ' },
+    projectid: { type: DataTypes.STRING(200), allowNull: true, comment: '' },
     packgeid: { type: DataTypes.STRING(200), allowNull: true, comment: ' ' },
     num: { type: DataTypes.STRING(200), allowNull: true, comment: ' ' }
   },
