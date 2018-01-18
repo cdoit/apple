@@ -133,7 +133,7 @@
                     content.push("地址："+markers[i].location);
                     // content.push("电话：010-64733333");
                     content.push("出厂日期："+ markers[i].buytime);
-                    content.push("<a href='/equipment/info?equipmentId="+markers[i].equipmentId+"'>详细信息</a>");
+                    content.push("<a href='/device/equipment/info?equipmentId="+markers[i].equipmentId+"'>详细信息</a>");
                     var infoWindow = new AMap.InfoWindow({
                         isCustom: true,  //使用自定义窗体
                         content: createInfoWindow(title, content.join("<br/>")),
@@ -153,7 +153,7 @@
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/equipment/equipmentData',
+                    url: '/device/equipment/equipmentData',
                     dataType: 'json',
                     success: function(data){
                         if(data!=null)

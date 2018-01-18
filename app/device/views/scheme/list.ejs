@@ -18,7 +18,7 @@
         </nav>
         <div class="Hui-article">
             <article class="cl pd-20">
-                <form class="form form-horizontal" method="post" action="/scheme/list" >
+                <form class="form form-horizontal" method="post" action="/device/scheme/list" >
                     <div class="text-c">
                         <input type="text" name="keyword" id="" value="<%if(keyword!=null){%><%=keyword%><%}%>" placeholder="方案名称" style="width:250px" class="input-text">
                         <input type="hidden" name="pageNo" value="<%=pageNo%>">
@@ -29,7 +29,7 @@
                 <div class="cl pd-5 bg-1 bk-gray mt-20">
                     <span class="l">
                     <!-- <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> -->
-                    <a class="btn btn-primary radius" data-title="添加方案" _href="/scheme/add" onclick="show_add('添加方案','/scheme/add')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加方案</a>
+                    <a class="btn btn-primary radius" data-title="添加方案" _href="/device/scheme/add" onclick="show_add('添加方案','/device/scheme/add')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加方案</a>
                     </span>
                     <span class="r">共有数据：<strong><%=total %></strong> 条</span>
                 </div>
@@ -63,8 +63,8 @@
                                         </td>
                                         <!-- <td><%=schemes[i].state %> </td> -->
                                         <td class="f-14 product-brand-manage">
-                                            <a style="text-decoration:none" onClick="show_add('编辑方案','/scheme/add?schemeId=<%=schemes[i].id %>')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
-                                            <a style="text-decoration:none" class="ml-5" onClick="scheme_del(this,'/scheme/delete?schemeId=<%=schemes[i].id %>')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                                            <a style="text-decoration:none" onClick="show_add('编辑方案','/device/scheme/add?schemeId=<%=schemes[i].id %>')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
+                                            <a style="text-decoration:none" class="ml-5" onClick="scheme_del(this,'/device/scheme/delete?schemeId=<%=schemes[i].id %>')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
                                         </td>
                                     </tr>
                                     <% } %>  
@@ -79,8 +79,8 @@
                             共<span><%=totalPage%></span>页 
                         </div>
                         <div style="float: right;margin-top: 10px;">
-                            <a href="/scheme/list?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
-                            <a href="/scheme/list?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
+                            <a href="/device/scheme/list?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
+                            <a href="/device/scheme/list?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
                         </div>
                     </div>
 

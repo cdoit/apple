@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    <form action="/login" method="post" role="form">
+    <form action="/device/login" method="post" role="form">
         <div class="mycenter">
             <div  class="form-group">
                 <h3 class="form-title">请登录</h3>
@@ -57,10 +57,10 @@
         console.log(robj);
         // alert("1:"+zobj+"  2:"+robj);
         if(zobj!=undefined && zobj!=""&&zobj!=null){
-            parent.window.location.href='/manager/index'; 
+            parent.window.location.href='/device/manager/index'; 
         }
         if(robj!=undefined && robj!=""&&robj!=null){
-            parent.parent.window.location.href='/manager/index'; 
+            parent.parent.window.location.href='/device/manager/index'; 
         }
     });
 </script>

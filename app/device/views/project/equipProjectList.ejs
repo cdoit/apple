@@ -14,7 +14,7 @@
             </nav>
             <div class="Hui-article">
                 <article class="cl pd-20">
-                    <form action="/project/equipProjectList" method="post" role="form">
+                    <form action="/device/project/equipProjectList" method="post" role="form">
                         <div class="text-c">
                             <span class="select-box inline">
                                 <select name="equipmentId" class="select">
@@ -60,7 +60,7 @@
                                             <td><%=project[i].address %> </td>
                                             <td>
                                                 <%if(project[i].schemeId!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/device/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
                                                 <%}%>
                                                 <%if(project[i].schemeId==null){%>
                                                     暂未绑定方案数据
@@ -68,7 +68,7 @@
                                             </td>
                                             <td>
                                                 <%if(project[i].designId!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设计信息','/design/findById?designId=<%=project[i].designId%>','10001','360','400')">查看</u>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设计信息','/device/design/findById?designId=<%=project[i].designId%>','10001','360','400')">查看</u>
                                                 <%}%>
                                                 <%if(project[i].designId==null){%>
                                                     暂未绑定设计数据
@@ -77,7 +77,7 @@
                                             <td>
                                                 <%if(project[i].equipmentId!=null){%>
                                                     <!-- <u style="cursor:pointer" class="text-primary" onclick="member_show('查看设备信息','/equipment/findById?equipmentId=<%=project[i].equipmentId%>','10001','360','400')">查看</u> -->
-                                                    <u style="cursor:pointer" class="text-primary" onclick="equipment_add('设备详情','/equipment/info?equipmentId=<%=project[i].equipmentId %>')">查看</u>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="equipment_add('设备详情','/device/equipment/info?equipmentId=<%=project[i].equipmentId %>')">查看</u>
                                                 <%}%>
                                                 <%if(project[i].equipmentId==null){%>
                                                     暂未绑定设备数据
@@ -107,8 +107,8 @@
                             共<span><%=totalPage%></span>页 
                         </div>
                         <div style="float: right;margin-top: 10px;">
-                            <a href="/project/equipProjectList?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>&equipmentId=<%=equipmentId%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
-                            <a href="/project/equipProjectList?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>&equipmentId=<%=equipmentId%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
+                            <a href="/device/project/equipProjectList?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>&equipmentId=<%=equipmentId%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
+                            <a href="/device/project/equipProjectList?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>&equipmentId=<%=equipmentId%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
                         </div>
                     </div>
                 </article>

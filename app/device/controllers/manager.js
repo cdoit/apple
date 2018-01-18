@@ -10,7 +10,7 @@ router.get('/index', login.checkin, function (req, res, next) {
 
 //欢迎页面
 router.get('/welcome', login.checkin, function (req, res, next) {
-    res.render('manager/welcome.ejs');
+    res.render('device/views/manager/welcome.ejs');
 });
 
 module.exports = router;

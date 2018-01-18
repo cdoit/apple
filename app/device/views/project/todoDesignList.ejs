@@ -14,7 +14,7 @@
             </nav>
             <div class="Hui-article">
                 <article class="cl pd-20">
-                    <form class="form form-horizontal" method="post" action="/project/todoDesign" >
+                    <form class="form form-horizontal" method="post" action="/device/project/todoDesign" >
                         <div class="text-c">
                             <input type="text" name="keyword" id="" value="<%if(keyword!=null){%><%=keyword%><%}%>" placeholder="任务名称、地址" style="width:250px" class="input-text">
                             <input type="hidden" name="pageNo" value="<%=pageNo%>">
@@ -50,7 +50,7 @@
                                             <td><%=project[i].address %> </td>
                                             <td>
                                                 <%if(project[i].schemeId!=null){%>
-                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
+                                                    <u style="cursor:pointer" class="text-primary" onclick="member_show('查看方案信息','/device/scheme/findById?schemeId=<%=project[i].schemeId%>','10001','360','400')">查看</u>
                                                 <%}%>
                                                 <%if(project[i].schemeId==null){%>
                                                     暂未绑定方案数据
@@ -90,10 +90,10 @@
                                             <td class="f-14 product-brand-manage">
                                                 <!-- <a style="text-decoration:none" class="ml-5"  _href="/project/fenfaMap" onclick="project_fenfa('地图页面分发','/project/fenfaMap')" href="javascript:;" title="地图页面分发"><i class="Hui-iconfont">&#xe665;</i></a> -->
                                                 <%if(project[i].designerId==null){%>
-                                                    <a style="text-decoration:none" class="ml-5" onClick="list_jiedan('0','/project/jiedan?projectId=<%=project[i].id %>')" href="javascript:;" title="接单"><i class="Hui-iconfont">&#xe6de;</i></a>
+                                                    <a style="text-decoration:none" class="ml-5" onClick="list_jiedan('0','/device/project/jiedan?projectId=<%=project[i].id %>')" href="javascript:;" title="接单"><i class="Hui-iconfont">&#xe6de;</i></a>
                                                 <%}%>
                                                 <%if(project[i].designerId!=null){%>
-                                                    <a style="text-decoration:none" class="ml-5" onClick="list_jiedan('1','/project/nojiedan?projectId=<%=project[i].id %>')" href="javascript:;" title="取消接单"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                                                    <a style="text-decoration:none" class="ml-5" onClick="list_jiedan('1','/device/project/nojiedan?projectId=<%=project[i].id %>')" href="javascript:;" title="取消接单"><i class="Hui-iconfont">&#xe6e2;</i></a>
                                                 <%}%>
                                             </td>
                                         </tr>
@@ -115,8 +115,8 @@
                                 共<span><%=totalPage%></span>页 
                             </div>
                             <div style="float: right;margin-top: 10px;">
-                                <a href="/project/todoDesign?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
-                                <a href="/project/todoDesign?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
+                                <a href="/device/project/todoDesign?pageNo=<%=pageNo-1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return prevPage('<%=pageNo %>')">上一页</a>
+                                <a href="/device/project/todoDesign?pageNo=<%=pageNo+1 %>&pageSize=<%=pageSize %>&keyword=<%=keyword%>" onclick="return nextPage('<%=pageNo %>','<%=totalPage %>')">下一页</a>
                             </div>
                         </div>
 

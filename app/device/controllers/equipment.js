@@ -101,7 +101,7 @@ router.get('/list', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[3];
             var totalPage = Math.ceil(result[3] / countPerPage);
-            res.render('equipment/list2.ejs', 
+            res.render('device/views/equipment/list2.ejs', 
                 {messenge:messenge,totalPage:totalPage, total:total,projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
@@ -199,7 +199,7 @@ router.post('/list', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[3];
             var totalPage = Math.ceil(result[3] / countPerPage);
-            res.render('equipment/list2.ejs', 
+            res.render('device/views/equipment/list2.ejs', 
                 {totalPage:totalPage, total:total, projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
@@ -241,7 +241,7 @@ router.get('/info', login.checkin, function (req, res, next) {
             }
         })
         ]).then(function(result){
-            res.render('equipment/info.ejs',
+            res.render('device/views/equipment/info.ejs',
             {equipParams:result[5], equipmentState:result[4], workState:result[3], adminInfo:result[2],equipmentType:result[1],equipment: result[0],moment: require("moment") });
       }).catch(next);
 });
@@ -265,7 +265,7 @@ router.get('/add', login.checkin, function (req, res, next) {
             }
         })
         ]).then(function(result){
-        res.render('equipment/add.ejs', 
+        res.render('device/views/equipment/add.ejs', 
         {adminInfo:result[2],dictionary:result[1], equipment: result[0],moment: require("moment") });
       }).catch(next);
 });
@@ -319,7 +319,7 @@ router.post('/addEquipment', login.checkin, function (req, res, next) {
     //     }
     // }) 
     db.Equipment.insertOrUpdate(equipment).then(function (result) {
-        res.redirect("/equipment/list");
+        res.redirect("/device/equipment/list");
     }).catch(next);
     });
 
@@ -343,13 +343,13 @@ router.get('/map', login.checkin, function (req, res, next) {
     db.Sequelize.query(
         "SELECT ep.*,e.`code`,e.`name`,e.buytime,e.customer from equipmentparameter ep JOIN equipment as e on e.id = ep.equipment_id ORDER BY ep.created_at desc"
     ).then(function (result) {
-        res.render('equipment/map.ejs',{moment: require("moment"),equipment:result[0]});
+        res.render('device/views/equipment/map.ejs',{moment: require("moment"),equipment:result[0]});
     }).catch(next);
 });
 
 
 router.get('/statistic', function (req, res, next) {
-    res.render('equipment/statistic.ejs' );
+    res.render('device/views/equipment/statistic.ejs' );
 });
 
 
@@ -429,7 +429,7 @@ router.get('/fenfaList', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[3];
             var totalPage = Math.ceil(result[3] / countPerPage);
-            res.render('equipment/fenfaList.ejs', 
+            res.render('device/views/equipment/fenfaList.ejs', 
                 {totalPage:totalPage, total:total,projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
@@ -498,7 +498,7 @@ router.post('/fenfaList', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[3];
             var totalPage = Math.ceil(result[3] / countPerPage);
-            res.render('equipment/fenfaList.ejs', 
+            res.render('device/views/equipment/fenfaList.ejs', 
                 {totalPage:totalPage, total:total, projectId:projectId,equipmenttype:equipmenttype,adminInfo:result[2],dictionary:result[1],keyword:keyword,countPerPage:countPerPage,currentPage:currentPage,equipment: result[0],moment: require("moment") }
             );
       }).catch(next);
@@ -680,7 +680,7 @@ router.get('/getDesignByCode', function (req, res, next) {
 router.get('/findById', login.checkin, function (req, res, next) {
     var equipmentId = req.query.equipmentId;
     db.Equipment.findById(equipmentId).then(function (result) {
-        res.render('equipment/info.ejs',{ equipment: result ,moment: require("moment")});
+        res.render('device/views/equipment/info.ejs',{ equipment: result ,moment: require("moment")});
     }).catch(next);
 });
 

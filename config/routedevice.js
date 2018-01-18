@@ -70,12 +70,12 @@ module.exports = function (app) {
         next();
     });
 
-    app.get('/', function (req, res) {
+    app.get('/device', function (req, res) {
         res.render('device/views/manager/login.ejs');
     });
 
-    app.get('/login', function (req, res) {
-        res.render('manager/login.ejs');
+    app.get('/device/login', function (req, res) {
+        res.render('device/views/manager/login.ejs');
     });
 
     // app.all('*', function(req, res, next) {
@@ -89,7 +89,7 @@ module.exports = function (app) {
 
     //
     //登陆
-    app.post('/login', function (req, res, next) {
+    app.post('/device/login', function (req, res, next) {
         var username = req.body.username;
         var password = req.body.password;
         var passwordsd = md5(password)  
@@ -102,16 +102,16 @@ module.exports = function (app) {
             if (result != null) {
                 req.session.admin = result;
                 // req.session.adminname = result.adminname;
-                res.redirect("/manager/index");
+                res.redirect("/device/manager/index");
             } else {
-                res.render('manager/login.ejs');
+                res.render('device/views/manager/login.ejs');
             }
         });
     });
 
-    app.get('/logout', function (req, res) {
+    app.get('/device/logout', function (req, res) {
         req.session.admin = null;
-        res.redirect("/manager/index");
+        res.redirect("/device/manager/index");
     });
 
     app.post('/uploadSingle', upload.single('file1'), function(req, res, next){
@@ -181,16 +181,16 @@ module.exports = function (app) {
 
 
 
-    app.post('/login', function (req, res, next) {
+    app.post('/device/login', function (req, res, next) {
 
         next();
     });
 
-    app.use('/scheme',require("../app/device/controllers/scheme"));
-    app.use('/manager',require("../app/device/controllers/manager"));
-    app.use('/equipment',require("../app/device/controllers/equipment"));
-    app.use('/project',require("../app/device/controllers/project"));
-    app.use('/design',require("../app/device/controllers/design"));
+    app.use('/device/scheme',require("../app/device/controllers/scheme"));
+    app.use('/device/manager',require("../app/device/controllers/manager"));
+    app.use('/device/equipment',require("../app/device/controllers/equipment"));
+    app.use('/device/project',require("../app/device/controllers/project"));
+    app.use('/device/design',require("../app/device/controllers/design"));
 
     app.use(function (err, req, res, next) {
         if (err.message

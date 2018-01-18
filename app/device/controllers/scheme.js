@@ -90,7 +90,7 @@ router.get('/list', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[1];
             var totalPage = Math.ceil(result[1] / pageSize);
-            res.render('scheme/list.ejs', 
+            res.render('device/views/scheme/list.ejs', 
             {total:total,totalPage:totalPage,admin:admin,keyword:keyword,pageSize:pageSize,pageNo:pageNo, schemes: result[0] ,moment: require("moment")});
       }).catch(next);
 
@@ -152,7 +152,7 @@ router.post('/list', login.checkin, function (req, res, next) {
         ]).then(function(result){
             var total = result[1];
             var totalPage = Math.ceil(result[1] / pageSize);
-            res.render('scheme/list.ejs', 
+            res.render('device/views/scheme/list.ejs', 
             {total:total,totalPage:totalPage,admin:admin,keyword:keyword,pageSize:pageSize,pageNo:pageNo, schemes: result[0] ,moment: require("moment")});
       }).catch(next);
 
@@ -187,7 +187,7 @@ router.get('/add', login.checkin, function (req, res, next) {
         }
     }
     db.Scheme.findOne(filter).then(function (result) {
-        res.render('scheme/add.ejs', { scheme: result,moment: require("moment") });
+        res.render('device/views/scheme/add.ejs', { scheme: result,moment: require("moment") });
     }).catch(next);
 });
 
@@ -285,7 +285,7 @@ router.post('/addScheme',upload.single('file1'), login.checkin, function (req, r
 router.get('/findById', login.checkin, function (req, res, next) {
     var schemeId = req.query.schemeId;
     db.Scheme.findById(schemeId).then(function (result) {
-        res.render('scheme/info.ejs',{ scheme: result,moment: require("moment") });
+        res.render('device/views/scheme/info.ejs',{ scheme: result,moment: require("moment") });
     }).catch(next);
 });
 

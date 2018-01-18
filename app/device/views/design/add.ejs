@@ -6,7 +6,7 @@
 </head>
 <body>
 <article class="page-container">
-	<form class="form form-horizontal" method="post" id="form-design-add" action="/design/save" enctype="multipart/form-data">
+	<form class="form form-horizontal" method="post" id="form-design-add" action="/device/design/save" enctype="multipart/form-data">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设计名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -59,7 +59,7 @@
 				focusInvalid: false,
 				rules : {
 						designName : {
-								remote : "/design/checkName?oldDesignName=" + encodeURIComponent(designName)
+								remote : "/device/design/checkName?oldDesignName=" + encodeURIComponent(designName)
 							},
 						file1 : {
 							checkfile:true
@@ -72,7 +72,7 @@
 						},
 				submitHandler: function(form){  
 					$(form).ajaxSubmit(function(data){
-						parent.window.location.href='/project/designed';
+						parent.window.location.href='/device/project/designed';
 						var index = parent.layer.getFrameIndex(window.name);
 						//关闭弹出层
 						parent.layer.close(index);

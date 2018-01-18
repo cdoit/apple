@@ -107,7 +107,7 @@
                 var temp = []; 
                 var seriesDataJson2 = [];  
                 $.ajax({  
-                    url:"/project/getProjectCount",  
+                    url:"/device/project/getProjectCount",  
                     type:"get",  
                     async:false,  
                     success:function(data){
@@ -205,7 +205,7 @@
                 var xAxisDataJson1 ;  
                 var seriesDataJson1 ;  
                 $.ajax({  
-                    url:"/project/getProjectState",  
+                    url:"/device/project/getProjectState",  
                     type:"get",  
                     async:false,  
                     success:function(data){  
@@ -255,7 +255,7 @@
                  var xAxisDataJson3 ;  
                 var seriesDataJson3 ;  
                 $.ajax({  
-                    url:"/equipment/getEquipmentState",  
+                    url:"/device/equipment/getEquipmentState",  
                     type:"get",  
                     async:false,  
                     success:function(data){  
@@ -309,7 +309,7 @@
                 var temp4 = []; 
                 var seriesDataJson4 = [];  
                 $.ajax({  
-                    url:"/equipment/getOutputCount",  
+                    url:"/device/equipment/getOutputCount",  
                     type:"get",  
                     async:false,  
                     success:function(data){ 
