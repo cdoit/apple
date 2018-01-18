@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: '物料Id'
     },
     name: { type: DataTypes.STRING(200), allowNull: true, comment: '' },
-    inputnum: { type: DataTypes.STRING(200), allowNull: true, comment: ' ' },
+    inputnum: { type: DataTypes.STRING(200), allowNull: true, comment: '' },
     remainnum: { type: DataTypes.STRING(200), allowNull: true, comment: ' ' }
   },
     {
