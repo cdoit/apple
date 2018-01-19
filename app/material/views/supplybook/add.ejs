@@ -1,0 +1,86 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <% include ../includes/meta.ejs %>
+<!--/meta 作为公共模版分离出去-->
+<title>悉道物料数据共享平台</title>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" method="post" id="form-supplybook-add" action="/material/supplybook/addSupplybook">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>供应商名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="required input-text" value="<%if(supplybook!=null){%><%=supplybook.supplyname%><%}%>" placeholder="" id="supplyname" name="supplyname" title="供应商不能为空">
+				<input type="hidden" class="input-text" value="<%if(supplybook!=null){%><%=supplybook.supplyname%><%}%>" id="oldSupplyname" name="oldSupplyname"  >
+                <input type="hidden" value="<%if(supplybook!=null){%><%=supplybook.id%><%}%>" name="supplybookId">
+			</div>
+        </div>
+		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>法人：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="required input-text" value="<%if(supplybook!=null){%><%=supplybook.pepole%><%}%>" placeholder="" id="pepole" name="pepole" title="法人不能为空">
+            </div>
+		</div>
+		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>电话：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="required input-text" onkeyup="value=value.replace(/#/g,'')"  value="<%if(supplybook!=null){%><%=supplybook.tel%><%}%>" placeholder="" id="tel" name="tel" title="电话不能为空">
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button id="equipment_save_submit" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存 </button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<% include ../includes/footer.ejs %>
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="../../lib/jquery.validation/1.14.0/messages_zh.js"></script>   
+<script type="text/javascript" src="../../lib/webuploader/0.1.5/webuploader.min.js"></script> 
+
+<script type="text/javascript">
+	$(document).ready(function() { 
+				var supplyname = $("#supplyname").val();
+				$("#supplyname").focus();
+				$("#form-supplybook-add").validate({ 
+					rules : {
+								code : {
+									remote : "/material/supplybook/checkName?oldSupplyname=" + encodeURIComponent(supplyname)
+								}
+							},
+							messages : {
+								code : {
+									remote : "该供应商已存在"
+								}
+							},
+					submitHandler: function(form){   //表单提交句柄,为一回调函数，带一个参数：form   
+                    	// alert(form);   
+						// form.submit();   //提交表单  
+						
+						$(form).ajaxSubmit(function(data){
+							parent.window.location.href='/material/supplybook/list';
+							var index = parent.layer.getFrameIndex(window.name);
+							//关闭弹出层
+							parent.layer.close(index);
+						}); 
+						
+
+					}
+					
+				});
+
+
+			});
+	</script>
+</body>
+</html>
