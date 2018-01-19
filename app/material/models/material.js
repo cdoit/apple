@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
       comment: '类型Id'
     },
     name: { type: DataTypes.STRING(200), allowNull: true, comment: '名称' },
-    unit: { type: DataTypes.STRING(200), allowNull: true, comment: '单位' }
+    unit: { type: DataTypes.STRING(200), allowNull: true, comment: '单位' },
     attributeinfo: { type: DataTypes.STRING(2000), allowNull: true, comment: ' ' }
   },
     {

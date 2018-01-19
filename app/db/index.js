@@ -102,7 +102,7 @@ exports.initdevice = function () {
 
 exports.initmaterial = function () {
 
-    var sequelize = new Sequelize('cdoapple', 'test', 'test',
+    var sequelize = new Sequelize('cdomaterial', 'test', 'test',
         {
             host: '192.168.31.108',
             port: 3306,
@@ -113,5 +113,58 @@ exports.initmaterial = function () {
         }
     );
 
-    // exports.Project = Project;
+    
+    var House = sequelize.import('../material/models/house.js');
+    var Houseplan = sequelize.import('../material/models/houseplan.js');
+    var Designpackge = sequelize.import('../material/models/designpackge.js');
+
+    var Supplybook = sequelize.import('../material/models/supplybook.js');
+    var Supply = sequelize.import('../material/models/supply.js');
+    var Purchase = sequelize.import('../material/models/purchase.js');
+    var Materialcategory = sequelize.import('../material/models/materialcategory.js');
+    var Material = sequelize.import('../material/models/material.js');
+    var Calculation = sequelize.import('../material/models/calculation.js');
+    var Deliver = sequelize.import('../material/models/deliver.js'); 
+
+
+    House.hasOne(Houseplan);
+    Houseplan.belongsTo(House);
+
+    Houseplan.hasOne(Designpackge);
+    Designpackge.belongsTo(Houseplan);
+
+    Supplybook.hasOne(Supply);
+    Supply.belongsTo(Supplybook);
+
+    Material.hasOne(Supply);
+    Supply.belongsTo(Material);
+
+    Materialcategory.hasOne(Material);
+    Material.belongsTo(Materialcategory);
+
+    Material.hasOne(Purchase);
+    Purchase.belongsTo(Material);
+
+    Material.hasOne(Calculation);
+    Calculation.belongsTo(Material);
+
+    Purchase.hasOne(Deliver);
+    Deliver.belongsTo(Purchase);
+
+    sequelize.sync();
+    
+    exports.Sequelize = sequelize;
+
+
+    exports.House = House;
+    exports.Houseplan = Houseplan;
+    exports.Designpackge = Designpackge;
+    exports.Supplybook = Supplybook;
+    exports.Supply = Supply;
+    exports.Purchase = Purchase;
+    exports.Materialcategory = Materialcategory;
+    exports.Material = Material;
+    exports.Calculation = Calculation;
+    exports.Deliver = Deliver; 
+
 }
