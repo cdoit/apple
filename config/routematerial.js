@@ -13,7 +13,7 @@ var wechatApp = new wechat(config);
 
 module.exports = function (app) {
     db.initmaterial();
-    app.use('/device',require("../app/material/controllers/index"));
+    // app.use('/device',require("../app/material/controllers/index"));
 
     app.get('/material', function (req, res) {
         res.render('material/views/index.ejs');
