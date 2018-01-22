@@ -31,6 +31,38 @@
 				<input type="text" class="required input-text" onkeyup="value=value.replace(/#/g,'')"  value="<%if(supplybook!=null){%><%=supplybook.tel%><%}%>" placeholder="" id="tel" name="tel" title="电话不能为空">
 			</div>
 		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>地址：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="<%if(supplybook!=null){%><%=supplybook.address%><%}%>" placeholder="" id="address" name="address" >
+            </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>票据类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="billtype" class="select">
+					<option value="专票" <%if(supplybook!=null&&supplybook.billtype=='专票'){%> selected="selected" <%}%>>专票</option>
+					<option value="无票、收据" <%if(supplybook!=null&&supplybook.billtype=='无票、收据'){%> selected="selected" <%}%>>无票、收据</option>
+					<option value="普票" <%if(supplybook!=null&&supplybook.billtype=='普票'){%> selected="selected" <%}%>>普票</option>
+				</select>
+				</span> </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>经营材料：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="<%if(supplybook!=null){%><%=supplybook.operatscope%><%}%>" placeholder="" id="operatscope" name="operatscope" >
+            </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>合作时长：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="<%if(supplybook!=null){%><%=supplybook.cooperationtime%><%}%>" placeholder="" id="cooperationtime" name="cooperationtime" >
+            </div>
+		</div>
 		
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
@@ -50,16 +82,16 @@
 
 <script type="text/javascript">
 	$(document).ready(function() { 
-				var supplyname = $("#supplyname").val();
+				// var supplyname = $("#supplyname").val();
 				$("#supplyname").focus();
 				$("#form-supplybook-add").validate({ 
 					rules : {
-								code : {
-									remote : "/material/supplybook/checkName?oldSupplyname=" + encodeURIComponent(supplyname)
+							supplyname : {
+									remote : "/material/supplybook/checkName?oldSupplyname=" + encodeURIComponent($("#supplyname").val())
 								}
 							},
 							messages : {
-								code : {
+								supplyname : {
 									remote : "该供应商已存在"
 								}
 							},

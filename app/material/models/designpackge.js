@@ -4,6 +4,7 @@ module.exports = function (sequelize, DataTypes) {
     id: { type: DataTypes.STRING(200), primaryKey: true, unique: true },
     houseplanid: {
       type: DataTypes.STRING(200),
+      field: 'houseplan_id',
       allowNull: false,
       comment: '方案Id'
     },

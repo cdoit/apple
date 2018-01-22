@@ -3,6 +3,7 @@ module.exports = function (sequelize, DataTypes) {
     id: { type: DataTypes.STRING(200), primaryKey: true, unique: true },
     materialid: {
       type: DataTypes.STRING(200),
+      field: 'material_id',
       allowNull: false,
       comment: '物料Id'
     },

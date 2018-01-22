@@ -20,7 +20,7 @@ module.exports = function (app) {
     });
 
     app.use('/material/supplybook',require("../app/material/controllers/supplybook"));
-
+    app.use('/material/supply',require("../app/material/controllers/supply"));
 
     
 
