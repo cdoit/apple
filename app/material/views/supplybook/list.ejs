@@ -34,10 +34,13 @@
                         <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
                                 <thead>
                                     <tr class="text-c">
-                                        <!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
                                         <th width="120">供应商名称</th>
-                                        <th width="120">人数</th>
+                                        <th width="120">法人</th>
                                         <th width="120">电话</th>
+                                        <th width="120">地址</th>
+                                        <th width="120">票据</th>
+                                        <th width="120">经营范围</th>
+                                        <th width="120">合作时长</th>
                                         <th width="100">操作</th>
                                     </tr>
                                 </thead>
@@ -52,6 +55,18 @@
 
                                         <td>
                                             <%=supplybook[i].tel %> 
+                                        </td>
+                                        <td>
+                                            <%=supplybook[i].address %> 
+                                        </td>
+                                        <td>
+                                            <%=supplybook[i].billtype %> 
+                                        </td>
+                                        <td>
+                                            <%=supplybook[i].operatscope %> 
+                                        </td>
+                                        <td>
+                                            <%=supplybook[i].cooperationtime %> 
                                         </td>
 
                                         

@@ -1,8 +1,9 @@
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('deliver', {
     id: { type: DataTypes.STRING(200), primaryKey: true, unique: true },
-    storeid: {
+    purchaseid: {
       type: DataTypes.STRING(200),
+      field: 'purchase_id',
       allowNull: false,
       comment: '库存Id'
     },

@@ -126,18 +126,11 @@ exports.initmaterial = function () {
     var Calculation = sequelize.import('../material/models/calculation.js');
     var Deliver = sequelize.import('../material/models/deliver.js'); 
 
-
     House.hasOne(Houseplan);
     Houseplan.belongsTo(House);
 
     Houseplan.hasOne(Designpackge);
     Designpackge.belongsTo(Houseplan);
-
-    Supplybook.hasOne(Supply);
-    Supply.belongsTo(Supplybook);
-
-    Material.hasOne(Supply);
-    Supply.belongsTo(Material);
 
     Materialcategory.hasOne(Material);
     Material.belongsTo(Materialcategory);
@@ -149,7 +142,13 @@ exports.initmaterial = function () {
     Calculation.belongsTo(Material);
 
     Purchase.hasOne(Deliver);
-    Deliver.belongsTo(Purchase);
+    Deliver.belongsTo(Purchase); 
+
+    Supplybook.hasMany(Supply, { foreignKey: 'supplybook_id', targetKey: 'id', as: 'Supplys' });
+    Material.hasMany(Supply, { foreignKey: 'material_id', targetKey: 'id', as: 'Supplys' });
+
+
+    // Materialcategory.hasMany(Material, { foreignKey: 'category_id', targetKey: 'id', as: 'Materials' });
 
     sequelize.sync();
     

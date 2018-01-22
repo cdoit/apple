@@ -1,7 +1,8 @@
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('material', {
     id: { type: DataTypes.STRING(200), primaryKey: true, unique: true },
-    categoryid: {
+    materialcategoryid: {
+      field: 'materialcategory_id',
       type: DataTypes.STRING(200),
       allowNull: false,
       comment: '类型Id'

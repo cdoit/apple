@@ -171,4 +171,48 @@ router.get('/checkName', function (req, res, next) {
     }).catch(next);
 });
 
+
+router.post('/addSupplybook', function (req, res, next) {
+    var supplybookId = req.body.supplybookId;
+    var supplyname = req.body.supplyname;
+    var pepole = req.body.pepole;
+    var tel = req.body.tel;
+    var address = req.body.address;
+    var billtype = req.body.billtype;
+    var operatscope = req.body.operatscope;
+    var cooperationtime = req.body.cooperationtime;
+
+    if(supplybookId == undefined || supplybookId == ''){
+        supplybookId = uuid.v1();
+    }
+
+    var supplybook = {
+        id:supplybookId,
+        supplyname:supplyname,
+        pepole:pepole,
+        address:address,
+        billtype:billtype,
+        operatscope:operatscope,
+        cooperationtime:cooperationtime,
+        tel:tel
+    }
+
+    db.Supplybook.insertOrUpdate(supplybook).then(function (result) {
+        res.redirect("/material/supplybook/list");
+    }).catch(next);
+});
+
+
+router.get('/delete', function (req, res, next) {
+    var supplybookId = req.query.supplybookId;
+        var filter = {
+            where: {
+                id:supplybookId
+            }
+        }
+        db.Supplybook.destroy(filter).then(function (result) {
+            res.json(result);
+        }).catch(next);
+});
+
 module.exports = router;
