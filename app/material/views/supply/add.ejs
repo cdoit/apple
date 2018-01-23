@@ -2,6 +2,43 @@
 <head>
     <% include ../includes/meta.ejs %>
 <title>悉道物料数据共享平台</title>
+<style type="text/css">
+	html,body{height:auto;}
+	#suggest, #suggest2 {width:200px;}
+	.gray {color:gray;}
+	.ac_results {background:#fff;border:1px solid #7f9db9;position: absolute;z-index: 10000;display: none;}
+	.ac_results li a {white-space: nowrap;text-decoration:none;display:block;color:#05a;padding:1px 3px;}
+	.ac_results li {border:1px solid #fff;}
+	.ac_over, .ac_results li a:hover {background:#c8e3fc;}
+	.ac_results li a span {float:right;}
+	.ac_result_tip {border-bottom:1px dashed #666;padding:3px;}
+
+	.item:hover
+	{
+	 background-color: Gray;
+	 cursor:pointer;
+	}
+	.show
+	{
+	 width: 200px;
+	 z-index: 10;
+	 display: block;
+	}
+	.hidden
+	{
+	 width: 200px;
+	 z-index: 10;
+	 display: none;
+	 border:1px solid rgb(80,160,91);
+	 border-top:none;
+	}
+	table tr td
+	{
+	 margin:none;
+	 padding:none;
+	 border:none;
+	}
+   </style>
 </head>
 <body>
 <article class="page-container">
@@ -19,10 +56,11 @@
 		
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>物料编码：</label>
+
 			<div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="required input-text" value="<%if(supply!=null){%><%=supply.materialId%><%}%>" placeholder="" id="materialId" name="materialId" title="物料编码不能为空">
-				<input type="hidden" value="<%if(supply!=null){%><%=supply.id%><%}%>" name="supplyId">
+				<input class="input-text inline" type="text"  align="center" name="city2" id="city2" onkeyup="txtchange()"/>
 			</div>
+			<div id='suggest2' class="ac_results"> </div>
 		</div>
 		
 		<div class="row cl">
@@ -47,8 +85,19 @@
 <script type="text/javascript" src="../../lib/jquery.validation/1.14.0/validate-methods.js"></script> 
 <script type="text/javascript" src="../../lib/jquery.validation/1.14.0/messages_zh.js"></script>   
 <script type="text/javascript" src="../../lib/webuploader/0.1.5/webuploader.min.js"></script> 
+<script type="text/javascript" src="../../js/suggest.js"></script> 
 
 <script type="text/javascript">
+	//选择其中的提示内容
+	function mousedown(object) {
+		$("#intxt").val($(object).text());
+		$("#tbcontent").fadeOut();
+	}
+	//文档框失去焦点，隐藏提示内容
+	function lost() {
+		$("#tbcontent").fadeOut();
+	}
+
 	$(document).ready(function() {
 				$("#form-supply-add").validate({
 					submitHandler: function(form){
@@ -60,7 +109,27 @@
 						}); 
 					}
 				});
+	});
+
+
+	function txtchange() {
+		var code = $("#city2").val();
+		$.ajax({
+				type: "get",
+				url: "/material/material/codetip",
+				data: { code: code },
+				dataType: "json",
+				success: function (data) {
+					$("#city2").html(""); //删除原有数据
+					var citys=new Array();
+					$.each(data, function (i, item) {  
+						citys[i]=new Array(item.id,item.id,item.name,item.id);
+					});  
+					$("#city2").suggest(citys,{hot_list:citys,attachObject:"#suggest2"});
+				}
 			});
-	</script>
+  	}
+
+</script>
 </body>
 </html>
