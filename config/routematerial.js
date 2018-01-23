@@ -14,6 +14,7 @@ var wechatApp = new wechat(config);
 module.exports = function (app) {
     db.initmaterial();
     // app.use('/device',require("../app/material/controllers/index"));
+    // app.use('/device',require("../app/material/controllers/index"));
 
     app.get('/material', function (req, res) {
         res.render('material/views/index.ejs');
@@ -22,7 +23,6 @@ module.exports = function (app) {
     app.use('/material/supplybook',require("../app/material/controllers/supplybook"));
     app.use('/material/supply',require("../app/material/controllers/supply"));
     app.use('/material/material',require("../app/material/controllers/material"));
-
     
 
 

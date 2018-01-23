@@ -5,6 +5,8 @@ const db = require("../../db/");
 
 //物料价格列表
 router.get('/list' , function (req, res, next) { 
+    // 物料编码
+    var materialId = req.query.materialId;
     var keyword = req.query.keyword;
     var pageNo = req.query.pageNo;
     var pageSize = req.query.pageSize;
@@ -28,23 +30,15 @@ router.get('/list' , function (req, res, next) {
                 'limit': pageSize,                      //每页多少条
                 'offset': pageSize * (pageNo - 1),      //跳过多少条
                 'where': {
-                    '$or': [
-                        {'materialId': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-            } 
+                    'materialId': materialId
+                } 
             }
         ),
         db.Supply.count(
             {
                 'where': {
-                    '$or': [
-                        {'materialId': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-            } 
+                    'materialId': materialId
+                } 
             }
         ),
         db.Supplybook.findAll()
@@ -57,6 +51,7 @@ router.get('/list' , function (req, res, next) {
 });
 
 router.post('/list' , function (req, res, next) { 
+    var materialId = req.body.materialId;
     var keyword = req.body.keyword;
     var pageNo = req.body.pageNo;
     var pageSize = req.body.pageSize;
@@ -80,23 +75,15 @@ router.post('/list' , function (req, res, next) {
                 'limit': pageSize,                      //每页多少条
                 'offset': pageSize * (pageNo - 1),      //跳过多少条
                 'where': {
-                    '$or': [
-                        {'materialId': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-            } 
+                    'materialId': materialId
+                }
             }
         ),
         db.Supply.count(
             {
                 'where': {
-                    '$or': [
-                        {'materialId': {
-                            '$like': '%'+keyword+'%'      
-                        }}
-                    ]
-            } 
+                    'materialId': materialId
+                }
             }
         ),
         db.Supplybook.findAll()

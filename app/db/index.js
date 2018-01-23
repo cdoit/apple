@@ -1,6 +1,7 @@
 'use strict';
 
 var Sequelize = require('sequelize');
+var Sequelize2 = require('sequelize');
 
 //��ʼ����ǰ���ݿ���Ϣ
 exports.initdevice = function () {
@@ -152,7 +153,7 @@ exports.initmaterial = function () {
 
     sequelize.sync();
     
-    exports.Sequelize = sequelize;
+    exports.Sequelize2 = sequelize;
 
 
     exports.House = House;
