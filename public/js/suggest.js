@@ -21,7 +21,7 @@
 		});
 			
 		$input.focus(function(){
-			if($.trim($(this).val())=='中文/拼音'){
+			if($.trim($(this).val())=='物料编码'){
 				$(this).val('').css('color','#000');
 			}
 			if($.trim($(this).val())==''){

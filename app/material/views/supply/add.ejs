@@ -13,7 +13,7 @@
 	.ac_results li a span {float:right;}
 	.ac_result_tip {border-bottom:1px dashed #666;padding:3px;}
 
-	.item:hover
+	/* .item:hover
 	{
 	 background-color: Gray;
 	 cursor:pointer;
@@ -37,7 +37,7 @@
 	 margin:none;
 	 padding:none;
 	 border:none;
-	}
+	} */
    </style>
 </head>
 <body>
@@ -88,15 +88,15 @@
 <script type="text/javascript" src="../../js/suggest.js"></script> 
 
 <script type="text/javascript">
-	//选择其中的提示内容
-	function mousedown(object) {
-		$("#intxt").val($(object).text());
-		$("#tbcontent").fadeOut();
-	}
-	//文档框失去焦点，隐藏提示内容
-	function lost() {
-		$("#tbcontent").fadeOut();
-	}
+	// //选择其中的提示内容
+	// function mousedown(object) {
+	// 	$("#intxt").val($(object).text());
+	// 	$("#tbcontent").fadeOut();
+	// }
+	// //文档框失去焦点，隐藏提示内容
+	// function lost() {
+	// 	$("#tbcontent").fadeOut();
+	// }
 
 	$(document).ready(function() {
 				$("#form-supply-add").validate({
