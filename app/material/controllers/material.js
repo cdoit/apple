@@ -28,6 +28,10 @@ router.get('/codetip' , function (req, res, next) {
     }).catch(next);
 });
 
+router.get('/code' , function (req, res, next) { 
+    res.render('material/views/basic/materialcode.ejs',null);
+});
+
 //获取物料类型树的接口
 router.get('/tree2', function (req, res, next) {
     db.Materialcategory.findAll().then(function (result) {
