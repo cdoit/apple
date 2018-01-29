@@ -10,7 +10,7 @@ router.get('/gettoken' , function (req, res, next) {
         corpId: "ding865f2022dc64284135c2f4657eb6378f",
         corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
       });
-      console.log("url:"+path);
+      console.log("second url:"+path);
       httpUtil.get(path, res);
 });
 
