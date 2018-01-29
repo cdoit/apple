@@ -7,7 +7,7 @@ var httpUtil = require('../../util/http');
 //供应商列表
 router.get('/gettoken' , function (req, res, next) { 
     var path = '/gettoken?' + querystring.stringify({
-        corpid: req.corpid,
+        corpId: req.corpid,
         corpsecret: req.secret
       });
       
