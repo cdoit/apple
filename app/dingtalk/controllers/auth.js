@@ -7,8 +7,8 @@ var httpUtil = require('../../util/http');
 //供应商列表
 router.get('/gettoken' , function (req, res, next) { 
     var path = 'oapi.dingtalk.com/gettoken?' + querystring.stringify({
-        corpId: req.corpid,
-        corpsecret: req.secret
+        corpId: req.corpId,
+        corpsecret: req.corpsecret
       });
       console.log("url:"+path);
       httpUtil.get(path, res);
