@@ -3,6 +3,7 @@ var router = express.Router();
 var uuid = require('node-uuid');
 const db = require("../../db/");
 var httpUtil = require('../../util/http');
+var querystring = require('querystring');
 //物料价格列表
 router.get('/list' , function (req, res, next) { 
     // 物料编码
