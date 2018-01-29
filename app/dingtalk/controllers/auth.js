@@ -10,7 +10,7 @@ router.get('/gettoken' , function (req, res, next) {
         corpId: req.corpid,
         corpsecret: req.secret
       });
-      
+      console.log("url:"+path);
       httpUtil.get(path, res);
 });
 
