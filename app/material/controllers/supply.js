@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var uuid = require('node-uuid');
 const db = require("../../db/");
-
+var httpUtil = require('../../util/http');
 //物料价格列表
 router.get('/list' , function (req, res, next) { 
     // 物料编码
@@ -97,18 +97,24 @@ router.post('/list' , function (req, res, next) {
 
 
 router.get('/add', function (req, res, next) {
-    var supplyId = req.query.supplyId;
-    Promise.all([
-        db.Supply.findOne({
-            'where': {
-                id:supplyId
-            }
-        }),
-        db.Supplybook.findAll()
-        ]).then(function(result){
-        res.render('material/views/supply/add.ejs',
-        { supplybook:result[1],supply: result[0],moment: require("moment") });
-      }).catch(next);
+    var path = '/cdo/sso/gettoken?' + querystring.stringify({
+        corpid: "ding865f2022dc64284135c2f4657eb6378f",
+        corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
+        });
+        
+    httpUtil.get(path, res);
+    // var supplyId = req.query.supplyId;
+    // Promise.all([
+    //     db.Supply.findOne({
+    //         'where': {
+    //             id:supplyId
+    //         }
+    //     }),
+    //     db.Supplybook.findAll()
+    //     ]).then(function(result){
+    //     res.render('material/views/supply/add.ejs',
+    //     { supplybook:result[1],supply: result[0],moment: require("moment") });
+    //   }).catch(next);
 });
 
 router.post('/addSupply', function (req, res, next) {
