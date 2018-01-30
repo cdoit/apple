@@ -12,6 +12,7 @@ router.get('/gettoken' , function (req, res, next) {
       });
       console.log("second url:"+path);
       httpUtil.get(path, res);
+      
 });
 
 module.exports = router;
