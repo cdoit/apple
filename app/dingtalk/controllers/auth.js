@@ -7,8 +7,8 @@ var httpUtil = require('../../util/https');
 //供应商列表req.corpIdreq.corpsecret
 router.get('/gettoken' , function (req, res, next) { 
     var path = 'oapi.dingtalk.com/gettoken?' + querystring.stringify({
-        corpId: "ding865f2022dc64284135c2f4657eb6378f",
-        corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
+        corpId: req.corpId,
+        corpsecret: req.corpsecret
       });
       console.log("second url:"+path);
       httpUtil.get(path, res);
