@@ -2,7 +2,7 @@ var http = require('http');
    
 var qs = require('querystring'); 
 module.exports = {   
-    get: function(host,port,path) {
+    get: function(host,port,path,backres) {
         var options = { 
             hostname: host, 
             port: port, 
@@ -16,11 +16,13 @@ module.exports = {
             res.setEncoding('utf8'); 
             res.on('data', function (chunk) { 
                 console.log('BODY1: ' + chunk); 
+                backres.JSON(chunk);
             }); 
         }); 
         
         req.on('error', function (e) { 
             console.log('problem with request: ' + e.message); 
+
         }); 
         
         req.end();

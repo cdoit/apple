@@ -11,7 +11,7 @@ router.get('/gettoken' , function (req, res, next) {
         corpsecret: req.query.corpsecret
       });
       console.log("second url:"+path);
-      httpUtil.get(path, res);
+      httpUtil.get(path, next);
       
 });
 
