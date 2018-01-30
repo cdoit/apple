@@ -113,13 +113,13 @@ router.get('/add', function (req, res, next) {
     // ], function(err, result) {
     //     var tasks = result;
     // });
-
     var path = '/cdo/sso/gettoken?' + querystring.stringify({
         corpId: "ding865f2022dc64284135c2f4657eb6378f",
         corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
         });
     console.log("first url:"+path);    
-    httpUtil.get('127.0.0.1','3000',path);
+    httpUtil.get('127.0.0.1','3000',path,res);
+ 
     // var supplyId = req.query.supplyId;
     // Promise.all([
     //     db.Supply.findOne({

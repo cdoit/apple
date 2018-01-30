@@ -3,7 +3,7 @@ var https = require("https");
 var oapiHost = 'oapi.dingtalk.com';
 
 module.exports = {
-  get: function(path, res) {
+  get: function(path, res,backres) {
     https.get('https://'+path, function(response) {
       console.log('three:'+'https://'+path);
       if (response.statusCode === 200) {
@@ -13,16 +13,16 @@ module.exports = {
         }).on('end', function () { 
           var result = JSON.parse(body);
           if (result && 0 === result.errcode) {
-            res.json(result);
+            backres.json(result);
           }
           else {
             var err={"status":"0","msg":result.errcode};
-            res.json(err);
+            backres.json(err);
           }
         });  
       }
       else {
-        res.error(response.statusCode);
+        backres.error(response.statusCode);
       }
     });
   },
