@@ -16,7 +16,7 @@ module.exports = {
             res.setEncoding('utf8'); 
             res.on('data', function (chunk) { 
                 console.log('BODY1: ' + chunk); 
-                backres.JSON(chunk);
+                backres.json(chunk);
             }); 
         }); 
         
