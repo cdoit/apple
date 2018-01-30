@@ -5,5 +5,5 @@ var router = express.Router();
 
 
 module.exports = function (app) {
-    app.use('/cdo/sso',require("../app/dingtalk/controllers/auth"));
+    app.use('/',require("../app/dingtalk/controllers/auth"));
 };

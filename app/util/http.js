@@ -3,11 +3,6 @@ var http = require('http');
 var qs = require('querystring'); 
 module.exports = {   
     get: function(host,port,path) {
-        var data = { 
-            a: 123, 
-            time: new Date().getTime()};//这是需要提交的数据 
-        var content = qs.stringify(data); 
-        
         var options = { 
             hostname: host, 
             port: port, 
