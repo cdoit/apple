@@ -98,6 +98,26 @@ router.post('/list' , function (req, res, next) {
 });
 
 
+router.get('/test', function (req, res, next) {
+    db.Material.insertOrUpdate({
+        id:uuid.v1(),
+        materialcategoryid:1,
+        name:'11111',
+        unit:'m',
+        attributeinfo:'11111'
+    }).then(function (result) {
+        //添加物料价格
+        return db.Supply.insertOrUpdate({
+            id:uuid.v1(),
+            supplybookId:'d77182a0-ff4b-11e7-8f1d-21c2afc54abe',
+            materialId:'102031113',
+            supplyprice:'343434343434.4'
+        });
+    }).then(function (resultss) {
+       res.json(resultss);
+    });
+});
+
 router.get('/add', function (req, res, next) {
     // async.waterfall([
     //     function(callback) {
