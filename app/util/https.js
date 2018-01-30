@@ -5,6 +5,7 @@ var oapiHost = 'oapi.dingtalk.com';
 module.exports = {
   get: function(path, res) {
     https.get('https://'+path, function(response) {
+      console.log('three:'+'https://'+path);
       if (response.statusCode === 200) {
         var body = '';  
         response.on('data', function (data) {
