@@ -13,16 +13,16 @@ module.exports = {
         }).on('end', function () { 
           var result = JSON.parse(body);
           if (result && 0 === result.errcode) {
-            backres.json(result);
+            res.json(result);
           }
           else {
             var err={"status":"0","msg":result.errcode};
-            backres.json(err);
+            res.json(err);
           }
         });  
       }
       else {
-        backres.error(response.statusCode);
+        res.error(response.statusCode);
       }
     });
   },
