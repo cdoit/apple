@@ -105,7 +105,7 @@ exports.initmaterial = function () {
 
     var sequelize = new Sequelize('cdomaterial', 'test', 'test',
         {
-            host: '127.0.0.1',
+            host: '127.0.0.1',//192.168.31.108
             port: 3306,
             dialect: 'mysql',
             logging: console.log,

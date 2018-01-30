@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var uuid = require('node-uuid');
 const db = require("../../db/");
-var httpUtil = require('../../util/http');
 var querystring = require('querystring');
+var async = require('async'); 
+var httpUtil=require('../../util/http'); 
 //物料价格列表
 router.get('/list' , function (req, res, next) { 
     // 物料编码
@@ -98,12 +99,27 @@ router.post('/list' , function (req, res, next) {
 
 
 router.get('/add', function (req, res, next) {
-    var path = 'www.faruxue1688.com/cdo/sso/gettoken?' + querystring.stringify({
+    // async.waterfall([
+    //     function(callback) {
+    //         DaoUser.getUserIdByName(uName, function(err, userId) {
+    //             callback(null, userId);
+    //         });
+    //     },
+    //     function(userId, callback) {
+    //         DaoTask.getDateByUid(userId, function(err, tasks) {
+    //             callback(null, tasks);
+    //         });
+    //     }
+    // ], function(err, result) {
+    //     var tasks = result;
+    // });
+
+    var path = '/cdo/sso/gettoken?' + querystring.stringify({
         corpId: "ding865f2022dc64284135c2f4657eb6378f",
         corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
         });
     console.log("first url:"+path);    
-    httpUtil.get(path, res);
+    httpUtil.get('127.0.0.1','3000',path, res);
     // var supplyId = req.query.supplyId;
     // Promise.all([
     //     db.Supply.findOne({

@@ -1,60 +1,61 @@
-var https = require("https");
-
-var oapiHost = 'oapi.dingtalk.com';
-
-module.exports = {
-  get: function(path, res) {
-    https.get('https://' +  path, function(response) {
-      if (response.statusCode === 200) {
-        var body = '';  
-        response.on('data', function (data) {
-          body += data; 
-        }).on('end', function () { 
-          var result = JSON.parse(body);
-          if (result && 0 === result.errcode) {
-            res.json(result);
-          }
-          else {
-            var err={"status":"0","msg":result.errcode};
-            res.json(err);
-          }
-        });  
-      }
-      else {
-        res.error(response.statusCode);
-      }
-    });
-  },
-
-  post: function(path, data, cb) {
-    var opt = {  
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      host: oapiHost,  
-      path: path,  
-    };
-    var req = https.request(opt, function (response) {
-      if (response.statusCode === 200) {  
-        var body = '';  
-        response.on('data', function (data) {
-          body += data; 
-        }).on('end', function () { 
-          var result = JSON.parse(body);
-          if (result && 0 === result.errcode) {
-            cb.success(result);
-          }
-          else {
-            cb.error(result);
-          }
-        });  
-      }  
-      else {
-        cb.error(response.statusCode);  
-      }  
-    });  
-    req.write(data + '\n');  
-    req.end();  
-  }
+var http = require('http'); 
+   
+var qs = require('querystring'); 
+module.exports = {   
+    get: function(host,port,path) {
+        var data = { 
+            a: 123, 
+            time: new Date().getTime()};//这是需要提交的数据 
+        var content = qs.stringify(data); 
+        
+        var options = { 
+            hostname: host, 
+            port: port, 
+            path: path, 
+            method: 'GET' 
+        }; 
+        
+        var req = http.request(options, function (res) { 
+            console.log('STATUS: ' + res.statusCode); 
+            console.log('HEADERS: ' + JSON.stringify(res.headers)); 
+            res.setEncoding('utf8'); 
+            res.on('data', function (chunk) { 
+                console.log('BODY: ' + chunk); 
+            }); 
+        }); 
+        
+        req.on('error', function (e) { 
+            console.log('problem with request: ' + e.message); 
+        }); 
+        
+        req.end();
+    },
+    post: function(host,port,path, data) {
+        var contents = querystring.stringify({
+            name:'byvoid',
+            email:'byvoid@byvoid.com',
+            address:'Zijing'
+        });
+         
+        var options = {
+            host:host,
+            port: port, 
+            path:path,
+            method:'POST',
+            headers:{
+                'Content-Type':'application/x-www-form-urlendcoded',
+                'Content-Length':contents.length
+            }
+        }
+         
+        var req = http.request(options, function(res){
+            res.setEncoding('utf8');
+            res.on('data',function(data){
+                console.log("data:",data);   //一段html代码
+            });
+        });
+         
+        req.write(contents);
+        req.end;
+    }
 };
