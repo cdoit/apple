@@ -114,7 +114,7 @@ router.get('/add', function (req, res, next) {
     //     var tasks = result;
     // });
 
-    var path = '/gettoken?' + querystring.stringify({
+    var path = '/cdo/sso/gettoken?' + querystring.stringify({
         corpId: "ding865f2022dc64284135c2f4657eb6378f",
         corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
         });
