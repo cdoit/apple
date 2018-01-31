@@ -133,10 +133,14 @@ router.get('/add', function (req, res, next) {
     // ], function(err, result) {
     //     var tasks = result;
     // });
-    var path = '/cdo/sso/gettoken?' + querystring.stringify({
-        corpid: "ding865f2022dc64284135c2f4657eb6378f",
-        corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
+    var path = '/cdo/sso/department/list?' + querystring.stringify({
+        access_token: "7ae5728a58993a82afa303876bfbb657"
         });
+
+    // var path = '/cdo/sso/gettoken?' + querystring.stringify({
+    //     corpid: "ding865f2022dc64284135c2f4657eb6378f",
+    //     corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
+    //     });
     console.log("first url:"+path);
     
     new Promise(function(resolve, reject) {
@@ -150,13 +154,15 @@ router.get('/add', function (req, res, next) {
             resolve(response);
         });
         request.on('error', function(e){
-            
+            reject(e);  
         });
         request.end();
-      }).then(function(response) {
+      }).then(function(response,e) {
+            var body="";
             response.on('data', function (chunk) { 
-                console.log('BODY1: ' + chunk); 
-                res.json(chunk);
+                body+=chunk
+                
+                res.json(body);
             }); 
       });
 

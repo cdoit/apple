@@ -4,6 +4,7 @@ var uuid = require('node-uuid');
 var querystring = require('querystring');
 var https = require('https');
 
+
 //供应商列表req.corpIdreq.corpsecret
 router.get('/gettoken' , function (req,res) { 
     var path = 'oapi.dingtalk.com/gettoken?' + querystring.stringify({
@@ -16,17 +17,12 @@ router.get('/gettoken' , function (req,res) {
         });
     }).then(function(response){
         var body="";
+        response.setEncoding('utf8');
         response.on('data', function (data) {
                     body += data; 
                 }).on('end', function () { 
-                    var result = JSON.parse(body);
-                    if (result && 0 === result.errcode) {
-                        res.json(result);
-                    }
-                    else {
-                        var err={"status":"0","msg":result.errcode};
-                        res.json(err);
-                    }
+                    var result = body;
+                    res.json(result);
                 });     
         });
 });
