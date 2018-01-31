@@ -26,4 +26,11 @@ router.get('/list' , function (req, res) {
     });
 });
 
+
+
+router.get('/test' , function (req, res) { 
+    res.render('sso/views/department.ejs');
+});
+
+
 module.exports = router;
