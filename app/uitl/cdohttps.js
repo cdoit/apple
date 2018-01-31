@@ -1,25 +1,14 @@
 https = require('https');//引入 htts 模块
 var express = require('express');
 
-var cdohttps = function () {
-    // //设置 WeChat 对象属性 config
-    // this.config = config;
-    // //设置 WeChat 对象属性 token
-    // this.token = config.token;
-    // //设置 WeChat 对象属性 appID
-    // this.appID = config.appID;
-    // //设置 WeChat 对象属性 appScrect
-    // this.appScrect = config.appScrect;
-    // //设置 WeChat 对象属性 apiDomain
-    // this.apiDomain = config.apiDomain;
-    // //设置 WeChat 对象属性 apiURL
-    // this.apiURL = config.apiURL;
+class cdohttps 
+{
+    constructor()
+    {
 
-    /**
-     * 用于处理 https Get请求方法
-     * @param {String} url 请求地址 
-     */
-    this.requestGet = function(url){
+    }
+
+    requestGet(url){
         return new Promise(function(resolve,reject){
             https.get(url,function(res){
                 var buffer = [],result = "";
@@ -44,7 +33,7 @@ var cdohttps = function () {
      * @param {String} url  请求地址
      * @param {JSON} data 提交的数据
      */
-    this.requestPost = function(url,data){
+    requestPost(url,data){
         return new Promise(function(resolve,reject){
             //解析 url 地址
             var urlData = urltil.parse(url);

@@ -7,12 +7,11 @@ var cdohttps = require('../../uitl/cdohttps');
 
 //供应商列表req.corpIdreq.corpsecret
 router.get('/gettoken' , function (req,res) { 
-    var path = 'oapi.dingtalk.com/gettoken?' + querystring.stringify({
+    var path = 'https://oapi.dingtalk.com/gettoken?' + querystring.stringify({
         corpid: req.query.corpid,
         corpsecret: req.query.corpsecret});
-        cdohttps.requestGet(path).then(function(data){
-            var result = JSON.parse(data); 
-            resolve(result.access_token);
+        new cdohttps().requestGet(path).then(function(data){ 
+            res.json(data);
         });
     // new Promise(function(resolve, reject) {
     //     https.get('https://'+path, function(response){

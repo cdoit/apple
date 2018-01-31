@@ -9,21 +9,23 @@ router.get('/list' , function (req, res) {
     var path = 'oapi.dingtalk.com/department/list?' + querystring.stringify({
         access_token: req.query.access_token,
       });
-    
-    new Promise(function(resolve, reject) {
-        https.get('https://'+path, function(response){
-            resolve(response);
-        });
-    }).then(function(response){
-        var body="";
-        response.setEncoding('utf8');
-        response.on('data', function (data) {
-                    body += data; 
-                }).on('end', function () { 
-                    var result = body;
-                    jsonresult=JSON.parse(result);
-                });     
+    new cdohttps().requestGet(path).then(function(data){ 
+        res.json(data);
     });
+    // new Promise(function(resolve, reject) {
+    //     https.get('https://'+path, function(response){
+    //         resolve(response);
+    //     });
+    // }).then(function(response){
+    //     var body="";
+    //     response.setEncoding('utf8');
+    //     response.on('data', function (data) {
+    //                 body += data; 
+    //             }).on('end', function () { 
+    //                 var result = body;
+    //                 jsonresult=JSON.parse(result);
+    //             });     
+    // });
 });
 
 
