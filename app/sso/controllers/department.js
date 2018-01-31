@@ -8,6 +8,7 @@ var cdohttps = require('../../uitl/cdohttps');
 router.get('/list' , function (req, res) { 
     var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
         access_token: req.query.access_token,
+        id:49517483
       });
     new cdohttps().requestGet(path).then(function(data){ 
         res.json(data);
