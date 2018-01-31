@@ -12,7 +12,7 @@
     <div class="text-c" style="margin-top:50px"> 
         <input type="text" name="keyword" id="inputtext" style="width:500px;height:100px;" class="input-text">
         <button name="" id="button1" class="btn btn-success" type="button" onclick="gettoken()"><i class="Hui-iconfont">&#xe665;</i>button1</button>
-        <button name="" id="button2" class="btn btn-success" type="button"><i class="Hui-iconfont">&#xe665;</i>button2</button>
+        <button name="" id="button2" class="btn btn-success" type="button" onclick="getbumen()"><i class="Hui-iconfont">&#xe665;</i>button2</button>
     </div>
     <% include includes/footer.ejs %>
     <script type="text/javascript">
@@ -31,6 +31,25 @@
                 },
                 error:function(data) {
                     console.log(data.msg);
+                },
+            });
+    }
+
+
+
+    function getbumen(){
+            $.ajax({
+                type: 'GET',
+                url: '/cdo/sso/department/list',
+                data:{
+                    access_token:$("#inputtext").val()
+                },
+                dataType: 'json',
+                success: function(data){
+                    $("#inputtext").val(data);
+                },
+                error:function(data) {
+                    console.log(data);
                 },
             });
     }

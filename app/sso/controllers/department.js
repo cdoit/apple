@@ -3,10 +3,10 @@ var router = express.Router();
 var uuid = require('node-uuid');
 var querystring = require('querystring');
 var https = require('https');
-
+var cdohttps = require('../../uitl/cdohttps');
 //供应商列表req.corpIdreq.corpsecret
 router.get('/list' , function (req, res) { 
-    var path = 'oapi.dingtalk.com/department/list?' + querystring.stringify({
+    var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
         access_token: req.query.access_token,
       });
     new cdohttps().requestGet(path).then(function(data){ 
