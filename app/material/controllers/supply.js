@@ -4,7 +4,7 @@ var uuid = require('node-uuid');
 const db = require("../../db/");
 var querystring = require('querystring');
 var async = require('async'); 
-var httpUtil=require('../../util/http'); 
+var http=require('http'); 
 //物料价格列表
 router.get('/list' , function (req, res, next) { 
     // 物料编码
@@ -134,12 +134,32 @@ router.get('/add', function (req, res, next) {
     //     var tasks = result;
     // });
     var path = '/cdo/sso/gettoken?' + querystring.stringify({
-        corpId: "ding865f2022dc64284135c2f4657eb6378f",
+        corpid: "ding865f2022dc64284135c2f4657eb6378f",
         corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
         });
-    console.log("first url:"+path);    
-    httpUtil.get('127.0.0.1','3000',path,res);
- 
+    console.log("first url:"+path);
+    
+    new Promise(function(resolve, reject) {
+        var options = { 
+            hostname: '127.0.0.1', 
+            port: '3000', 
+            path: path, 
+            method: 'GET' 
+        }; 
+        var request = http.request(options, function(response) {
+            resolve(response);
+        });
+        request.on('error', function(e){
+            
+        });
+        request.end();
+      }).then(function(response) {
+            response.on('data', function (chunk) { 
+                console.log('BODY1: ' + chunk); 
+                res.json(chunk);
+            }); 
+      });
+
     // var supplyId = req.query.supplyId;
     // Promise.all([
     //     db.Supply.findOne({
