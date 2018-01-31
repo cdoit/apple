@@ -1,0 +1,40 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <% include includes/meta.ejs %> 
+    <!--/meta 作为公共模版分离出去-->
+    <title>悉道物料数据共享平台</title>
+</head>
+
+<body>
+    <div class="text-c" style="margin-top:50px"> 
+        <input type="text" name="keyword" id="inputtext" style="width:500px;height:100px;" class="input-text">
+        <button name="" id="button1" class="btn btn-success" type="button" onclick="gettoken()"><i class="Hui-iconfont">&#xe665;</i>button1</button>
+        <button name="" id="button2" class="btn btn-success" type="button"><i class="Hui-iconfont">&#xe665;</i>button2</button>
+    </div>
+    <% include includes/footer.ejs %>
+    <script type="text/javascript">
+        function gettoken(){
+            $.ajax({
+                type: 'GET',
+                url: '/cdo/sso/gettoken',
+                data:{
+                    corpid:'ding865f2022dc64284135c2f4657eb6378f',
+                    corpsecret:'Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH'
+                },
+                dataType: 'json',
+                success: function(data){
+                    var jsonObj=eval("("+data+")");
+                    $("#inputtext").val(jsonObj.access_token);
+                },
+                error:function(data) {
+                    console.log(data.msg);
+                },
+            });
+    }
+    </script>
+</body>
+
+</html>
