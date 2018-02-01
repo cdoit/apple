@@ -93,7 +93,7 @@
             beforeClick: function(treeId, treeNode) {
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 var ids= treeNode.isParent;
-                if(!treeNode.isParent){
+                // if(!treeNode.isParent){
                     //获取点击节点的id
                     var departmentid = treeNode.id;
                     // var access_token = $("#inputtext").val();
@@ -121,7 +121,7 @@
                             console.log(data);
                         },
                     });
-                }
+                // }
 
                 
             }
