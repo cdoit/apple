@@ -33,8 +33,12 @@ router.get('/user/simplelist' , function (req, res) {
 });
 
 router.get('/user/list' , function (req, res) { 
+    var token = req.query.access_token ;
+    if(token == null || token == undefined || token == ''){
+        token = req.session.token;
+    }
     var path = 'https://oapi.dingtalk.com/user/list?' + querystring.stringify({
-        access_token: req.query.access_token,
+        access_token: token,
         department_id:req.query.department_id
       });
     new cdohttps().requestGet(path).then(function(data){ 
