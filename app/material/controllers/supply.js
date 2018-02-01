@@ -119,65 +119,18 @@ router.get('/test', function (req, res, next) {
 });
 
 router.get('/add', function (req, res, next) {
-    // async.waterfall([
-    //     function(callback) {
-    //         DaoUser.getUserIdByName(uName, function(err, userId) {
-    //             callback(null, userId);
-    //         });
-    //     },
-    //     function(userId, callback) {
-    //         DaoTask.getDateByUid(userId, function(err, tasks) {
-    //             callback(null, tasks);
-    //         });
-    //     }
-    // ], function(err, result) {
-    //     var tasks = result;
-    // });
-    // var path = '/cdo/sso/department/list?' + querystring.stringify({
-    //     access_token: "7ae5728a58993a82afa303876bfbb657"
-    //     });
-
-    var path = '/cdo/sso/gettoken?' + querystring.stringify({
-        corpid: "ding865f2022dc64284135c2f4657eb6378f",
-        corpsecret: "Bo67en-DR4aBMYHV-BczWlIWiFFa_aAla5kZbyc9JGwcHs6g2K2TWrtbZ1GWWqIH"
-        });
-    console.log("first url:"+path);
-    
-    new Promise(function(resolve, reject) {
-        var options = { 
-            hostname: '127.0.0.1', 
-            port: '3000', 
-            path: path, 
-            method: 'GET' 
-        }; 
-        var request = http.request(options, function(response) {
-            resolve(response);
-        });
-        request.on('error', function(e){
-            reject(e);  
-        });
-        request.end();
-      }).then(function(response,e) {
-            var body="";
-            response.on('data', function (chunk) { 
-                body+=chunk
-                
-                res.json(body);
-            }); 
-      });
-
-    // var supplyId = req.query.supplyId;
-    // Promise.all([
-    //     db.Supply.findOne({
-    //         'where': {
-    //             id:supplyId
-    //         }
-    //     }),
-    //     db.Supplybook.findAll()
-    //     ]).then(function(result){
-    //     res.render('material/views/supply/add.ejs',
-    //     { supplybook:result[1],supply: result[0],moment: require("moment") });
-    //   }).catch(next);
+    var supplyId = req.query.supplyId;
+    Promise.all([
+        db.Supply.findOne({
+            'where': {
+                id:supplyId
+            }
+        }),
+        db.Supplybook.findAll()
+        ]).then(function(result){
+        res.render('material/views/supply/add.ejs',
+        { supplybook:result[1],supply: result[0],moment: require("moment") });
+      }).catch(next);
 });
 
 router.post('/addSupply', function (req, res, next) {
