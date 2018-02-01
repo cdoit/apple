@@ -4,10 +4,17 @@ var uuid = require('node-uuid');
 var querystring = require('querystring');
 var https = require('https');
 var cdohttps = require('../../uitl/cdohttps');
+
+
+
 //供应商列表req.corpIdreq.corpsecret
-router.get('/list' , function (req, res) { 
+router.get('/list' , function (req, res) {
+    var token = req.query.access_token ;
+    if(token == null || token == undefined || token == ''){
+        token = req.session.token;
+    }
     var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
-        access_token: req.query.access_token,
+        access_token: token,
         id:49517483
       });
     new cdohttps().requestGet(path).then(function(data){ 
@@ -35,7 +42,7 @@ router.get('/user/list' , function (req, res) {
     });
 });
 
-router.get('/test' , function (req, res) { 
+router.get('/test' , function (req, res) {
     res.render('sso/views/department.ejs');
 });
 

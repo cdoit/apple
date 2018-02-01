@@ -65,6 +65,7 @@ module.exports = function (app) {
     //设置Session
     app.use(session({
         secret: 'cdo',
+        cookie: {maxAge: 80000 },
         resave: true,
         saveUninitialized: true
     }));

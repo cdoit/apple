@@ -10,7 +10,8 @@ router.get('/gettoken' , function (req,res) {
     var path = 'https://oapi.dingtalk.com/gettoken?' + querystring.stringify({
         corpid: req.query.corpid,
         corpsecret: req.query.corpsecret});
-        new cdohttps().requestGet(path).then(function(data){ 
+        new cdohttps().requestGet(path).then(function(data){
+            req.session.token = data.access_token;
             res.json(data);
         });
     // new Promise(function(resolve, reject) {

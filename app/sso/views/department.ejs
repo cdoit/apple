@@ -26,7 +26,7 @@
                 <!-- 测试工具 -->
 
                 <div class="text-c" > 
-                        <input type="text" name="keyword" id="inputtext" style="width:500px;height:100px;" class="input-text">
+                        <input type="text" name="keyword" id="inputtext" style="width:500px;height:100px;" class="input-text" value=" ">
                         <button name="" id="button1" class="btn btn-success" type="button" onclick="gettoken()"><i class="Hui-iconfont">&#xe665;</i>button1</button>
                         <button name="" id="button2" class="btn btn-success" type="button" onclick="getbumen()"><i class="Hui-iconfont">&#xe665;</i>button2</button>
                     </div>
@@ -35,7 +35,7 @@
                         <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
                                 <thead>
                                     <tr class="text-c">
-                                        <th width="120">供应商名�/th>
+                                        <th width="120">供应商名</th>
                                         <th width="120">物料编码</th>
                                         <th width="120">价格</th>
                                         <th width="100">操作</th>
@@ -96,8 +96,9 @@
                 var ids= treeNode.isParent;
                 if(!treeNode.isParent){
                     //获取点击节点的id
-                    var id = treeNode.id;
-                    window.location.href='/material/supply/list?materialId='+id;
+                    var departmentid = treeNode.id;
+                    var access_token = $("#inputtext").val();
+                    window.location.href='/cdo/sso/department/user/list?department_id='+departmentid+"&access_token="+access_token;
                     
                 }
 
@@ -105,6 +106,12 @@
             }
         }
     };
+
+
+    $(document).ready(function(){
+        getbumen();
+    });
+
 
     function getbumen(){
             $.ajax({
@@ -117,7 +124,7 @@
                 success: function(data){
                     $("#inputtext").val(data);
 
-                    //形成�
+                    //形成�
                     var t = $("#treeDemo");
                     //取zNodes
                     var zNodes = [];
