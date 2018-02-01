@@ -8,15 +8,52 @@
     <title>悉道SSO权限管理后台</title>
 </head>
 
-<body>
-    <div class="text-c" style="margin-top:50px"> 
-        <input type="text" name="keyword" id="inputtext" style="width:500px;height:100px;" class="input-text">
-        <button name="" id="button1" class="btn btn-success" type="button" onclick="gettoken()"><i class="Hui-iconfont">&#xe665;</i>获取tokan</button>
-        <button name="" id="button2" class="btn btn-success" type="button" onclick="getbumen()"><i class="Hui-iconfont">&#xe665;</i>获取部门</button>
-    </div>
-    <div class="text-c" style="margin-top:50px">
+<body class="pos-r">
+    
+    <div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
             <ul id="treeDemo" class="ztree"></ul>
     </div>
+
+
+    <div style="margin-left:200px;">
+    <nav class="breadcrumb"><i class="Hui-iconfont">
+            <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+        </nav>
+        <div class="page-container">
+            <article class="cl pd-20">
+
+
+                <!-- 测试工具 -->
+
+                <div class="text-c" > 
+                        <input type="text" name="keyword" id="inputtext" style="width:500px;height:100px;" class="input-text">
+                        <button name="" id="button1" class="btn btn-success" type="button" onclick="gettoken()"><i class="Hui-iconfont">&#xe665;</i>button1</button>
+                        <button name="" id="button2" class="btn btn-success" type="button" onclick="getbumen()"><i class="Hui-iconfont">&#xe665;</i>button2</button>
+                    </div>
+                
+                <div class="mt-20">
+                        <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+                                <thead>
+                                    <tr class="text-c">
+                                        <th width="120">供应商名�/th>
+                                        <th width="120">物料编码</th>
+                                        <th width="120">价格</th>
+                                        <th width="100">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    
+                                </tbody>
+                            </table>
+                </div>
+                
+               
+                
+            </article>
+        </div>
+
+
+
     <% include includes/footer.ejs %>
     <script type="text/javascript">
         function gettoken(){
@@ -58,9 +95,9 @@
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
                 var ids= treeNode.isParent;
                 if(!treeNode.isParent){
-                    // treeNode.url = "/material/supply/list";
                     //获取点击节点的id
                     var id = treeNode.id;
+                    window.location.href='/material/supply/list?materialId='+id;
                     
                 }
 
@@ -80,7 +117,7 @@
                 success: function(data){
                     $("#inputtext").val(data);
 
-                    //形成数
+                    //形成�
                     var t = $("#treeDemo");
                     //取zNodes
                     var zNodes = [];
