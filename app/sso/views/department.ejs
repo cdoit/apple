@@ -14,6 +14,9 @@
         <button name="" id="button1" class="btn btn-success" type="button" onclick="gettoken()"><i class="Hui-iconfont">&#xe665;</i>button1</button>
         <button name="" id="button2" class="btn btn-success" type="button" onclick="getbumen()"><i class="Hui-iconfont">&#xe665;</i>button2</button>
     </div>
+    <div class="text-c" style="margin-top:50px">
+            <ul id="treeDemo" class="ztree"></ul>
+    </div>
     <% include includes/footer.ejs %>
     <script type="text/javascript">
         function gettoken(){
@@ -30,12 +33,41 @@
                     $("#inputtext").val(jsonObj.access_token);
                 },
                 error:function(data) {
-                    console.log(data.msg);
+                    console.log(data);
                 },
             });
     }
 
 
+    var setting = {
+        view: {
+            dblClickExpand: false,
+            showLine: false,
+            selectedMulti: false
+        },
+        data: {
+            simpleData: {
+                enable:true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: ""
+            }
+        },
+        callback: {
+            beforeClick: function(treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                var ids= treeNode.isParent;
+                if(!treeNode.isParent){
+                    // treeNode.url = "/material/supply/list";
+                    //获取点击节点的id
+                    var id = treeNode.id;
+                    
+                }
+
+                
+            }
+        }
+    };
 
     function getbumen(){
             $.ajax({
@@ -47,6 +79,25 @@
                 dataType: 'json',
                 success: function(data){
                     $("#inputtext").val(data);
+
+                    //形成数
+                    var t = $("#treeDemo");
+                    //取zNodes
+                    var zNodes = [];
+                    var jsonObj=eval("("+data+")");
+                    $.each(jsonObj.department, function (i, item) {  
+                            var obj = new Object;
+                            obj.id = item.id;
+                            obj.pId = item.parentid;
+                            obj.name = item.name;
+                            zNodes.push(obj);
+                        });
+
+                    t = $.fn.zTree.init(t, setting, zNodes);
+                    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                    zTree.expandAll(true);
+
+
                 },
                 error:function(data) {
                     console.log(data);
