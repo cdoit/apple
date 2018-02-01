@@ -47,7 +47,7 @@ router.get('/user/list' , function (req, res) {
     });
 });
 
-router.get('/test' , function (req, res) {
+router.get('/manage' , function (req, res) {
     res.render('sso/views/department.ejs');
 });
 
