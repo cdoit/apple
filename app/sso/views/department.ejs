@@ -109,10 +109,9 @@
                             var jsonObj=eval("("+data+")");
                             var html = '';
                             $.each(jsonObj.userlist, function (i, item) { 
-                                
                                 html += '<tr class="text-c">';
-                                html +='<td>'+item.mobile+'</td>';
                                 html +='<td>'+item.name+'</td>';
+                                html +='<td>'+item.mobile+'</td>';
                                 html +='<td></td>';
                                 html += '</tr>';
                             });
