@@ -35,13 +35,12 @@
                         <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
                                 <thead>
                                     <tr class="text-c">
-                                        <th width="120">供应商名</th>
-                                        <th width="120">物料编码</th>
-                                        <th width="120">价格</th>
+                                        <th width="120">名字</th>
+                                        <th width="120">电话</th>
                                         <th width="100">操作</th>
                                     </tr>
                                 </thead>
-                                <tbody> 
+                                <tbody id="listfor"> 
                                     
                                 </tbody>
                             </table>
@@ -97,9 +96,32 @@
                 if(!treeNode.isParent){
                     //获取点击节点的id
                     var departmentid = treeNode.id;
-                    var access_token = $("#inputtext").val();
-                    window.location.href='/cdo/sso/department/user/list?department_id='+departmentid+"&access_token="+access_token;
-                    
+                    // var access_token = $("#inputtext").val();
+                    // window.location.href='/cdo/sso/department/user/list?department_id='+departmentid;
+                    $.ajax({
+                        type: 'GET',
+                        url: '/cdo/sso/department/user/list',
+                        data:{
+                            department_id:departmentid
+                        },
+                        dataType: 'json',
+                        success: function(data){
+                            var jsonObj=eval("("+data+")");
+                            var html = '';
+                            $.each(jsonObj.userlist, function (i, item) { 
+                                
+                                html += '<tr class="text-c">';
+                                html +='<td>'+item.mobile+'</td>';
+                                html +='<td>'+item.name+'</td>';
+                                html +='<td></td>';
+                                html += '</tr>';
+                            });
+                            $("#listfor").append(html);
+                        },
+                        error:function(data) {
+                            console.log(data);
+                        },
+                    });
                 }
 
                 
