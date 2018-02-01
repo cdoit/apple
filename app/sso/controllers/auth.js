@@ -11,7 +11,8 @@ router.get('/gettoken' , function (req,res) {
         corpid: req.query.corpid,
         corpsecret: req.query.corpsecret});
         new cdohttps().requestGet(path).then(function(data){
-            req.session.token = data.access_token;
+            var obj = JSON.parse(data); 
+            req.session.token = obj.access_token;
             res.json(data);
         });
     // new Promise(function(resolve, reject) {
