@@ -36,6 +36,7 @@ router.get('/user/list' , function (req, res) {
     var token = req.query.access_token ;
     if(token == null || token == undefined || token == ''){
         token = req.session.token;
+        console.log("session:"+req.session.token);
     }
     var path = 'https://oapi.dingtalk.com/user/list?' + querystring.stringify({
         access_token: token,
