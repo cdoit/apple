@@ -15,10 +15,20 @@ router.get('/list' , function (req, res) {
     });
 });
 
-router.get('/usersimplelist' , function (req, res) { 
+router.get('/user/simplelist' , function (req, res) { 
     var path = 'https://oapi.dingtalk.com/user/simplelist?' + querystring.stringify({
         access_token: req.query.access_token,
-        id:49517483
+        department_id:req.query.department_id
+      });
+    new cdohttps().requestGet(path).then(function(data){ 
+        res.json(data);
+    });
+});
+
+router.get('/user/list' , function (req, res) { 
+    var path = 'https://oapi.dingtalk.com/user/list?' + querystring.stringify({
+        access_token: req.query.access_token,
+        department_id:req.query.department_id
       });
     new cdohttps().requestGet(path).then(function(data){ 
         res.json(data);
