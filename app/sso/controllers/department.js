@@ -9,9 +9,9 @@ var dingauth=require('./dingauth');
 
 //供应商列表req.corpIdreq.corpsecret
 router.get('/list' , function (req, res) {
-    new dingauth().getaccesstokan().then(function(data){
+    new dingauth().getaccesstokan().then(function(token){
             var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
-            access_token: data,
+            access_token: token,
             id:49517483});
             new cdohttps().requestGet(path).then(function(result){ 
                 res.json(result);
@@ -23,27 +23,32 @@ router.get('/list' , function (req, res) {
 });
 
 router.get('/user/simplelist' , function (req, res) { 
-    var path = 'https://oapi.dingtalk.com/user/simplelist?' + querystring.stringify({
-        access_token: req.query.access_token,
-        department_id:req.query.department_id
-      });
-    new cdohttps().requestGet(path).then(function(data){ 
-        res.json(data);
+    new dingauth().getaccesstokan().then(function(token){
+        var path = 'https://oapi.dingtalk.com/user/simplelist?' + querystring.stringify({
+            access_token: token,
+            department_id:req.query.department_id
+        });
+        new cdohttps().requestGet(path).then(function(data){ 
+            res.json(data);
+        });
+    }).catch(function(error)
+    {
+
     });
 });
 
 router.get('/user/list' , function (req, res) { 
-    var token = req.query.access_token ;
-    if(token == null || token == undefined || token == ''){
-        token = req.session.token;
-        console.log("session:"+req.session.token);
-    }
-    var path = 'https://oapi.dingtalk.com/user/list?' + querystring.stringify({
-        access_token: token,
-        department_id:req.query.department_id
-      });
-    new cdohttps().requestGet(path).then(function(data){ 
-        res.json(data);
+    new dingauth().getaccesstokan().then(function(token){
+        var path = 'https://oapi.dingtalk.com/user/list?' + querystring.stringify({
+            access_token: token,
+            department_id:req.query.department_id
+        });
+        new cdohttps().requestGet(path).then(function(data){ 
+            res.json(data);
+        });
+    }).catch(function(error)
+    {
+
     });
 });
 
