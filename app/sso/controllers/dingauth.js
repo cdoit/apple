@@ -24,6 +24,7 @@ class dingauth
                 corpsecret: config.corpsecret});
                 new cdohttps().requestGet(path).then(function(data){
                     var result = JSON.parse(data);
+                    console.log("tk:"+result.access_token);
                     // req.session.token = obj.access_token;
                     // res.json(data);
                     if(data.indexOf("errcode") < 0){
