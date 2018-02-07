@@ -36,6 +36,7 @@ class dingauth
                         //将获取后的 access_token 返回
                         resolve(accessTokenJson.access_token);
                     }else{
+                        console.log("tk:"+data.indexOf("errcode"));
                         //将错误返回
                         reject(result);
                     } 
