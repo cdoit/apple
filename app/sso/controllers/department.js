@@ -4,7 +4,7 @@ var uuid = require('node-uuid');
 var querystring = require('querystring');
 var https = require('https');
 var cdohttps = require('../../uitl/cdohttps');
-
+var dingauth=require('dingauth');
 
 
 //供应商列表req.corpIdreq.corpsecret
@@ -13,13 +13,15 @@ router.get('/list' , function (req, res) {
     if(token == null || token == undefined || token == ''){
         token = req.session.token;
     }
-    var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
-        access_token: token,
-        id:49517483
-      });
-    new cdohttps().requestGet(path).then(function(data){ 
-        res.json(data);
+    new dingauth().getaccesstokan().then(function(data){ 
+        var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
+        access_token: data,
+        id:49517483});
+        new cdohttps().requestGet(path).then(function(result){ 
+            res.json(result);
+        });
     });
+    
 });
 
 router.get('/user/simplelist' , function (req, res) { 
