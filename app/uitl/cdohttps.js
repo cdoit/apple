@@ -20,6 +20,7 @@ class cdohttps
                 res.on('end',function(){
                     result = Buffer.concat(buffer).toString('utf-8');
                     //将最后结果返回
+                    console.log(result);
                     resolve(result);
                 });
             }).on('error',function(err){
