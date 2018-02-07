@@ -9,10 +9,10 @@ var dingauth=require('./dingauth');
 
 //供应商列表req.corpIdreq.corpsecret
 router.get('/list' , function (req, res) {
-    var token = req.query.access_token ;
-    if(token == null || token == undefined || token == ''){
-        token = req.session.token;
-    }
+    // var token = req.query.access_token ;
+    // if(token == null || token == undefined || token == ''){
+    //     token = req.session.token;
+    // }
     new dingauth().getaccesstokan().then(function(data){ 
         var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
         access_token: data,
