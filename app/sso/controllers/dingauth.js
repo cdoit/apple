@@ -17,7 +17,8 @@ class dingauth
         return new Promise(function(resolve,reject){
             var currentTime = new Date().getTime();
             //判断 本地存储的 access_token 是否有效
-            if(accessTokenJson.access_token === "" || accessTokenJson.expires_time < currentTime){
+            console.log(config.corpid);
+            if(accessTokenJson.access_token == "" || accessTokenJson.expires_time < currentTime){
                 var path = 'https://oapi.dingtalk.com/gettoken?' + querystring.stringify({
                 corpid: config.corpid,
                 corpsecret: config.corpsecret});
