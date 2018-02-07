@@ -1,9 +1,9 @@
 var express = require('express');
-// var querystring = require('querystring');
-// var cdohttps = require('../../uitl/cdohttps');
-// var accessTokenJson = require('../access_token');//引入本地存储的 access_token
-// var fs = require('fs'); //引入 fs 模块
-// var config=require('../config');
+var querystring = require('querystring');
+var cdohttps = require('../../uitl/cdohttps');
+var accessTokenJson = require('../access_token');//引入本地存储的 access_token
+var fs = require('fs'); //引入 fs 模块
+var config=require('../config');
 
 class dingauth
 {
