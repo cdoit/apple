@@ -4,7 +4,7 @@ var uuid = require('node-uuid');
 var querystring = require('querystring');
 var https = require('https');
 var cdohttps = require('../../uitl/cdohttps');
-var dingauth=require('dingauth');
+var dingauth=require('./dingauth');
 
 
 //供应商列表req.corpIdreq.corpsecret
