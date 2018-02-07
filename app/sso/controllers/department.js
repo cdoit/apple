@@ -9,15 +9,10 @@ var dingauth=require('./dingauth');
 
 //供应商列表req.corpIdreq.corpsecret
 router.get('/list' , function (req, res) {
-    // var token = req.query.access_token ;
-    // if(token == null || token == undefined || token == ''){
-    //     token = req.session.token;
-    // }
     new dingauth().getaccesstokan().then(function(data){
             var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
             access_token: data,
             id:49517483});
-            console.log('path:'+path);
             new cdohttps().requestGet(path).then(function(result){ 
                 res.json(result);
             });
@@ -25,7 +20,6 @@ router.get('/list' , function (req, res) {
     {
 
     });
-    
 });
 
 router.get('/user/simplelist' , function (req, res) { 

@@ -24,15 +24,13 @@ class dingauth
                 corpsecret: config.corpsecret});
                 new cdohttps().requestGet(path).then(function(data){
                     var result = JSON.parse(data);
-                    
-                    // req.session.token = obj.access_token;
-                    // res.json(data);
                     if(result.errcode == 0){
-                        console.log("tk:"+result.access_token);
                         accessTokenJson.access_token = result.access_token;
                         accessTokenJson.expires_time = new Date().getTime() + (parseInt(result.expires_in) - 200) * 1000;
                         //更新本地存储的
+
                         fs.writeFile('../access_token.json',JSON.stringify(accessTokenJson));
+                        console.log("write");
                         //将获取后的 access_token 返回
                         resolve(accessTokenJson.access_token);
                     }else{
