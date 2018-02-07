@@ -13,9 +13,7 @@ router.get('/list' , function (req, res) {
     // if(token == null || token == undefined || token == ''){
     //     token = req.session.token;
     // }
-    new dingauth().getaccesstokan().then(function(data,reject){
-        if(reject==null) 
-        {
+    new dingauth().getaccesstokan().then(function(data){
             var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
             access_token: data,
             id:49517483});
@@ -23,8 +21,9 @@ router.get('/list' , function (req, res) {
             new cdohttps().requestGet(path).then(function(result){ 
                 res.json(result);
             });
-        }
-        
+    }).catch(function(error)
+    {
+
     });
     
 });
