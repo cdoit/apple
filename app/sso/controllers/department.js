@@ -13,13 +13,18 @@ router.get('/list' , function (req, res) {
     // if(token == null || token == undefined || token == ''){
     //     token = req.session.token;
     // }
-    new dingauth().getaccesstokan().then(function(data){ 
-        var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
-        access_token: data,
-        id:49517483});
-        new cdohttps().requestGet(path).then(function(result){ 
-            res.json(result);
-        });
+    new dingauth().getaccesstokan().then(function(data,reject){
+        if(reject==null) 
+        {
+            var path = 'https://oapi.dingtalk.com/department/list?' + querystring.stringify({
+            access_token: data,
+            id:49517483});
+            console.log('path:'+path);
+            new cdohttps().requestGet(path).then(function(result){ 
+                res.json(result);
+            });
+        }
+        
     });
     
 });

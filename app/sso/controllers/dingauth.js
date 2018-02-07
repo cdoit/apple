@@ -24,10 +24,11 @@ class dingauth
                 corpsecret: config.corpsecret});
                 new cdohttps().requestGet(path).then(function(data){
                     var result = JSON.parse(data);
-                    console.log("tk:"+result.access_token);
+                    
                     // req.session.token = obj.access_token;
                     // res.json(data);
-                    if(data.indexOf("errcode") < 0){
+                    if(data.indexOf("errcode") == 0){
+                        console.log("tk:"+result.access_token);
                         accessTokenJson.access_token = result.access_token;
                         accessTokenJson.expires_time = new Date().getTime() + (parseInt(result.expires_in) - 200) * 1000;
                         //更新本地存储的
@@ -36,7 +37,7 @@ class dingauth
                         resolve(accessTokenJson.access_token);
                     }else{
                         //将错误返回
-                        resolve(result);
+                        reject(result);
                     } 
                 });
             }else{
