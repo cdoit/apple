@@ -160,11 +160,11 @@ module.exports = function (app) {
 
         if (user != undefined) {
 
-            db.Sequelize.query("select * from user as u1  join userinfo as u2 on u1.id=u2.user_id where u1.id='" + user.id+"'").then(function (fuser) {
+            db.Sequelize3.query("select * from user as u1  join userinfo as u2 on u1.id=u2.user_id where u1.id='" + user.id+"'").then(function (fuser) {
 
                 var userf = fuser[0][0];
 
-                db.Sequelize.query("select * from user as u1  join userinfo as u2 on u1.id = u2.user_id where u1.sponsor='"+user.id+"'").then(function (sponsors) {
+                db.Sequelize3.query("select * from user as u1  join userinfo as u2 on u1.id = u2.user_id where u1.sponsor='"+user.id+"'").then(function (sponsors) {
 
                     res.render('home/user.ejs', { user: userf, sponsors: sponsors[0]});
 
@@ -332,9 +332,6 @@ module.exports = function (app) {
                 next(e);
             });
         }
-
-   
-
     });
     app.use('/test',require("../app/wx/controllers/testdata"));
     app.use('/manager',require("../app/wx/controllers/manager"));

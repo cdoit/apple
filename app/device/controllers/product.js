@@ -40,7 +40,7 @@ router.get("/index", function (req, res, next) {
         obj.products = results[0][0];
         obj.slogans = results[1];
         // res.json(obj);
-        res.render('common/produce', {ad: obj});
+        res.render('wx/views/common/produce', {ad: obj});
       }).catch(next);
 
 });
