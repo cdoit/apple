@@ -8,11 +8,11 @@ const db = require("../app/db/");
 // db.init();
 //
 const config = require('../config.json')
-const wechat = require('../wechat/wechat');
-//
-var wechatApp = new wechat(config); 
-// const login = require('../app/controllers/login');
-const weixinserver = require('../wechat/weixin');
+// const wechat = require('../wechat/wechat');
+// //
+// var wechatApp = new wechat(config); 
+// // const login = require('../app/controllers/login');
+// const weixinserver = require('../wechat/weixin');
 
 
 
@@ -23,7 +23,7 @@ const weixinserver = require('../wechat/weixin');
 
 module.exports = function (app) {
 
-    app.get('/wx/qrcode', weixinserver.qrcode);
+    // app.get('/wx/qrcode', weixinserver.qrcode);
     
 
 };
