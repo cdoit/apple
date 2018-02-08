@@ -1,0 +1,215 @@
+﻿html, body  {
+    width: 100%;
+    height: 100%;
+    background-color: #0094ff;
+    -webkit-text-size-adjust: 100% !important;
+}
+
+.citySelect {
+    width: 60px;
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    font-size: 20px;
+    vertical-align: middle;
+    line-height: 50px;
+   
+}
+.citySelect a{
+     color:#ffffff;
+}
+
+.vsearch-box {
+    width: calc(100% - 60px);
+    float: left;
+    height: 100%;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+input:focus {
+    outline: none;
+    border-color: #cfdc00;
+    box-shadow: 0 0 5px rgba(207, 220, 0, 0.4);
+}
+
+.vsearch-text {
+    width: 100%;
+    height: 40px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    font-size: 12pt;
+    border-left-width: 1px;
+    border-radius: 20px;
+    vertical-align: middle;
+    line-height: 40px;
+    padding-left: 10px;
+}
+
+.vsearch-button {
+    position: absolute;
+    height: 30px;
+    width: 40px;
+    background: #0094ff;
+    border: 0px;
+    border-radius: 20px;
+    right: 20px;
+    top: 10px;
+}
+
+.vsearch-box button:before {
+    content: "\f105";
+    font-family: "FontAwesome";
+    color: #F9F0DA;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 50px;
+    top: -10px;
+    right: 12px;
+    position: absolute;
+}
+
+.slogan {
+    width: 100%;
+    height: 100px;
+    background-color: #fff;
+    margin-top: 70px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: antiquewhite;
+}
+    .slogan img {
+        border-radius: 5px;
+    }
+    .thumbnail {
+        cursor: pointer;
+    }
+
+    .thumbnail:hover {
+       
+    }
+
+.header {
+    height: 30px;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "微软雅黑"
+}
+
+.title {
+    float: left;
+}
+
+.infomation {
+ float:right;
+}
+
+    .infomation strong {
+        font-weight: 600;
+        color: #0064ff;
+        font-size: 16px;
+    }
+
+    .infomation small {
+        font-size: 12px;
+        font-weight: 500;
+        color: #808080;
+    }
+
+.foot {
+    height: 80px;
+    margin-top: 10px;
+}
+
+.foot-start {
+}
+
+.timer {
+    float: left;
+}
+
+.timer-title {
+    font-size: 10px;
+}
+
+.timer-value {
+    font-size: 20px;
+    color: #0094ff;
+}
+
+.pay {
+    float: right;
+}
+
+.pay-title {
+    font-size: 10px;
+    text-align: right;
+}
+
+.pay-value {
+    font-size: 20px;
+    color: #ff6a00
+}
+
+.foot-end {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: "微软雅黑";
+    background-color: #808080;
+    color: #ffffff;
+    text-align: center;
+}
+
+#searhPanel {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0;
+    position: fixed;
+    left: 10000px;
+    top: 51px;
+    z-index: 10000;
+    display: none;
+    padding: 10px;
+}
+
+.search-hot {
+    width: 100%;
+}
+
+    .search-hot div {
+        margin-top: 20px;
+        font-weight: 700;
+    }
+
+    .search-hot hr {
+        margin: 0px;
+        padding: 0px;
+        margin-top: 10px;
+    }
+
+    .search-hot ul {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .search-hot li {
+        display: inline-block;
+        background-color: #eeeeee;
+        border-radius: 5px;
+        padding: 3px;
+        font-family: "微软雅黑";
+        margin: 5px;
+        font-weight: 700;
+    }
+.footerbottom footer {
+    text-align: center;
+    color: #ffffff
+}
+
+

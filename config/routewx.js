@@ -37,33 +37,33 @@ module.exports = function (app) {
         wechatApp.handleMsg(req, res);
     });
     //
-    app.get('/getAccessToken', function (req, res) {
+    app.get('/wx/getAccessToken', function (req, res) {
         wechatApp.getAccessToken().then(function (data) {
             res.send(data);
         });
     });
     //
-    app.get("/admin/show", function (req, res, next) {
+    app.get("/wx/admin/show", function (req, res, next) {
         //
         db.User.findAll().then(function (users) {
-            res.render('manager/userlist.ejs', { users: users });
+            res.render('/wx/views/manager/userlist.ejs', { users: users });
         });
     });
-    app.get("/admin/edit", function (req, res, next) {
+    app.get("/wx/admin/edit", function (req, res, next) {
         //
         db.User.findAll().success(function (users) {
-            res.render('home/userlist.ejs', { users: users });
+            res.render('/wx/views/home/userlist.ejs', { users: users });
 
         });
     });
-    app.get("/admin/delete", function (req, res, next) {
+    app.get("/wx/admin/delete", function (req, res, next) {
         //
         var userid = req.query.userid;
 
         //
         db.User.destroy({ where: { userid: userid } }).then(function (rowDeleted) {
             if (rowDeleted === 0) {
-                res.redirect("/admin/show");
+                res.redirect("wx/views/admin/show");
             } else {
                 res.write("111");
                 res.end();
@@ -93,7 +93,7 @@ module.exports = function (app) {
                     if (result) {
                         req.session.user = result;
                     } 
-                    res.redirect("/index.html");
+                    res.redirect("/wx/index.html");
                 });
         
             });
@@ -115,26 +115,26 @@ module.exports = function (app) {
                 req.session.user = result;
 
                 if (result.mobile) {
-                    res.redirect('/user');
+                    res.redirect('/wx/user');
                 } else {
                     console.log("find a person bu no register");
                     if (result.roleid == 0) {
-                        res.redirect("/register.html");
+                        res.redirect("/wx/register.html");
                     } else {
-                        res.redirect("/SaleRegister.html");
+                        res.redirect("/wx/SaleRegister.html");
                     }
              
                 }
           
             } else {
                 console.log("find no person");
-                res.redirect("/register.html");
+                res.redirect("wx/register.html");
             }
         });
 
     });
     //
-    app.get('/user', function (req, res, next) {
+    app.get('/wx/user', function (req, res, next) {
         var user = req.session.user;
   
         if (user != null) {
@@ -144,18 +144,18 @@ module.exports = function (app) {
                 }
             }).then(function (result) {
                 if (result.roleid == 0) {
-                    res.redirect("/registerEnd.html");
+                    res.redirect("wx/registerEnd.html");
                 } else {
-                    res.render('home/salesperson.ejs', { user: result });
+                    res.render('wx/views/home/salesperson.ejs', { user: result });
                 }
             });
         } else {
-            res.redirect("/register.html");
+            res.redirect("wx/register.html");
         }
     });
 
     //
-    app.get('/user/my', function (req, res, next) {
+    app.get('/wx/user/my', function (req, res, next) {
         var user = req.session.user;
 
         if (user != undefined) {
@@ -181,7 +181,7 @@ module.exports = function (app) {
 
     });
     //
-    app.get('/user/orcode', function (req, res, next) {
+    app.get('/wx/user/orcode', function (req, res, next) {
 
         var user = req.session.user;
         
@@ -219,12 +219,12 @@ module.exports = function (app) {
 
     app.get('/wx/qrcode', weixinserver.qrcode);
 
-    app.post('/login', function (req, res, next) {
+    app.post('/wx/login', function (req, res, next) {
 
         next();
     });
 
-    app.post('/register', function (req, res, next) {
+    app.post('/wx/register', function (req, res, next) {
         var username = req.body.username;
         var address = req.body.address;
         var mobile = req.body.mobile;
@@ -333,9 +333,9 @@ module.exports = function (app) {
             });
         }
     });
-    app.use('/test',require("../app/wx/controllers/testdata"));
-    app.use('/manager',require("../app/wx/controllers/manager"));
-    app.use('/pano',require("../app/wx/controllers/pano"));
-    app.use('/product',require("../app/wx/controllers/product"));
-    app.use('/search',require("../app/wx/controllers/search"));
+    app.use('/wx/test',require("../app/wx/controllers/testdata"));
+    app.use('/wx/manager',require("../app/wx/controllers/manager"));
+    app.use('/wx/pano',require("../app/wx/controllers/pano"));
+    app.use('/wx/product',require("../app/wx/controllers/product"));
+    app.use('/wx/search',require("../app/wx/controllers/search"));
 };

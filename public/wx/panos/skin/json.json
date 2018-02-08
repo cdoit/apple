@@ -1,0 +1,56 @@
+﻿{
+  "product": {
+    "id": "f1561980-9865-11e7-b4c0-4d616e501f58",
+    "apartmentLayout_id": "f1561980-9865-11e7-b4c0-4d616e501f58",
+    "name": null,
+    "priority": null,
+    "loopimags": null,
+    "price": null,
+    "space": null,
+    "area": null,
+    "targetsize": null,
+    "safeparam": null,
+    "antiseismic": null,
+    "plan": null,
+    "notice": null,
+    "category": null,
+    "constructtime": null,
+    "created_at": "2017-09-13T09:28:46.000Z",
+    "updated_at": "2017-09-13T09:28:46.000Z",
+    "deleted_at": null,
+    "building_id": "f13daf80-9865-11e7-b4c0-4d616e501f58",
+    "roomcount": 3,
+    "hallcount": null,
+    "kitchencount": null,
+    "wccount": null,
+    "floorheight": null
+  },
+  "purchaser": [
+    {
+      "id": "fe35d870-9865-11e7-b4c0-4d616e501f58",
+      "priority": 2,
+      "userId": "f15f6850-9865-11e7-b4c0-4d616e501f58",
+      "productId": "f16c87b0-9865-11e7-b4c0-4d616e501f58",
+      "adminInfoId": null,
+      "created_at": "2017-09-13T09:29:08.000Z",
+      "updated_at": "2017-09-13T09:29:08.000Z",
+      "deleted_at": null,
+      "product_id": "f16c87b0-9865-11e7-b4c0-4d616e501f58",
+      "user_id": "f15f6850-9865-11e7-b4c0-4d616e501f58"
+    }
+  ],
+  "comment": [
+    {
+      "id": "fe750450-9865-11e7-b4c0-4d616e501f58",
+      "orderId": "fe35d870-9865-11e7-b4c0-4d616e501f58",
+      "productId": "f16c87b0-9865-11e7-b4c0-4d616e501f58",
+      "pralsecounts": 3,
+      "comment": "评论",
+      "created_at": "2017-09-13T09:29:08.000Z",
+      "updated_at": "2017-09-13T09:29:08.000Z",
+      "deleted_at": null,
+      "order_id": "fe35d870-9865-11e7-b4c0-4d616e501f58",
+      "product_id": "f16c87b0-9865-11e7-b4c0-4d616e501f58"
+    }
+  ]
+}
