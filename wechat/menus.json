@@ -3,12 +3,12 @@
         {	
           "type":"view",
           "name":"产品浏览",
-          "url":"http://www.faruxue1688.com/product/index"
+          "url":"http://www.faruxue1688.com/wx/product/index"
         },
         {	
           "type":"view",
           "name":"关于我们",
-          "url":"http://www.faruxue1688.com/aboutus.html"
+          "url":"http://www.faruxue1688.com/wx/aboutus.html"
         },
         {	
           "type":"view",
