@@ -106,7 +106,7 @@ router.get('/product', function (req, res, next) {
         obj.purchaser = results[1][0];
         obj.comment = results[2][0];
         // res.json(obj);
-        res.render('common/single', {single: obj});
+        res.render('wx/views/common/single', {single: obj});
       }).catch(next);
 });
 
