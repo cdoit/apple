@@ -7,15 +7,11 @@ var fs = require('fs');
 const db = require("../app/db/");
 //
 const config = require('../config.json')
-const wechat = require('../wechat/wechat');
-//
-var wechatApp = new wechat(config); 
 
 const home = require('../app/device/controllers/home');
 // const project = require('../app/controllers/project');
 const test = require('../app/device/controllers/test');
 
-var webchatTest = new test(db);
 const login = require('../app/device/controllers/login');
 
 //

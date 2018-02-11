@@ -6,7 +6,7 @@ var uuid = require('node-uuid');
 const db = require("../app/db/");
 
 const config = require('../config.json')
-const wechat = require('../wechat/wechat');
+const wechat = require('../app/wx/wechat/wechat');
 
 var wechatApp = new wechat(config); 
 
@@ -15,7 +15,7 @@ const test = require('../app/wx/controllers/test');
 
 var webchatTest = new test(db);
 const login = require('../app/wx/controllers/login');
-const weixinserver = require('../wechat/weixin');
+const weixinserver = require('../app/wx/wechat/weixin');
 //
 var http = require('http');
 //
