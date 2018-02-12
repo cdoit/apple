@@ -119,9 +119,9 @@ module.exports = function (app) {
                 } else {
                     console.log("find a person bu no register");
                     if (result.roleid == 0) {
-                        res.redirect("/webchat/register.html");
+                        res.redirect("webchat/register.html");
                     } else {
-                        res.redirect("/webchat/SaleRegister.html");
+                        res.redirect("webchat/SaleRegister.html");
                     }
              
                 }
@@ -176,7 +176,7 @@ module.exports = function (app) {
        
         } else {
 
-          res.redirect("/register.html");
+          res.redirect("webchat/register.html");
         }
 
     });
@@ -328,7 +328,7 @@ module.exports = function (app) {
                 res.redirect('/user');
                 console.log("标记：");
             }).catch(function (e) {
-                return res.redirect('/register.html');
+                return res.redirect('webchat/register.html');
                 next(e);
             });
         }
