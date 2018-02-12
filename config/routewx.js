@@ -119,16 +119,16 @@ module.exports = function (app) {
                 } else {
                     console.log("find a person bu no register");
                     if (result.roleid == 0) {
-                        res.redirect("/wx/register.html");
+                        res.redirect("/webchat/register.html");
                     } else {
-                        res.redirect("/wx/SaleRegister.html");
+                        res.redirect("/webchat/SaleRegister.html");
                     }
              
                 }
           
             } else {
                 console.log("find no person");
-                res.redirect("wx/register.html");
+                res.redirect("webchat/register.html");
             }
         });
 
@@ -144,13 +144,13 @@ module.exports = function (app) {
                 }
             }).then(function (result) {
                 if (result.roleid == 0) {
-                    res.redirect("wx/registerEnd.html");
+                    res.redirect("webchat/registerEnd.html");
                 } else {
                     res.render('wx/views/home/salesperson.ejs', { user: result });
                 }
             });
         } else {
-            res.redirect("wx/register.html");
+            res.redirect("webchat/register.html");
         }
     });
 
