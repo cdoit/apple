@@ -4,21 +4,15 @@ var express = require('express');
 var router = express.Router();
 var uuid = require('node-uuid');
 const db = require("../app/db/");
-
 const config = require('../config.json')
 const wechat = require('../app/wx/wechat/wechat');
-
 var wechatApp = new wechat(config); 
-
 const home = require('../app/wx/controllers/home');
 const test = require('../app/wx/controllers/test');
-
 var webchatTest = new test(db);
 const login = require('../app/wx/controllers/login');
 const weixinserver = require('../app/wx/wechat/weixin');
-//
 var http = require('http');
-//
 var admin = require('../app/wx/controllers/manager');
 
 function getopenid(req, res, next) {
@@ -53,14 +47,10 @@ module.exports = function (app) {
         //
         db.User.findAll().success(function (users) {
             res.render('/wx/views/home/userlist.ejs', { users: users });
-
         });
     });
     app.get("/wx/admin/delete", function (req, res, next) {
-        //
         var userid = req.query.userid;
-
-        //
         db.User.destroy({ where: { userid: userid } }).then(function (rowDeleted) {
             if (rowDeleted === 0) {
                 res.redirect("wx/views/admin/show");
@@ -68,13 +58,10 @@ module.exports = function (app) {
                 res.write("111");
                 res.end();
             }
-
         })
-
     });
 
     app.get('/wx/test', getopenid, function (req, res, next) {
-
 
         webchatTest.add(req.session.openid);
     });
@@ -119,16 +106,16 @@ module.exports = function (app) {
                 } else {
                     console.log("find a person bu no register");
                     if (result.roleid == 0) {
-                        res.redirect("http://www.faruxue1688.com/webchat/register.html");
+                        res.redirect("/webchat/register.html");
                     } else {
-                        res.redirect("http://www.faruxue1688.com/webchat/SaleRegister.html");
+                        res.redirect("/webchat/SaleRegister.html");
                     }
              
                 }
           
             } else {
                 console.log("find no person");
-                res.redirect("http://www.faruxue1688.com/webchat/register.html");
+                res.redirect("/webchat/register.html");
             }
         });
 
@@ -150,7 +137,7 @@ module.exports = function (app) {
                 }
             });
         } else {
-            res.redirect("http://www.faruxue1688.com/webchat/register.html");
+            res.redirect("/webchat/register.html");
         }
     });
 
@@ -176,15 +163,13 @@ module.exports = function (app) {
        
         } else {
 
-          res.redirect("http://www.faruxue1688.com/webchat/register.html");
+          res.redirect("/webchat/register.html");
         }
 
     });
     //
     app.get('/wx/user/orcode', function (req, res, next) {
-
         var user = req.session.user;
-        
         if (user != undefined) {
             console.log("jj:"+user.id);
             http.get('http://www.faruxue1688.com/wx/qrcode?scenid=' + user.id, function (result) {
@@ -248,17 +233,14 @@ module.exports = function (app) {
                 }
             }).then(function (result) {
                 if (result != null) {
-
-
                     if (result.mobile!=null&&result.mobile != "") {
                         var cuser = result;
                         req.session.user = cuser;
                         console.log("user存入日志1："+req.session.user);
                         res.redirect('/user');
-                    } else {
-
-              
-    
+                    } 
+                    else 
+                    {
                     userinfo = {
                         id:uuid.v1(),
                         username: username,
@@ -290,8 +272,6 @@ module.exports = function (app) {
                         //     res.redirect('/user');
                         //     console.log("用户跳转了");
                         // }
-
-
                         res.write(user.roleid+"");
                         console.log("user.roleid的值："+user.roleid);
                         res.end();
@@ -301,12 +281,9 @@ module.exports = function (app) {
                             console.log(e);
                             next(e);
                         });
-
                     }
                 };
                 });
-
-  
         } else {
             user = {
                 mobile: mobile,
@@ -328,7 +305,7 @@ module.exports = function (app) {
                 res.redirect('/user');
                 console.log("标记：");
             }).catch(function (e) {
-                return res.redirect('http://www.faruxue1688.com/webchat/register.html');
+                return res.redirect('webchat/register.html');
                 next(e);
             });
         }
