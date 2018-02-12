@@ -93,7 +93,7 @@ module.exports = function (app) {
                     if (result) {
                         req.session.user = result;
                     } 
-                    res.redirect("/wx/index.html");
+                    res.redirect("/webchat/index.html");
                 });
         
             });
