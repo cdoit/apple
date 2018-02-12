@@ -119,16 +119,16 @@ module.exports = function (app) {
                 } else {
                     console.log("find a person bu no register");
                     if (result.roleid == 0) {
-                        res.redirect("webchat/register.html");
+                        res.redirect("http://www.faruxue1688.com/webchat/register.html");
                     } else {
-                        res.redirect("webchat/SaleRegister.html");
+                        res.redirect("http://www.faruxue1688.com/webchat/SaleRegister.html");
                     }
              
                 }
           
             } else {
                 console.log("find no person");
-                res.redirect("webchat/register.html");
+                res.redirect("http://www.faruxue1688.com/webchat/register.html");
             }
         });
 
@@ -150,7 +150,7 @@ module.exports = function (app) {
                 }
             });
         } else {
-            res.redirect("webchat/register.html");
+            res.redirect("http://www.faruxue1688.com/webchat/register.html");
         }
     });
 
@@ -176,7 +176,7 @@ module.exports = function (app) {
        
         } else {
 
-          res.redirect("webchat/register.html");
+          res.redirect("http://www.faruxue1688.com/webchat/register.html");
         }
 
     });
@@ -328,7 +328,7 @@ module.exports = function (app) {
                 res.redirect('/user');
                 console.log("标记：");
             }).catch(function (e) {
-                return res.redirect('webchat/register.html');
+                return res.redirect('http://www.faruxue1688.com/webchat/register.html');
                 next(e);
             });
         }
