@@ -16,4 +16,20 @@ router.get('/gettoken' , function (req,res) {
     });
 });
 
+router.get('/user/getuserinfo' , function (req,res) { 
+    new dingauth().getaccesstokan().then(function(token){
+        var path = 'https://oapi.dingtalk.com/user/getuserinfo?' + querystring.stringify({
+            access_token: token,
+            code:req.code
+        });
+        new cdohttps().requestGet(path).then(function(data){ 
+            res.json(data);
+        });
+
+    }).catch(function(error)
+    {
+
+    });
+});
+
 module.exports = router;
