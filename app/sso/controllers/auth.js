@@ -3,6 +3,7 @@ var router = express.Router();
 var uuid = require('node-uuid');
 var querystring = require('querystring');
 var cdohttps = require('../../uitl/cdohttps');
+var dingauth=require('./dingauth');
 
 
 //供应商列表req.corpIdreq.corpsecret
@@ -28,7 +29,7 @@ router.get('/user/getuserinfo' , function (req,res) {
 
     }).catch(function(error)
     {
-
+        console.log(error);
     });
 });
 

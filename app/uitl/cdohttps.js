@@ -26,6 +26,9 @@ class cdohttps
             }).on('error',function(err){
                 reject(err);
             });
+        }).catch(function(error)
+        {
+    
         });
     }
 
