@@ -7,6 +7,7 @@ var cdohttps = require('../../uitl/cdohttps');
 
 //供应商列表req.corpIdreq.corpsecret
 router.get('/' , function (req,res) { 
+    console.log('code:'+req.query.code);
     var path = '/cdo/sso/user/getuserinfo?' + querystring.stringify({
         code:req.query.code
     });
