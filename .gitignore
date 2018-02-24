@@ -61,3 +61,4 @@ upload/
 app/wx
 public/test
 public/earth
+app/sso/access_token.json
